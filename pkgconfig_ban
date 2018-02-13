@@ -1,0 +1,7 @@
+# This file contains pkgconfig build requirements that get picked up
+# but are undesirable. One entry per line, no whitespace.
+Qt5Multimedia
+Qt5Qml
+Qt5Quick
+Qt5QuickTest
+Qt5QuickWidgets
