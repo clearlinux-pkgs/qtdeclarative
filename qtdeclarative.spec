@@ -4,7 +4,7 @@
 #
 Name     : qtdeclarative
 Version  : 5.10.1
-Release  : 3
+Release  : 4
 URL      : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtdeclarative-everywhere-src-5.10.1.tar.xz
 Source0  : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtdeclarative-everywhere-src-5.10.1.tar.xz
 Summary  : No detailed summary available
@@ -55,6 +55,14 @@ Provides: qtdeclarative-devel
 dev components for the qtdeclarative package.
 
 
+%package extras
+Summary: extras components for the qtdeclarative package.
+Group: Default
+
+%description extras
+extras components for the qtdeclarative package.
+
+
 %package lib
 Summary: lib components for the qtdeclarative package.
 Group: Libraries
@@ -84,15 +92,15 @@ make INSTALL_ROOT=%{buildroot} install
 
 %files bin
 %defattr(-,root,root,-)
+%exclude /usr/bin/qmlcachegen
+%exclude /usr/bin/qmleasing
+%exclude /usr/bin/qmlimportscanner
+%exclude /usr/bin/qmllint
+%exclude /usr/bin/qmlmin
+%exclude /usr/bin/qmlplugindump
+%exclude /usr/bin/qmltestrunner
 /usr/bin/qml
-/usr/bin/qmlcachegen
-/usr/bin/qmleasing
-/usr/bin/qmlimportscanner
-/usr/bin/qmllint
-/usr/bin/qmlmin
-/usr/bin/qmlplugindump
 /usr/bin/qmlscene
-/usr/bin/qmltestrunner
 
 %files dev
 %defattr(-,root,root,-)
@@ -735,6 +743,16 @@ make INSTALL_ROOT=%{buildroot} install
 /usr/lib64/qt5/mkspecs/modules/qt_lib_quickparticles_private.pri
 /usr/lib64/qt5/mkspecs/modules/qt_lib_quickwidgets.pri
 /usr/lib64/qt5/mkspecs/modules/qt_lib_quickwidgets_private.pri
+
+%files extras
+%defattr(-,root,root,-)
+/usr/bin/qmlcachegen
+/usr/bin/qmleasing
+/usr/bin/qmlimportscanner
+/usr/bin/qmllint
+/usr/bin/qmlmin
+/usr/bin/qmlplugindump
+/usr/bin/qmltestrunner
 
 %files lib
 %defattr(-,root,root,-)
