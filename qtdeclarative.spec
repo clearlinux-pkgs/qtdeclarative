@@ -4,7 +4,7 @@
 #
 Name     : qtdeclarative
 Version  : 5.10.1
-Release  : 4
+Release  : 5
 URL      : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtdeclarative-everywhere-src-5.10.1.tar.xz
 Source0  : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtdeclarative-everywhere-src-5.10.1.tar.xz
 Summary  : No detailed summary available
