@@ -4,7 +4,7 @@
 #
 Name     : qtdeclarative
 Version  : 5.10.1
-Release  : 5
+Release  : 6
 URL      : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtdeclarative-everywhere-src-5.10.1.tar.xz
 Source0  : http://download.qt.io/official_releases/qt/5.10/5.10.1/submodules/qtdeclarative-everywhere-src-5.10.1.tar.xz
 Summary  : No detailed summary available
@@ -26,6 +26,7 @@ BuildRequires : pkgconfig(Qt5Widgets)
 BuildRequires : pkgconfig(Qt5Xml)
 BuildRequires : pkgconfig(Qt5XmlPatterns)
 BuildRequires : qtbase-dev
+BuildRequires : qtbase-extras
 
 %description
 The Qt Quick module provides the basic elements to specify and implement your
