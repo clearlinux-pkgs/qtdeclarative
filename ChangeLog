@@ -1,13 +1,11 @@
-Qt 5.10.1 is a bug-fix release. It maintains both forward and backward
-compatibility (source and binary) with Qt 5.10.0.
-
-For more details, refer to the online documentation included in this
-distribution. The documentation is also available online:
+Qt 5.11 introduces many new features and improvements as well as bugfixes
+over the 5.10.x series. For more details, refer to the online documentation
+included in this distribution. The documentation is also available online:
 
 http://doc.qt.io/qt-5/index.html
 
-The Qt version 5.10 series is binary compatible with the 5.9.x series.
-Applications compiled for 5.9 will continue to run with 5.10.
+The Qt version 5.11 series is binary compatible with the 5.10.x series.
+Applications compiled for 5.10 will continue to run with 5.11.
 
 Some of the changes listed in this file include issue tracking numbers
 corresponding to tasks in the Qt Bug Tracker:
@@ -17,93 +15,153 @@ https://bugreports.qt.io/
 Each of these identifiers can be entered in the bug tracker to obtain more
 information about a particular change.
 
-This release contains all fixes included in the Qt 5.9.4 release.
-
 ****************************************************************************
 *                   Important Behavior Changes                             *
 ****************************************************************************
 
-* A type that can be used for object declaration in QML must start with an
-  uppercase letter (this has always been the convention).  Registration of
-  type names beginning with lowercase characters is now explicitly disallowed.
+* QML module plugins used to be limited to type registrations in the
+  primary module namespace in the virtual registerTypes() function.
+  Module authors worked around this limitation by placing necessary
+  internal type registrations into initializeEngine() that may cause
+  memory leaks. Therefore this restriction has been moved and types in
+  any (non-protected) namespaces can be registered in the
+  registerTypes() function.
+
+* In Qt 5.11 and newer versions, QML plugin modules are available with
+  the same minor version as the Qt release minor version number. For
+  example it's possible to import QtQuick.Window 2.11 or import
+  QtQuick.Layouts 1.11 even though there haven't been any API changes in
+  these modules for Qt 5.11, and the maximum possible import version
+  will automatically increment in future Qt versions. This is intended
+  to reduce confusion.
 
 ****************************************************************************
-*                            Qt 5.10.1 Changes                             *
+*                          Library                                         *
 ****************************************************************************
 
 QtQml
 -----
 
- - [QTBUG-65924] Fixed namespaced builds with -no-qml-debug
- - [QTBUG-65624] Fixed a crash with simple qsTr() bindings on var properties
- - [QTBUG-36773] A qmldir file can be provided via a custom schema
- - [QTBUG-64798] Property alias syntax error no longer causes a crash
- - [QTBUG-44153] Fixed a crash when a property alias points to a deleted object
- - [QTBUG-47321][QTBUG-51995][QTBUG-60344] We now avoid temporarily invalid
-   bindings (such as "Cannot read property of null") while unloading a Loader
- - [QTBUG-66067] Fixed a bug with negative-valued enum values in singletons
+ - Qt Qml uses a completely new compiler pipeline to compile Javascript (and QML) first
+   into bytecode and then JIT heavily used functions into assembly.
+  * Lots of cleanups and performance improvement to the way function calls and Javascript
+    scopes are being handled.
+  * Improved performance of JS property lookups.
+  * A new bytecode format that is very compact, saving memory in many cases.
+  * significantly faster bytecode interpreter than in earlier versions of Qt, in many cases
+    reaching almost the performance of the old JIT.
+  * A new JIT that works on top of the bytecode interpreter and only compiles hot functions
+    into assembly.
+  * Overall test results show almost a doubling of the JS performance on platforms where we
+    can't use a JIT (iOS and WinRT) compared to 5.10.
+  * With the new JIT, JS performance is usually around 10-40% faster than in older Qt versions
+    (depending on the use case).
 
- - QML profiler:
-   * [QTBUG-64674] Re-enabled QML memory profiling
-   * [QTBUG-65190] QML profiler tracks signals globally to prevent duplication
+ - The commercial only Qt Quick Compiler has been removed and replaced with a common solution
+   that works in both the open source and commercial version of Qt. No code changes are needed
+   for users of the old compiler.
 
- - Platform Specific Changes:
-   * Fixed compilation on QNX 7.0
-   * Enabled x86-64 JIT for QNX
-   * Enabled ARM64 JIT for QNX
+ - Fix qmlplugindump to work correctly with shadow builds.
+
+ - Fixed creation of QWidgets in QML.
+
+ - Various fixes to the debugging bridge.
+
+ - ListModel
+   * Support assignment of function declarations in ListElement, to allow for
+     models with actions.
 
 QtQuick
 -------
 
- - [QTBUG-50992] Fixed bugs related to deferred property bindings to avoid
-   item view delegate objects being destroyed during incubation or failing
-   to be created.  This fixes a lot of related bugs in QtQuick Controls 2.
- - [QTBUG-64548][QTBUG-62990][QTBUG-64367] Shortcut works in QQuickWidget
-   and QQuickRenderControl scenes
- - [QTBUG-65789] An Image with an SVG source uses the SVG renderer to do
-   animorphic scaling sharply
- - [QTBUG-64616] Fixed a bug with TextInput validators allowing invalid characters
- - [QTBUG-52944] When a Loader loads a Window, its transient parent will now
-   be set to the Loader's window (i.e. the window manager should place it on top).
- - Improved support for compressed textures
+ - QQuickWindow:
+   * [QTBUG-66329] We no longer synthesize redundant mouse events based on
+     touch events that come from a trackpad which can generate mouse events.
 
- - Software rendering:
-   * [QTBUG-62867] Fixed bad clipping caused by incorrect background coordinates
+ - Item:
+   * [QTBUG-20524] Added a containmentMask property.  This allows any
+     QObject which defines Q_INVOKABLE bool contains(const QPointF &point)
+     (including a Shape) to mask the area of an Item that will be
+     sensitive to mouse and touch events.
 
- - Item Views:
-   * [QTBUG-49218] Fixed an off-by-one layout error in GridView
-   * [QTBUG-64311] Fixed the removal transition animation when the last item
-     of a GridView or ListView is removed
+ - AnimatedSprite:
+   * [QTBUG-36341] AnimatedSprite's implicitWidth and implicitHeight are
+     now based on frameWidth and frameHeight, respectively. This means it
+     is no longer necessary to explicitly size AnimatedSprite.
 
- - Shapes:
-   * [QTBUG-64951] Some rendering performance improvements; added
-     qt.shape.time.sync logging category
-   * [QTBUG-65173] Shapes work correctly in static builds
-   * [QTBUG-63105] Invisible Shapes can be used with OpacityMask and other
-     Qt Graphical Effects
+ - Image:
+   * [QTBUG-66127] Support detection of suitable file extension.
+   * Add support for ktx files containing compressed textures.
+   * Add experimental automatic atlasing of ETC-compressed
+     textures (can be enabled with QSG_ENABLE_COMPRESSED_ATLAS=1).
+   * [QTBUG-67019] SVG images are now scaled up if the source size is larger
+     than the original size.
+   * [QTBUG-65789] SVG images are rendered with the correct aspect ratio
+     when width or height is set to zero.
+
+ - AnimatedImage:
+   * Added a speed property.  It's also OK to set it to 0 to pause
+     the animation.
+   * There is now an example to demonstrate usage of AnimatedImage.
+   * [QTBUG-62913] frameCount now has a NOTIFY signal to avoid binding warnings.
+
+ - Path:
+   * [QTBUG-62684] Add new PathAngleArc type.
+
+ - Shape:
+   * A containsMode property is added. If it is set to FillContains, then
+     Shape.contains() returns true only within the visible bounds, so its
+     Pointer Handlers also respond only within those bounds.
+
+ - ShapePath:
+   * Improved performance for complex paths.
+
+ - Text:
+   * [QTBUG-60328][QTBUG-67145] Fixed Text with ElideRight not being rendered
+     when reparented.
+   * [QTBUG-67007] Fixed non-integer scale factors with Text native rendering.
 
  - Pointer Handlers:
-   * [QTBUG-64692] Pointer Handlers receive events in the reverse of
-     declaration order, just as Items receive events in top-down Z order
-   * [QTBUG-65003] TapHandler consistently emits the canceled signal when
-     its passive or exclusive grab is taken over by another handler or item
-   * [QTBUG-64848] One pinch gesture cannot pinch two PinchHandlers at the
-     same time; to that end, we now test the target item's bounds correctly
-     when delivering native gesture events from trackpads
-   * A Pointer Handler with only a passive grab cannot prevent delivery to
-     other handlers by accepting all the points in the pointer event.
-     This enables Handlers to cooperatively modify behavior of existing controls.
-   * TapHandler.gesturePolicy is now DragThreshold by default (rather than
-     ReleaseWithinBounds), because this makes it easier for a TapHandler to
-     add additional onTapped behavior to existing controls.  The reason is
-     that the DragThreshold policy only requires a passive grab, not an exclusive
-     grab, so it doesn't interfere with the pre-existing event delivery.
-   * Fixed a bug with target item translation in DragHandler
-   * Added plugins.qmltyles so that syntax highlighting and completion work
-     in Qt Creator
-   * Various improvements in the tests/manual/pointer manual tests
+   * Added singleTapped and doubleTapped convenience signals to TapHandler.
+   * PointerHandlers implement QQmlParserStatus, so that subclasses can
+     have custom initialization in componentComplete() (just as Items can).
+   * [QTBUG-65651] Restore 5.9 behavior: if an Item has no PointerHandlers,
+     childMouseEventFilter() will not be called during post-delivery of
+     an unhandled event.
+   * TapHandler.gesturePolicy is now DragThreshold by default.
+   * DragHandler with target: null no longer crashes.
+   * [QTBUG-64852] DragHandler enforces its axis constraints even when
+     the parent coordinate system changes during the drag.  For example
+     the knob of a DragHandler-based slider inside a Flickable doesn't
+     come out of its "groove" if you manage to drag the slider and the
+     Flickable at the same time.
 
- - Platform Specific Changes:
-   * [QTBUG-61882][QTBUG-65519] Fixed rendering of emoji on macOS
-   * [QTBUG-65663] Fixed re-rendering of window when dragged to a screen
-     with a different devicePixelRatio on macOS
+  - Loader:
+    * [QTBUG-63729] Avoid evaluating bindings during destruction, to
+      avoid some spurious errors.
+    * [QTBUG-66822] When deactivating a loader, do not immediately clear
+      its context.
+
+ - Software renderer
+    * [QTBUG-63185][QTBUG-65975] QSGLayer::grab now works correctly.
+    * [QTBUG-66381] Fixed a crash when a Window has a QObject parent
+      (such as Loader).
+    * [QTBUG-65934] Fixed renering of rounded rectangles with floating point
+      pixel device ratios.
+
+  - Platform Specific Changes:
+    * [QTBUG-67460] Fixed a problem with jumping back to the highlight
+      while slowly scrolling a ListView on macOS.
+
+QtQuickTest
+-----------
+
+ - [QTBUG-50064] Added QUICK_TEST_MAIN_WITH_SETUP macro to allow executing
+   C++ before a QML test (such as registering context properties).
+
+QQuickWidget
+------------
+
+ - [QTBUG-45641] Tab presses are now passed on to the root item to be
+   handled first. When not handled by the root item, it will be handled
+   like a standard QWidget.
