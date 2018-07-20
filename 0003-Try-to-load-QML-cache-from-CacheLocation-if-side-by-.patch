@@ -1,0 +1,67 @@
+From e3949c2404d1c7a1131cade1488968dd9566dd46 Mon Sep 17 00:00:00 2001
+From: Thiago Macieira <thiago.macieira@intel.com>
+Date: Fri, 20 Jul 2018 09:22:47 -0700
+Subject: [PATCH 3/3] Try to load QML cache from CacheLocation if side-by-side
+ fails
+
+This could happen if the .qmlc file is stale or corrupt for some reason.
+In that case, we should try to load a cache file from the user's
+CacheLocation.
+
+Change-Id: Id2be776c7ae0467c9d9ffffd1543204272a531d1
+---
+ src/qml/compiler/qv4compileddata.cpp | 35 ++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
+
+diff --git a/src/qml/compiler/qv4compileddata.cpp b/src/qml/compiler/qv4compileddata.cpp
+index d8e318f92..8ee978429 100644
+--- a/src/qml/compiler/qv4compileddata.cpp
++++ b/src/qml/compiler/qv4compileddata.cpp
+@@ -338,26 +338,27 @@ bool CompilationUnit::loadFromDisk(const QUrl &url, const QDateTime &sourceTimeS
+     const QString sourcePath = QQmlFile::urlToLocalFileOrQrc(url);
+     QScopedPointer<CompilationUnitMapper> cacheFile(new CompilationUnitMapper());
+ 
+-    QString cachePath = sourcePath + QLatin1Char('c');
+-    if (!QFile::exists(cachePath))
+-        cachePath = localCacheFilePath(url);
+-
+-    CompiledData::Unit *mappedUnit = cacheFile->open(cachePath, sourceTimeStamp, errorString);
+-    if (!mappedUnit)
+-        return false;
+-
+-    const Unit * const oldDataPtr = (data && !(data->flags & QV4::CompiledData::Unit::StaticData)) ? data : nullptr;
+-    QScopedValueRollback<const Unit *> dataPtrChange(data, mappedUnit);
++    const QStringList cachePaths = { sourcePath + QLatin1Char('c'), localCacheFilePath(url) };
++    for (const QString &cachePath : cachePaths) {
++        CompiledData::Unit *mappedUnit = cacheFile->open(cachePath, sourceTimeStamp, errorString);
++        if (!mappedUnit)
++            continue;
++
++        const Unit * const oldDataPtr = (data && !(data->flags & QV4::CompiledData::Unit::StaticData)) ? data : nullptr;
++        QScopedValueRollback<const Unit *> dataPtrChange(data, mappedUnit);
++
++        if (data->sourceFileIndex != 0 && sourcePath != QQmlFile::urlToLocalFileOrQrc(stringAt(data->sourceFileIndex))) {
++            *errorString = QStringLiteral("QML source file has moved to a different location.");
++            continue;
++        }
+ 
+-    if (data->sourceFileIndex != 0 && sourcePath != QQmlFile::urlToLocalFileOrQrc(stringAt(data->sourceFileIndex))) {
+-        *errorString = QStringLiteral("QML source file has moved to a different location.");
+-        return false;
++        dataPtrChange.commit();
++        free(const_cast<Unit*>(oldDataPtr));
++        backingFile.reset(cacheFile.take());
++        return true;
+     }
+ 
+-    dataPtrChange.commit();
+-    free(const_cast<Unit*>(oldDataPtr));
+-    backingFile.reset(cacheFile.take());
+-    return true;
++    return false;
+ }
+ 
+ void CompilationUnit::linkBackendToEngine(ExecutionEngine *engine)
+-- 
+2.18.0
+

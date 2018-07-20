@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : qtdeclarative
 Version  : 5.11.1
-Release  : 9
+Release  : 10
 URL      : http://download.qt.io/official_releases/qt/5.11/5.11.1/submodules/qtdeclarative-everywhere-src-5.11.1.tar.xz
 Source0  : http://download.qt.io/official_releases/qt/5.11/5.11.1/submodules/qtdeclarative-everywhere-src-5.11.1.tar.xz
 Summary  : No detailed summary available
@@ -14,7 +14,8 @@ License  : BSD-2-Clause BSD-3-Clause-Clear GFDL-1.3 GPL-2.0 GPL-3.0 LGPL-3.0
 Requires: qtdeclarative-bin
 Requires: qtdeclarative-lib
 Requires: qtdeclarative-license
-BuildRequires : cmake
+BuildRequires : buildreq-cmake
+BuildRequires : buildreq-qmake
 BuildRequires : mesa-dev
 BuildRequires : pkgconfig(Qt5Concurrent)
 BuildRequires : pkgconfig(Qt5Core)
@@ -27,8 +28,9 @@ BuildRequires : pkgconfig(Qt5Test)
 BuildRequires : pkgconfig(Qt5Widgets)
 BuildRequires : pkgconfig(Qt5Xml)
 BuildRequires : pkgconfig(Qt5XmlPatterns)
-BuildRequires : qtbase-dev
-BuildRequires : qtbase-extras
+Patch1: 0001-QtQml-disable-use-of-disk-caches-when-running-as-roo.patch
+Patch2: 0002-Always-generate-QML-cache-files-in-the-cache-directo.patch
+Patch3: 0003-Try-to-load-QML-cache-from-CacheLocation-if-side-by-.patch
 
 %description
 The Qt Quick module provides the basic elements to specify and implement your
@@ -86,6 +88,9 @@ license components for the qtdeclarative package.
 
 %prep
 %setup -q -n qtdeclarative-everywhere-src-5.11.1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -97,14 +102,14 @@ test -r config.log && cat config.log
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1530981561
+export SOURCE_DATE_EPOCH=1532107686
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/qtdeclarative
-cp LICENSE.LGPL3 %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.LGPL3
 cp LICENSE.FDL %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.FDL
-cp LICENSE.GPL3-EXCEPT %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.GPL3-EXCEPT
 cp LICENSE.GPL2 %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.GPL2
 cp LICENSE.GPL3 %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.GPL3
+cp LICENSE.GPL3-EXCEPT %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.GPL3-EXCEPT
+cp LICENSE.LGPL3 %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.LGPL3
 cp src/3rdparty/masm/LICENSE %{buildroot}/usr/share/doc/qtdeclarative/src_3rdparty_masm_LICENSE
 cp tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/doc/qtdeclarative/tests_auto_qml_ecmascripttests_test262_LICENSE
 %make_install
