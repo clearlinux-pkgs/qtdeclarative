@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : qtdeclarative
 Version  : 5.11.1
-Release  : 10
+Release  : 11
 URL      : http://download.qt.io/official_releases/qt/5.11/5.11.1/submodules/qtdeclarative-everywhere-src-5.11.1.tar.xz
 Source0  : http://download.qt.io/official_releases/qt/5.11/5.11.1/submodules/qtdeclarative-everywhere-src-5.11.1.tar.xz
 Summary  : No detailed summary available
@@ -61,14 +61,6 @@ Provides: qtdeclarative-devel
 dev components for the qtdeclarative package.
 
 
-%package extras
-Summary: extras components for the qtdeclarative package.
-Group: Default
-
-%description extras
-extras components for the qtdeclarative package.
-
-
 %package lib
 Summary: lib components for the qtdeclarative package.
 Group: Libraries
@@ -102,7 +94,7 @@ test -r config.log && cat config.log
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1532107686
+export SOURCE_DATE_EPOCH=1535154101
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/qtdeclarative
 cp LICENSE.FDL %{buildroot}/usr/share/doc/qtdeclarative/LICENSE.FDL
@@ -119,19 +111,19 @@ cp tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/doc/qtd
 
 %files bin
 %defattr(-,root,root,-)
-%exclude /usr/bin/qmlcachegen
-%exclude /usr/bin/qmleasing
-%exclude /usr/bin/qmlimportscanner
-%exclude /usr/bin/qmllint
-%exclude /usr/bin/qmlmin
-%exclude /usr/bin/qmlplugindump
-%exclude /usr/bin/qmltestrunner
 /usr/bin/qml
 /usr/bin/qmlprofiler
 /usr/bin/qmlscene
 
 %files dev
 %defattr(-,root,root,-)
+/usr/bin/qmlcachegen
+/usr/bin/qmleasing
+/usr/bin/qmlimportscanner
+/usr/bin/qmllint
+/usr/bin/qmlmin
+/usr/bin/qmlplugindump
+/usr/bin/qmltestrunner
 /usr/include/qt5/QtPacketProtocol/5.11.1/QtPacketProtocol/private/qpacket_p.h
 /usr/include/qt5/QtPacketProtocol/5.11.1/QtPacketProtocol/private/qpacketprotocol_p.h
 /usr/include/qt5/QtPacketProtocol/5.11.1/QtPacketProtocol/private/qversionedpacket_p.h
@@ -757,7 +749,6 @@ cp tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/doc/qtd
 /usr/include/qt5/QtQuickWidgets/qquickwidget.h
 /usr/include/qt5/QtQuickWidgets/qtquickwidgetsglobal.h
 /usr/include/qt5/QtQuickWidgets/qtquickwidgetsversion.h
-/usr/lib64/*.a
 /usr/lib64/cmake/Qt5Qml/Qt5QmlConfig.cmake
 /usr/lib64/cmake/Qt5Qml/Qt5QmlConfigExtras.cmake
 /usr/lib64/cmake/Qt5Qml/Qt5QmlConfigVersion.cmake
@@ -778,10 +769,13 @@ cp tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/doc/qtd
 /usr/lib64/cmake/Qt5QuickTest/Qt5QuickTestConfigVersion.cmake
 /usr/lib64/cmake/Qt5QuickWidgets/Qt5QuickWidgetsConfig.cmake
 /usr/lib64/cmake/Qt5QuickWidgets/Qt5QuickWidgetsConfigVersion.cmake
+/usr/lib64/libQt5PacketProtocol.a
 /usr/lib64/libQt5PacketProtocol.prl
 /usr/lib64/libQt5Qml.prl
 /usr/lib64/libQt5Qml.so
+/usr/lib64/libQt5QmlDebug.a
 /usr/lib64/libQt5QmlDebug.prl
+/usr/lib64/libQt5QmlDevTools.a
 /usr/lib64/libQt5QmlDevTools.prl
 /usr/lib64/libQt5Quick.prl
 /usr/lib64/libQt5Quick.so
@@ -809,16 +803,6 @@ cp tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/doc/qtd
 /usr/lib64/qt5/mkspecs/modules/qt_lib_quickparticles_private.pri
 /usr/lib64/qt5/mkspecs/modules/qt_lib_quickwidgets.pri
 /usr/lib64/qt5/mkspecs/modules/qt_lib_quickwidgets_private.pri
-
-%files extras
-%defattr(-,root,root,-)
-/usr/bin/qmlcachegen
-/usr/bin/qmleasing
-/usr/bin/qmlimportscanner
-/usr/bin/qmllint
-/usr/bin/qmlmin
-/usr/bin/qmlplugindump
-/usr/bin/qmltestrunner
 
 %files lib
 %defattr(-,root,root,-)
