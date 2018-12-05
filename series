@@ -1,3 +1,1 @@
 0001-QtQml-disable-use-of-disk-caches-when-running-as-roo.patch
-0002-Always-generate-QML-cache-files-in-the-cache-directo.patch
-0003-Try-to-load-QML-cache-from-CacheLocation-if-side-by-.patch
