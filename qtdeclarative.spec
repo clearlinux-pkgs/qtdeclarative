@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : qtdeclarative
 Version  : 5.12.1
-Release  : 15
+Release  : 16
 URL      : https://download.qt.io/official_releases/qt/5.12/5.12.1/submodules/qtdeclarative-everywhere-src-5.12.1.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/5.12/5.12.1/submodules/qtdeclarative-everywhere-src-5.12.1.tar.xz
 Summary  : No detailed summary available
