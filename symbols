@@ -4,6 +4,7 @@ libQt5Qml.so.5:Qt_5.1
 libQt5Qml.so.5:Qt_5.10
 libQt5Qml.so.5:Qt_5.11
 libQt5Qml.so.5:Qt_5.12
+libQt5Qml.so.5:Qt_5.12.2_PRIVATE_API
 libQt5Qml.so.5:Qt_5.2
 libQt5Qml.so.5:Qt_5.3
 libQt5Qml.so.5:Qt_5.4
@@ -12,7 +13,6 @@ libQt5Qml.so.5:Qt_5.6
 libQt5Qml.so.5:Qt_5.7
 libQt5Qml.so.5:Qt_5.8
 libQt5Qml.so.5:Qt_5.9
-libQt5Qml.so.5:Qt_5_PRIVATE_API
 libQt5Qml.so.5:_Z10qmlContextPK7QObject
 libQt5Qml.so.5:_Z16qmlProtectModulePKci
 libQt5Qml.so.5:_Z17qmlRegisterModulePKcii
@@ -3020,6 +3020,7 @@ libQt5Quick.so.5:Qt_5.1
 libQt5Quick.so.5:Qt_5.10
 libQt5Quick.so.5:Qt_5.11
 libQt5Quick.so.5:Qt_5.12
+libQt5Quick.so.5:Qt_5.12.2_PRIVATE_API
 libQt5Quick.so.5:Qt_5.2
 libQt5Quick.so.5:Qt_5.3
 libQt5Quick.so.5:Qt_5.4
@@ -3028,7 +3029,6 @@ libQt5Quick.so.5:Qt_5.6
 libQt5Quick.so.5:Qt_5.7
 libQt5Quick.so.5:Qt_5.8
 libQt5Quick.so.5:Qt_5.9
-libQt5Quick.so.5:Qt_5_PRIVATE_API
 libQt5Quick.so.5:_Z20qt_color_from_stringRKN3QV45ValueE
 libQt5Quick.so.5:_Z23qsgnode_set_descriptionP7QSGNodeRK7QString
 libQt5Quick.so.5:_Z33qt_quick_shortcut_context_matcherv
@@ -6067,8 +6067,8 @@ libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCache7releaseERK7QVectorIjE
 libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCache8populateERK7QVectorIjE
 libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCache9emptyDataEj
 libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCache9glyphDataEj
-libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheC1EP14QOpenGLContextRK8QRawFont
-libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheC2EP14QOpenGLContextRK8QRawFont
+libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheC1ERK8QRawFont
+libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheC2ERK8QRawFont
 libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheD0Ev
 libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheD1Ev
 libQt5Quick.so.5:_ZN26QSGDistanceFieldGlyphCacheD2Ev
@@ -7515,7 +7515,7 @@ libQt5Quick.so.5:_Zls6QDebugPK7QSGNode
 libQt5Quick.so.5:_Zls6QDebugRKN19QSGShaderEffectNode12VariableDataE
 libQt5Quick.so.5:_Zls6QDebugRKN31QSGGuiThreadShaderEffectManager10ShaderInfo14InputParameterE
 libQt5Quick.so.5:_Zls6QDebugRKN31QSGGuiThreadShaderEffectManager10ShaderInfo8VariableE
-libQt5QuickParticles.so.5:Qt_5_PRIVATE_API
+libQt5QuickParticles.so.5:Qt_5.12.2_PRIVATE_API
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData10extendLifeEfP20QQuickParticleSystem
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData5cloneERKS_
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData7v4ValueEP20QQuickParticleSystem
@@ -7654,7 +7654,7 @@ libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitter17componentCompleteEv
 libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitterD0Ev
 libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitterD1Ev
 libQt5QuickParticles.so.5:_ZThn16_N22QQuickParticleAffector17componentCompleteEv
-libQt5QuickShapes.so.5:Qt_5_PRIVATE_API
+libQt5QuickShapes.so.5:Qt_5.12.2_PRIVATE_API
 libQt5QuickShapes.so.5:_ZN11QQuickShape10classBeginEv
 libQt5QuickShapes.so.5:_ZN11QQuickShape10itemChangeEN10QQuickItem10ItemChangeERKNS0_14ItemChangeDataE
 libQt5QuickShapes.so.5:_ZN11QQuickShape11qt_metacallEN11QMetaObject4CallEiPPv
@@ -7802,6 +7802,7 @@ libQt5QuickTest.so.5:Qt_5.1
 libQt5QuickTest.so.5:Qt_5.10
 libQt5QuickTest.so.5:Qt_5.11
 libQt5QuickTest.so.5:Qt_5.12
+libQt5QuickTest.so.5:Qt_5.12.2_PRIVATE_API
 libQt5QuickTest.so.5:Qt_5.2
 libQt5QuickTest.so.5:Qt_5.3
 libQt5QuickTest.so.5:Qt_5.4
@@ -7810,7 +7811,6 @@ libQt5QuickTest.so.5:Qt_5.6
 libQt5QuickTest.so.5:Qt_5.7
 libQt5QuickTest.so.5:Qt_5.8
 libQt5QuickTest.so.5:Qt_5.9
-libQt5QuickTest.so.5:Qt_5_PRIVATE_API
 libQt5QuickTest.so.5:_Z15quick_test_mainiPPcPKcS2_
 libQt5QuickTest.so.5:_Z26quick_test_main_with_setupiPPcPKcS2_P7QObject
 libQt5QuickTest.so.5:_ZN14QuickTestEvent10keyReleaseEiii
@@ -7922,6 +7922,7 @@ libQt5QuickWidgets.so.5:Qt_5.1
 libQt5QuickWidgets.so.5:Qt_5.10
 libQt5QuickWidgets.so.5:Qt_5.11
 libQt5QuickWidgets.so.5:Qt_5.12
+libQt5QuickWidgets.so.5:Qt_5.12.2_PRIVATE_API
 libQt5QuickWidgets.so.5:Qt_5.2
 libQt5QuickWidgets.so.5:Qt_5.3
 libQt5QuickWidgets.so.5:Qt_5.4
@@ -7930,7 +7931,6 @@ libQt5QuickWidgets.so.5:Qt_5.6
 libQt5QuickWidgets.so.5:Qt_5.7
 libQt5QuickWidgets.so.5:Qt_5.8
 libQt5QuickWidgets.so.5:Qt_5.9
-libQt5QuickWidgets.so.5:Qt_5_PRIVATE_API
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget10paintEventEP11QPaintEvent
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget10setContentERK4QUrlP13QQmlComponentP7QObject
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget10timerEventEP11QTimerEvent
