@@ -4,7 +4,7 @@ libQt5Qml.so.5:Qt_5.1
 libQt5Qml.so.5:Qt_5.10
 libQt5Qml.so.5:Qt_5.11
 libQt5Qml.so.5:Qt_5.12
-libQt5Qml.so.5:Qt_5.12.3_PRIVATE_API
+libQt5Qml.so.5:Qt_5.12.4_PRIVATE_API
 libQt5Qml.so.5:Qt_5.2
 libQt5Qml.so.5:Qt_5.3
 libQt5Qml.so.5:Qt_5.4
@@ -193,6 +193,7 @@ libQt5Qml.so.5:_ZN12QQmlMetaType17qmlSingletonTypesEv
 libQt5Qml.so.5:_ZN12QQmlMetaType20typeRegistrationLockEv
 libQt5Qml.so.5:_ZN12QQmlMetaType21customStringConverterEi
 libQt5Qml.so.5:_ZN12QQmlMetaType21registerCompositeTypeERKN11QQmlPrivate21RegisterCompositeTypeE
+libQt5Qml.so.5:_ZN12QQmlMetaType22attachedPropertiesFuncEP17QQmlEnginePrivatePK11QMetaObject
 libQt5Qml.so.5:_ZN12QQmlMetaType24attachedPropertiesFuncIdEP17QQmlEnginePrivatePK11QMetaObject
 libQt5Qml.so.5:_ZN12QQmlMetaType24freeUnusedTypesAndCachesEv
 libQt5Qml.so.5:_ZN12QQmlMetaType25findCachedCompilationUnitERK4QUrlPNS_21CachedUnitLookupErrorE
@@ -1523,6 +1524,7 @@ libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper10virtualPutEPNS_7ManagedENS_11PropertyKe
 libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper16virtualIsEqualToEPNS_7ManagedES2_
 libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper17virtualInstanceOfEPKNS_6ObjectERKNS_5ValueE
 libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper21virtualGetOwnPropertyEPKNS_7ManagedENS_11PropertyKeyEPNS_8PropertyE
+libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper23lookupSingletonPropertyEPNS_6LookupEPNS_15ExecutionEngineERKNS_5ValueE
 libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper26virtualResolveLookupGetterEPKNS_6ObjectEPNS_15ExecutionEngineEPNS_6LookupE
 libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper26virtualResolveLookupSetterEPNS_6ObjectEPNS_15ExecutionEngineEPNS_6LookupERKNS_5ValueE
 libQt5Qml.so.5:_ZN3QV415QQmlTypeWrapper6createEPNS_15ExecutionEngineEP7QObjectRK14QQmlRefPointerI17QQmlTypeNameCacheEPK13QQmlImportRefNS_4Heap15QQmlTypeWrapper12TypeNameModeE
@@ -2030,7 +2032,9 @@ libQt5Qml.so.5:_ZN5QtQml10qmlWarningEPK7QObject
 libQt5Qml.so.5:_ZN5QtQml10qmlWarningEPK7QObjectRK5QListI9QQmlErrorE
 libQt5Qml.so.5:_ZN5QtQml10qmlWarningEPK7QObjectRK9QQmlError
 libQt5Qml.so.5:_ZN5QtQml18qmlExecuteDeferredEP7QObject
+libQt5Qml.so.5:_ZN5QtQml27qmlAttachedPropertiesObjectEP7QObjectPFS1_S1_Eb
 libQt5Qml.so.5:_ZN5QtQml27qmlAttachedPropertiesObjectEPiPK7QObjectPK11QMetaObjectb
+libQt5Qml.so.5:_ZN5QtQml29qmlAttachedPropertiesFunctionEP7QObjectPK11QMetaObject
 libQt5Qml.so.5:_ZN5QtQml31qmlAttachedPropertiesObjectByIdEiPK7QObjectb
 libQt5Qml.so.5:_ZN5QtQml7qmlInfoEPK7QObject
 libQt5Qml.so.5:_ZN5QtQml7qmlInfoEPK7QObjectRK5QListI9QQmlErrorE
@@ -3022,7 +3026,7 @@ libQt5Quick.so.5:Qt_5.1
 libQt5Quick.so.5:Qt_5.10
 libQt5Quick.so.5:Qt_5.11
 libQt5Quick.so.5:Qt_5.12
-libQt5Quick.so.5:Qt_5.12.3_PRIVATE_API
+libQt5Quick.so.5:Qt_5.12.4_PRIVATE_API
 libQt5Quick.so.5:Qt_5.2
 libQt5Quick.so.5:Qt_5.3
 libQt5Quick.so.5:Qt_5.4
@@ -3969,6 +3973,7 @@ libQt5Quick.so.5:_ZN14QQuickTextEdit13focusOutEventEP11QFocusEvent
 libQt5Quick.so.5:_ZN14QQuickTextEdit13isRightToLeftEii
 libQt5Quick.so.5:_ZN14QQuickTextEdit13keyPressEventEP9QKeyEvent
 libQt5Quick.so.5:_ZN14QQuickTextEdit13linkActivatedERK7QString
+libQt5Quick.so.5:_ZN14QQuickTextEdit13q_linkHoveredERK7QString
 libQt5Quick.so.5:_ZN14QQuickTextEdit13q_textChangedEv
 libQt5Quick.so.5:_ZN14QQuickTextEdit13setRenderTypeENS_10RenderTypeE
 libQt5Quick.so.5:_ZN14QQuickTextEdit13setTextFormatENS_10TextFormatE
@@ -5123,10 +5128,10 @@ libQt5Quick.so.5:_ZN19QQuickWindowPrivate17deliverTouchEventEP23QQuickPointerTou
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate17dragOverThresholdE9QVector2D
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate17dragOverThresholdEdN2Qt4AxisEP11QMouseEventi
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate18compressTouchEventEP11QTouchEvent
+libQt5Quick.so.5:_ZN19QQuickWindowPrivate19checkIfDoubleTappedEm6QPoint
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate19deliverPointerEventEP18QQuickPointerEvent
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate19deliverTouchAsMouseEP10QQuickItemP18QQuickPointerEvent
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate19translateTouchEventEP11QTouchEvent
-libQt5Quick.so.5:_ZN19QQuickWindowPrivate20checkIfDoubleClickedEm
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate22cleanupNodesOnShutdownEP10QQuickItem
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate22cleanupNodesOnShutdownEv
 libQt5Quick.so.5:_ZN19QQuickWindowPrivate22sendFilteredMouseEventEP6QEventP10QQuickItemS3_
@@ -5851,6 +5856,7 @@ libQt5Quick.so.5:_ZN24QQuickAccessibleAttached20defaultButtonChangedEb
 libQt5Quick.so.5:_ZN24QQuickAccessibleAttached21qmlAttachedPropertiesEP7QObject
 libQt5Quick.so.5:_ZN24QQuickAccessibleAttached21selectableTextChangedEb
 libQt5Quick.so.5:_ZN24QQuickAccessibleAttached22checkStateMixedChangedEb
+libQt5Quick.so.5:_ZN24QQuickAccessibleAttached7setRoleEN11QAccessible4RoleE
 libQt5Quick.so.5:_ZN24QQuickAccessibleAttached8doActionERK7QString
 libQt5Quick.so.5:_ZN24QQuickAccessibleAttachedC1EP7QObject
 libQt5Quick.so.5:_ZN24QQuickAccessibleAttachedC2EP7QObject
@@ -7501,9 +7507,9 @@ libQt5Quick.so.5:_ZThn32_N24QQuickShaderEffectSourceD0Ev
 libQt5Quick.so.5:_ZThn32_N24QQuickShaderEffectSourceD1Ev
 libQt5Quick.so.5:_ZThn40_N19QQuickWindowQmlImpl10classBeginEv
 libQt5Quick.so.5:_ZThn40_N19QQuickWindowQmlImpl17componentCompleteEv
-libQt5Quick.so.5:_ZThn688_N17QQuickViewPrivate19itemGeometryChangedEP10QQuickItem20QQuickGeometryChangeRK6QRectF
-libQt5Quick.so.5:_ZThn688_N17QQuickViewPrivateD0Ev
-libQt5Quick.so.5:_ZThn688_N17QQuickViewPrivateD1Ev
+libQt5Quick.so.5:_ZThn696_N17QQuickViewPrivate19itemGeometryChangedEP10QQuickItem20QQuickGeometryChangeRK6QRectF
+libQt5Quick.so.5:_ZThn696_N17QQuickViewPrivateD0Ev
+libQt5Quick.so.5:_ZThn696_N17QQuickViewPrivateD1Ev
 libQt5Quick.so.5:_Zls6QDebugP10QQuickItem
 libQt5Quick.so.5:_Zls6QDebugPK11QSGRootNode
 libQt5Quick.so.5:_Zls6QDebugPK12QQuickWindow
@@ -7517,7 +7523,7 @@ libQt5Quick.so.5:_Zls6QDebugPK7QSGNode
 libQt5Quick.so.5:_Zls6QDebugRKN19QSGShaderEffectNode12VariableDataE
 libQt5Quick.so.5:_Zls6QDebugRKN31QSGGuiThreadShaderEffectManager10ShaderInfo14InputParameterE
 libQt5Quick.so.5:_Zls6QDebugRKN31QSGGuiThreadShaderEffectManager10ShaderInfo8VariableE
-libQt5QuickParticles.so.5:Qt_5.12.3_PRIVATE_API
+libQt5QuickParticles.so.5:Qt_5.12.4_PRIVATE_API
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData10extendLifeEfP20QQuickParticleSystem
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData5cloneERKS_
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData7v4ValueEP20QQuickParticleSystem
@@ -7656,7 +7662,7 @@ libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitter17componentCompleteEv
 libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitterD0Ev
 libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitterD1Ev
 libQt5QuickParticles.so.5:_ZThn16_N22QQuickParticleAffector17componentCompleteEv
-libQt5QuickShapes.so.5:Qt_5.12.3_PRIVATE_API
+libQt5QuickShapes.so.5:Qt_5.12.4_PRIVATE_API
 libQt5QuickShapes.so.5:_ZN11QQuickShape10classBeginEv
 libQt5QuickShapes.so.5:_ZN11QQuickShape10itemChangeEN10QQuickItem10ItemChangeERKNS0_14ItemChangeDataE
 libQt5QuickShapes.so.5:_ZN11QQuickShape11qt_metacallEN11QMetaObject4CallEiPPv
@@ -7804,7 +7810,7 @@ libQt5QuickTest.so.5:Qt_5.1
 libQt5QuickTest.so.5:Qt_5.10
 libQt5QuickTest.so.5:Qt_5.11
 libQt5QuickTest.so.5:Qt_5.12
-libQt5QuickTest.so.5:Qt_5.12.3_PRIVATE_API
+libQt5QuickTest.so.5:Qt_5.12.4_PRIVATE_API
 libQt5QuickTest.so.5:Qt_5.2
 libQt5QuickTest.so.5:Qt_5.3
 libQt5QuickTest.so.5:Qt_5.4
@@ -7924,7 +7930,7 @@ libQt5QuickWidgets.so.5:Qt_5.1
 libQt5QuickWidgets.so.5:Qt_5.10
 libQt5QuickWidgets.so.5:Qt_5.11
 libQt5QuickWidgets.so.5:Qt_5.12
-libQt5QuickWidgets.so.5:Qt_5.12.3_PRIVATE_API
+libQt5QuickWidgets.so.5:Qt_5.12.4_PRIVATE_API
 libQt5QuickWidgets.so.5:Qt_5.2
 libQt5QuickWidgets.so.5:Qt_5.3
 libQt5QuickWidgets.so.5:Qt_5.4
