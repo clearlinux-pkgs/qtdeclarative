@@ -1,1 +1,4 @@
 0001-QtQml-disable-use-of-disk-caches-when-running-as-roo.patch
+0002-Fix-build-of-Yarr.h-with-GCC-11.patch
+0003-Add-missing-limits-include-to-fix-build-with-GCC-11.patch
+0004-Build-fixes-for-GCC-11.patch

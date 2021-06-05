@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Fri, 4 Jun 2021 19:49:39 -0700
+Subject: [PATCH] Fix build of Yarr.h with GCC 11
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fixes:
+
+In file included from jsruntime/qv4regexp_p.h:62,
+                 from jsruntime/qv4regexp.cpp:40:
+../3rdparty/masm/yarr/Yarr.h:46:44: error: ‘numeric_limits’ is not a member of ‘std’
+   46 | static const unsigned offsetNoMatch = std::numeric_limits<unsigned>::max();
+      |                                            ^~~~~~~~~~~~~~
+../3rdparty/masm/yarr/Yarr.h:46:59: error: expected primary-expression before ‘unsigned’
+   46 | static const unsigned offsetNoMatch = std::numeric_limits<unsigned>::max();
+      |                                                           ^~~~~~~~
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ src/3rdparty/masm/yarr/Yarr.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/3rdparty/masm/yarr/Yarr.h b/src/3rdparty/masm/yarr/Yarr.h
+index ccf78f98..2955ea7e 100644
+--- a/src/3rdparty/masm/yarr/Yarr.h
++++ b/src/3rdparty/masm/yarr/Yarr.h
+@@ -28,6 +28,7 @@
+ #pragma once
+ 
+ #include <limits.h>
++#include <limits>
+ #include "YarrErrorCode.h"
+ 
+ namespace JSC { namespace Yarr {

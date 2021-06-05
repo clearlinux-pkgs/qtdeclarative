@@ -1,4 +1,4 @@
-From 0d6d43407552b66dc16cf6414564822b40e105d5 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Thiago Macieira <thiago.macieira@intel.com>
 Date: Thu, 19 Jul 2018 14:53:34 -0700
 Subject: [PATCH] QtQml: disable use of disk caches when running as root
@@ -18,10 +18,10 @@ Change-Id: Id2be776c7ae0467c9d9ffffd1542e3baadb81867
  1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/src/qml/qml/qqmltypeloader.cpp b/src/qml/qml/qqmltypeloader.cpp
-index c6c3ee5523..a29f0bb974 100644
+index 1d66e756..9acc74f3 100644
 --- a/src/qml/qml/qqmltypeloader.cpp
 +++ b/src/qml/qml/qqmltypeloader.cpp
-@@ -57,6 +57,7 @@
+@@ -60,6 +60,7 @@
  #include <QtCore/qthread.h>
  
  #include <functional>
@@ -29,7 +29,7 @@ index c6c3ee5523..a29f0bb974 100644
  
  // #define DATABLOB_DEBUG
  #ifdef DATABLOB_DEBUG
-@@ -65,11 +66,21 @@
+@@ -68,11 +69,21 @@
  #define ASSERT_LOADTHREAD()
  #endif
  
@@ -52,6 +52,3 @@ index c6c3ee5523..a29f0bb974 100644
  namespace {
  
      template<typename LockType>
--- 
-2.24.0
-

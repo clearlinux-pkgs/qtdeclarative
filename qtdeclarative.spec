@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : qtdeclarative
 Version  : 5.15.0
-Release  : 25
+Release  : 26
 URL      : https://download.qt.io/official_releases/qt/5.15/5.15.0/submodules/qtdeclarative-everywhere-src-5.15.0.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/5.15/5.15.0/submodules/qtdeclarative-everywhere-src-5.15.0.tar.xz
 Summary  : No detailed summary available
@@ -28,6 +28,9 @@ BuildRequires : pkgconfig(Qt5Svg)
 BuildRequires : pkgconfig(Qt5Test)
 BuildRequires : pkgconfig(Qt5Widgets)
 Patch1: 0001-QtQml-disable-use-of-disk-caches-when-running-as-roo.patch
+Patch2: 0002-Fix-build-of-Yarr.h-with-GCC-11.patch
+Patch3: 0003-Add-missing-limits-include-to-fix-build-with-GCC-11.patch
+Patch4: 0004-Build-fixes-for-GCC-11.patch
 
 %description
 The Qt Quick module provides the basic elements to specify and implement your
@@ -98,6 +101,9 @@ staticdev components for the qtdeclarative package.
 %setup -q -n qtdeclarative-everywhere-src-5.15.0
 cd %{_builddir}/qtdeclarative-everywhere-src-5.15.0
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
@@ -110,7 +116,7 @@ test -r config.log && cat config.log
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1589476383
+export SOURCE_DATE_EPOCH=1622862359
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qtdeclarative
 cp %{_builddir}/qtdeclarative-everywhere-src-5.15.0/LICENSE.FDL %{buildroot}/usr/share/package-licenses/qtdeclarative/61907422fefcd2313a9b570c31d203a6dbebd333
