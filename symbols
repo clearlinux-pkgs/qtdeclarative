@@ -7,7 +7,7 @@ libQt5Qml.so.5:Qt_5.12
 libQt5Qml.so.5:Qt_5.13
 libQt5Qml.so.5:Qt_5.14
 libQt5Qml.so.5:Qt_5.15
-libQt5Qml.so.5:Qt_5.15.0_PRIVATE_API
+libQt5Qml.so.5:Qt_5.15.2_PRIVATE_API
 libQt5Qml.so.5:Qt_5.2
 libQt5Qml.so.5:Qt_5.3
 libQt5Qml.so.5:Qt_5.4
@@ -193,7 +193,7 @@ libQt5Qml.so.5:_ZN12QQmlMetaType12registerTypeERKN11QQmlPrivate12RegisterTypeE
 libQt5Qml.so.5:_ZN12QQmlMetaType12typeCategoryEi
 libQt5Qml.so.5:_ZN12QQmlMetaType13defaultMethodEP7QObject
 libQt5Qml.so.5:_ZN12QQmlMetaType13defaultMethodEPK11QMetaObject
-libQt5Qml.so.5:_ZN12QQmlMetaType13propertyCacheEPK11QMetaObjecti
+libQt5Qml.so.5:_ZN12QQmlMetaType13propertyCacheEPK11QMetaObjectib
 libQt5Qml.so.5:_ZN12QQmlMetaType13propertyCacheERK8QQmlTypei
 libQt5Qml.so.5:_ZN12QQmlMetaType13protectModuleERK7QStringi
 libQt5Qml.so.5:_ZN12QQmlMetaType14isLockedModuleERK7QStringi
@@ -2945,7 +2945,7 @@ libQt5QmlModels.so.5:Qt_5.12
 libQt5QmlModels.so.5:Qt_5.13
 libQt5QmlModels.so.5:Qt_5.14
 libQt5QmlModels.so.5:Qt_5.15
-libQt5QmlModels.so.5:Qt_5.15.0_PRIVATE_API
+libQt5QmlModels.so.5:Qt_5.15.2_PRIVATE_API
 libQt5QmlModels.so.5:Qt_5.2
 libQt5QmlModels.so.5:Qt_5.3
 libQt5QmlModels.so.5:Qt_5.4
@@ -3256,7 +3256,7 @@ libQt5QmlWorkerScript.so.5:Qt_5.12
 libQt5QmlWorkerScript.so.5:Qt_5.13
 libQt5QmlWorkerScript.so.5:Qt_5.14
 libQt5QmlWorkerScript.so.5:Qt_5.15
-libQt5QmlWorkerScript.so.5:Qt_5.15.0_PRIVATE_API
+libQt5QmlWorkerScript.so.5:Qt_5.15.2_PRIVATE_API
 libQt5QmlWorkerScript.so.5:Qt_5.2
 libQt5QmlWorkerScript.so.5:Qt_5.3
 libQt5QmlWorkerScript.so.5:Qt_5.4
@@ -3276,7 +3276,7 @@ libQt5Quick.so.5:Qt_5.12
 libQt5Quick.so.5:Qt_5.13
 libQt5Quick.so.5:Qt_5.14
 libQt5Quick.so.5:Qt_5.15
-libQt5Quick.so.5:Qt_5.15.0_PRIVATE_API
+libQt5Quick.so.5:Qt_5.15.2_PRIVATE_API
 libQt5Quick.so.5:Qt_5.2
 libQt5Quick.so.5:Qt_5.3
 libQt5Quick.so.5:Qt_5.4
@@ -5120,6 +5120,7 @@ libQt5Quick.so.5:_ZN16QSGNinePatchNode15rebuildGeometryEP10QSGTextureP11QSGGeome
 libQt5Quick.so.5:_ZN16QSGNodeVisitorEx13visitChildrenEP7QSGNode
 libQt5Quick.so.5:_ZN16QSGRenderContext10initializeEPKNS_10InitParamsE
 libQt5Quick.so.5:_ZN16QSGRenderContext10invalidateEv
+libQt5Quick.so.5:_ZN16QSGRenderContext10preprocessEv
 libQt5Quick.so.5:_ZN16QSGRenderContext11initializedEv
 libQt5Quick.so.5:_ZN16QSGRenderContext11invalidatedEv
 libQt5Quick.so.5:_ZN16QSGRenderContext11prepareSyncEdP17QRhiCommandBuffer
@@ -5717,6 +5718,7 @@ libQt5Quick.so.5:_ZN19QQuickWindowQmlImpl17componentCompleteEv
 libQt5Quick.so.5:_ZN19QQuickWindowQmlImpl17visibilityChangedEN7QWindow10VisibilityE
 libQt5Quick.so.5:_ZN19QQuickWindowQmlImpl19setWindowVisibilityEv
 libQt5Quick.so.5:_ZN19QQuickWindowQmlImpl21qmlAttachedPropertiesEP7QObject
+libQt5Quick.so.5:_ZN19QQuickWindowQmlImpl22transientParentVisibleEv
 libQt5Quick.so.5:_ZN19QQuickWindowQmlImpl9setScreenEP7QObject
 libQt5Quick.so.5:_ZN19QQuickWindowQmlImplC1EP7QWindow
 libQt5Quick.so.5:_ZN19QQuickWindowQmlImplC2EP7QWindow
@@ -6125,6 +6127,7 @@ libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob11qt_metacastEPKc
 libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob11updateStateEN21QAbstractAnimationJob5StateES1_
 libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob13windowChangedEP12QQuickWindow
 libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob14readyToAnimateEv
+libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob15updateLoopCountEi
 libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob17updateCurrentTimeEi
 libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob20findAnimationContextEP23QQuickAbstractAnimation
 libQt5Quick.so.5:_ZN22QQuickAnimatorProxyJob21sceneGraphInitializedEv
@@ -6260,6 +6263,7 @@ libQt5Quick.so.5:_ZN22QQuickTableViewPrivate15updateTableSizeEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate16calculateTopLeftER6QPointR7QPointF
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate16initItemCallbackEiP7QObject
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate16nextEdgeToUnloadE6QRectF
+libQt5Quick.so.5:_ZN22QQuickTableViewPrivate16syncViewportRectEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate17beginRebuildTableEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate17createFxTableItemERK6QPointN13QQmlIncubator14IncubationModeE
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate17layoutTopLeftItemEv
@@ -6294,12 +6298,13 @@ libQt5Quick.so.5:_ZN22QQuickTableViewPrivate20scheduleRebuildTableE6QFlagsINS_13
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate20updateTableRecursiveEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate21_q_componentFinalizedEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate21layoutChangedCallbackERK5QListI21QPersistentModelIndexEN18QAbstractItemModel16LayoutChangeHintE
-libQt5Quick.so.5:_ZN22QQuickTableViewPrivate21updateAverageEdgeSizeEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate22columnsRemovedCallbackERK11QModelIndexii
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate22moveToNextRebuildStateEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate22syncWithPendingChangesEv
+libQt5Quick.so.5:_ZN22QQuickTableViewPrivate22updateAverageRowHeightEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate23columnsInsertedCallbackERK11QModelIndexii
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate24syncViewportPosRecursiveEv
+libQt5Quick.so.5:_ZN22QQuickTableViewPrivate24updateAverageColumnWidthEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate25checkForVisibilityChangesEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate25loadAndUnloadVisibleEdgesEv
 libQt5Quick.so.5:_ZN22QQuickTableViewPrivate26scheduleRebuildIfFastFlickEv
@@ -6561,6 +6566,7 @@ libQt5Quick.so.5:_ZN23QSGDefaultNinePatchNodeD1Ev
 libQt5Quick.so.5:_ZN23QSGDefaultNinePatchNodeD2Ev
 libQt5Quick.so.5:_ZN23QSGDefaultRenderContext10initializeEPKN16QSGRenderContext10InitParamsE
 libQt5Quick.so.5:_ZN23QSGDefaultRenderContext10invalidateEv
+libQt5Quick.so.5:_ZN23QSGDefaultRenderContext10preprocessEv
 libQt5Quick.so.5:_ZN23QSGDefaultRenderContext11prepareSyncEdP17QRhiCommandBuffer
 libQt5Quick.so.5:_ZN23QSGDefaultRenderContext11qt_metacallEN11QMetaObject4CallEiPPv
 libQt5Quick.so.5:_ZN23QSGDefaultRenderContext11qt_metacastEPKc
@@ -6699,6 +6705,7 @@ libQt5Quick.so.5:_ZN24QQuickShaderEffectSource19itemGeometryChangedEP10QQuickIte
 libQt5Quick.so.5:_ZN24QQuickShaderEffectSource19setTextureMirroringENS_16TextureMirroringE
 libQt5Quick.so.5:_ZN24QQuickShaderEffectSource19sourceItemDestroyedEP7QObject
 libQt5Quick.so.5:_ZN24QQuickShaderEffectSource20invalidateSceneGraphEv
+libQt5Quick.so.5:_ZN24QQuickShaderEffectSource23sourceItemParentChangedEP10QQuickItem
 libQt5Quick.so.5:_ZN24QQuickShaderEffectSource23textureMirroringChangedEv
 libQt5Quick.so.5:_ZN24QQuickShaderEffectSource24scheduledUpdateCompletedEv
 libQt5Quick.so.5:_ZN24QQuickShaderEffectSource7setLiveEb
@@ -7500,7 +7507,6 @@ libQt5Quick.so.5:_ZNK14QQuickListView21highlightMoveVelocityEv
 libQt5Quick.so.5:_ZNK14QQuickListView23highlightResizeDurationEv
 libQt5Quick.so.5:_ZNK14QQuickListView23highlightResizeVelocityEv
 libQt5Quick.so.5:_ZNK14QQuickListView7spacingEv
-libQt5Quick.so.5:_ZNK14QQuickListView8containsERK7QPointF
 libQt5Quick.so.5:_ZNK14QQuickListView8snapModeEv
 libQt5Quick.so.5:_ZNK14QQuickPathLine10metaObjectEv
 libQt5Quick.so.5:_ZNK14QQuickPathMove10metaObjectEv
@@ -8455,6 +8461,7 @@ libQt5Quick.so.5:_ZThn16_N20QQuickPointerHandlerD1Ev
 libQt5Quick.so.5:_ZThn16_N21QQuickNumberAnimationD0Ev
 libQt5Quick.so.5:_ZThn16_N21QQuickNumberAnimationD1Ev
 libQt5Quick.so.5:_ZThn16_N22QQuickAnimatorProxyJob11updateStateEN21QAbstractAnimationJob5StateES1_
+libQt5Quick.so.5:_ZThn16_N22QQuickAnimatorProxyJob15updateLoopCountEi
 libQt5Quick.so.5:_ZThn16_N22QQuickAnimatorProxyJob17updateCurrentTimeEi
 libQt5Quick.so.5:_ZThn16_N22QQuickAnimatorProxyJobD0Ev
 libQt5Quick.so.5:_ZThn16_N22QQuickAnimatorProxyJobD1Ev
@@ -8528,7 +8535,7 @@ libQt5Quick.so.5:_Zls6QDebugPK19QQuickPointerDevice
 libQt5Quick.so.5:_Zls6QDebugPK7QSGNode
 libQt5Quick.so.5:_Zls6QDebugRKN19QSGShaderEffectNode12VariableDataE
 libQt5Quick.so.5:_Zls6QDebugRKN31QSGGuiThreadShaderEffectManager10ShaderInfo8VariableE
-libQt5QuickParticles.so.5:Qt_5.15.0_PRIVATE_API
+libQt5QuickParticles.so.5:Qt_5.15.2_PRIVATE_API
 libQt5QuickParticles.so.5:_Z36qml_register_types_QtQuick_Particlesv
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData10extendLifeEfP20QQuickParticleSystem
 libQt5QuickParticles.so.5:_ZN18QQuickParticleData5cloneERKS_
@@ -8668,7 +8675,7 @@ libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitter17componentCompleteEv
 libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitterD0Ev
 libQt5QuickParticles.so.5:_ZThn16_N21QQuickParticleEmitterD1Ev
 libQt5QuickParticles.so.5:_ZThn16_N22QQuickParticleAffector17componentCompleteEv
-libQt5QuickShapes.so.5:Qt_5.15.0_PRIVATE_API
+libQt5QuickShapes.so.5:Qt_5.15.2_PRIVATE_API
 libQt5QuickShapes.so.5:_Z33qml_register_types_QtQuick_Shapesv
 libQt5QuickShapes.so.5:_ZN11QQuickShape10classBeginEv
 libQt5QuickShapes.so.5:_ZN11QQuickShape10itemChangeEN10QQuickItem10ItemChangeERKNS0_14ItemChangeDataE
@@ -8821,7 +8828,7 @@ libQt5QuickTest.so.5:Qt_5.12
 libQt5QuickTest.so.5:Qt_5.13
 libQt5QuickTest.so.5:Qt_5.14
 libQt5QuickTest.so.5:Qt_5.15
-libQt5QuickTest.so.5:Qt_5.15.0_PRIVATE_API
+libQt5QuickTest.so.5:Qt_5.15.2_PRIVATE_API
 libQt5QuickTest.so.5:Qt_5.2
 libQt5QuickTest.so.5:Qt_5.3
 libQt5QuickTest.so.5:Qt_5.4
@@ -8911,7 +8918,7 @@ libQt5QuickWidgets.so.5:Qt_5.12
 libQt5QuickWidgets.so.5:Qt_5.13
 libQt5QuickWidgets.so.5:Qt_5.14
 libQt5QuickWidgets.so.5:Qt_5.15
-libQt5QuickWidgets.so.5:Qt_5.15.0_PRIVATE_API
+libQt5QuickWidgets.so.5:Qt_5.15.2_PRIVATE_API
 libQt5QuickWidgets.so.5:Qt_5.2
 libQt5QuickWidgets.so.5:Qt_5.3
 libQt5QuickWidgets.so.5:Qt_5.4
@@ -8947,6 +8954,7 @@ libQt5QuickWidgets.so.5:_ZN12QQuickWidget18focusNextPrevChildEb
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget21mouseDoubleClickEventEP11QMouseEvent
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget23createFramebufferObjectEv
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget24destroyFramebufferObjectEv
+libQt5QuickWidgets.so.5:_ZN12QQuickWidget27propagateFocusObjectChangedEP7QObject
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget5eventEP6QEvent
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget9dropEventEP10QDropEvent
 libQt5QuickWidgets.so.5:_ZN12QQuickWidget9hideEventEP10QHideEvent
