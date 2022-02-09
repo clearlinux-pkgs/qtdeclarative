@@ -96,8 +96,9 @@ Ulf Hermann (2):
       JIT: When making memory writable, include the exception handler
       V4: Do not call dtor of an object we continue to use
 
-Vlad Zahorodnii (1):
+Vlad Zahorodnii (2):
       Fix sweep step for tainted QObject JavaScript wrappers
+      Make sure QQuickWidget and its offscreen window's screens are always in sync
 
 Volker Hilsheimer (1):
       QQuickItemAnimation: close potential memory leak
@@ -1758,6 +1759,66 @@ index 40f6cfbdcf..37386c23b2 100644
 +GHS_KEEP_REFERENCE(qml_register_types_QtQuick_Shapes);
  
  #endif // QQUICKSHAPESGLOBAL_P_H
+diff --git a/src/quickwidgets/qquickwidget.cpp b/src/quickwidgets/qquickwidget.cpp
+index 39780f8de3..223d91f579 100644
+--- a/src/quickwidgets/qquickwidget.cpp
++++ b/src/quickwidgets/qquickwidget.cpp
+@@ -106,6 +106,7 @@ void QQuickWidgetPrivate::init(QQmlEngine* e)
+ 
+     renderControl = new QQuickWidgetRenderControl(q);
+     offscreenWindow = new QQuickWindow(*new QQuickOffcreenWindowPrivate(),renderControl);
++    offscreenWindow->setScreen(q->screen());
+     offscreenWindow->setTitle(QString::fromLatin1("Offscreen"));
+     offscreenWindow->setObjectName(QString::fromLatin1("QQuickOffScreenWindow"));
+     // Do not call create() on offscreenWindow.
+@@ -901,9 +902,7 @@ void QQuickWidgetPrivate::createContext()
+ 
+         context = new QOpenGLContext;
+         context->setFormat(offscreenWindow->requestedFormat());
+-        const QWindow *win = q->window()->windowHandle();
+-        if (win && win->screen())
+-            context->setScreen(win->screen());
++        context->setScreen(q->screen());
+         QOpenGLContext *shareContext = qt_gl_global_share_context();
+         if (!shareContext)
+             shareContext = QWidgetPrivate::get(q->window())->shareContext();
+@@ -1520,19 +1519,16 @@ bool QQuickWidget::event(QEvent *e)
+         d->handleWindowChange();
+         break;
+ 
+-    case QEvent::ScreenChangeInternal:
+-        if (QWindow *window = this->window()->windowHandle()) {
+-            QScreen *newScreen = window->screen();
+-
+-            if (d->offscreenWindow)
+-                d->offscreenWindow->setScreen(newScreen);
+-            if (d->offscreenSurface)
+-                d->offscreenSurface->setScreen(newScreen);
++    case QEvent::ScreenChangeInternal: {
++        QScreen *newScreen = screen();
++        if (d->offscreenWindow)
++            d->offscreenWindow->setScreen(newScreen);
++        if (d->offscreenSurface)
++            d->offscreenSurface->setScreen(newScreen);
+ #if QT_CONFIG(opengl)
+-            if (d->context)
+-                d->context->setScreen(newScreen);
++        if (d->context)
++            d->context->setScreen(newScreen);
+ #endif
+-        }
+ 
+         if (d->useSoftwareRenderer
+ #if QT_CONFIG(opengl)
+@@ -1545,7 +1541,7 @@ bool QQuickWidget::event(QEvent *e)
+             d->render(true);
+         }
+         break;
+-
++    }
+     case QEvent::Show:
+     case QEvent::Move:
+         d->updatePosition();
 diff --git a/tests/auto/qml/debugger/qv4debugger/tst_qv4debugger.cpp b/tests/auto/qml/debugger/qv4debugger/tst_qv4debugger.cpp
 index 84f5eebd10..e3cbeb9891 100644
 --- a/tests/auto/qml/debugger/qv4debugger/tst_qv4debugger.cpp
