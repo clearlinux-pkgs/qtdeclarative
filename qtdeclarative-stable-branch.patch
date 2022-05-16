@@ -15,6 +15,9 @@ Alessandro Portale (1):
 Alexey Edelev (1):
       Do not revert properties of deleted objects
 
+Allan Sandfeld Jensen (1):
+      Fix release-only windows builds
+
 Andreas Buhr (2):
       Fix QQuickShortcut::setContext so re-grab all shortcuts
       Change QQuickShortcut::setSequences to bind to all sequences
@@ -25,8 +28,10 @@ Andreas Hartmetz (1):
 Andrei Golubev (1):
       Fix QML property cache leaks of delegate items
 
-Andy Shaw (1):
+Andy Shaw (3):
       Show a tableview even if the syncView has an empty model
+      Ensure that the case of the path will match then QUrl for a UNC path
+      Remove unnecessary forward declaration
 
 Antonio Rojas (1):
       Add missing limits include to fix build with GCC 11
@@ -34,8 +39,11 @@ Antonio Rojas (1):
 Antti Kokko (1):
       Add changes file for Qt 5.15.2
 
-Bartlomiej Moskal (1):
+Bartlomiej Moskal (4):
       QQuickWindow: Check if QQuickItem was not deleted
+      qquicktextinput: Fix Undo history for IM event
+      qquicktextinput: Fix validation for IM event
+      QQuickTextControl: commit pre-edit after key press
 
 Dmitry Shachnev (1):
       Include <limits> in Yarr.h to fix build with GCC 11
@@ -46,7 +54,7 @@ Edward Welbourne (1):
 Eskil Abrahamsen Blomfeldt (1):
       Fix distorted text with subpixel matrix translation
 
-Fabian Kosmale (10):
+Fabian Kosmale (15):
       Inline components: Fix custom parser support
       QQuickView docs: show correct usage of setInitialProperties
       QQuickTextInput: Store mask data in std::unique_ptr
@@ -57,6 +65,11 @@ Fabian Kosmale (10):
       ListModel: Fix move handling in sync
       QQmlIRLoader: Actually load RequiredPropertyExtraData
       QV4 Engine: Remove MSVC special casing
+      QQmlPropertyPrivate::signalExpression: handle object being null
+      QQmlIncubator: handle clear inside setinitialState
+      QuickTest: Do not recurse forever on inline components in enumerateTestCases
+      Assert that pointer is non-null
+      QQuickItem: Guard against cycles in nextPrevItemInTabFocusChain
 
 Fabio Falsini (1):
       QQuickItemParticle give() method kill particle
@@ -64,13 +77,15 @@ Fabio Falsini (1):
 Ivan Solovev (1):
       QuickLayouts: fix crash when layout width depends on parent width
 
-Jan Arve Sæther (4):
+Jan Arve Sæther (5):
       export QAcccessibleQuickItem
       QQmlProperty: Guard QQmlContextData with QQmlGuardedContextData
       QQuickListView: Add autotest so that animated delegate does not crash
+      DelegateModelGroup: Fix bug where item could be removed from the model
       Fix TapHandler so that it actually registers a tap
 
-Jani Heikkinen (1):
+Jani Heikkinen (2):
+      Bump version
       Bump version
 
 Joni Poikelin (1):
@@ -79,10 +94,12 @@ Joni Poikelin (1):
 Kimmo Ollila (1):
       Avoid GHS linker to optimize away QML type registrations
 
-Laszlo Agocs (4):
+Laszlo Agocs (6):
       Add Lancelot tests for both types of clipping
       Regenerate Shape fill geometry when alpha changes to non-zero
       Revert "Set the stencil buffer zone" and "Add clipNext null pointer guard"
+      Fix incorrect depth test state with QSGRenderNode::DepthAwareRendering
+      Do not batch lines with > 1 width in alpha pass
       Revert "Fix for possible crash in QSGDefaultLayer::grab"
 
 Li Xinwei (1):
@@ -91,13 +108,18 @@ Li Xinwei (1):
 Marc Mutz (1):
       QQmlJs::FixedPoolArray: fix UB (precondition violation) in allocate()
 
-Maximilian Goldstein (6):
+Maximilian Goldstein (8):
       Revert "qquickloader: Free memory of loaded components after source change"
       qmlfunctions.qdoc: Add clarification to QML_FOREIGN
       qv4qmlcontext: Fix bounded signal expressions when debugging
       qqmlistmodel: Fix crash when modelCache is null
       qmlplugindump: Fix overload ambiguity
+      qv4generatorobject: Fix crash when creating new properties
       qqmldelegatemodel: Fix out of bounds cache removal
+      qqmlapplicationengine: Handle errors during component creation
+
+Michael Brasser (1):
+      Do less work when there are no active ImageParticle particles
 
 Miikka Heikkinen (1):
       DesignerSupport: Don't skip already inspected objects
@@ -115,37 +137,52 @@ Paul Wicking (1):
 Piotr Mikolajczyk (1):
       Accessibility event is sent on item's geometry change
 
-Richard Moe Gustavsen (2):
+Richard Moe Gustavsen (4):
       qquicktextinput: ensure we update IM when cursor changes position
       QQuickTextEdit: ensure we update after changing padding
+      QQuickTableView: forceLayout() should work, even when no items are loaded
+      QQuickTableView: always update content size when rebuilding small tables
 
 Richard Weickelt (1):
       Fix crash when calling hasOwnProperty() on proxy object
 
-Shawn Rutledge (1):
+Shawn Rutledge (4):
       doc: explain QQItem event delivery, handlers, setAcceptTouchEvents()
+      docs: Fix documentation of the Locale numberOptions property
+      doc: fix up QQuickItem::contains() docs
+      Prevent infinite recursion in QQuickItemPrivate::itemToWindowTransform
 
 Shinichi Okada (1):
       QML Text doesn't reset lineCount when text is empty
 
-Tarja Sundqvist (2):
+Siyeon Seo (1):
+      Avoid crash when accessing an empty QTextLine
+
+Tarja Sundqvist (3):
       Update commercial license headers
       Revert "Update commercial license headers"
+      Merge remote-tracking branch 'origin/tqtc/lts-5.15.4' into tqtc/lts-5.15-opensource
 
-Ulf Hermann (7):
+Ulf Hermann (10):
       JIT: When making memory writable, include the exception handler
       masm: Add error handling for failed mprotect()
       Remove QQmlCleanup from QQmlScriptData
       Cache static compilation units
       QAnimationGroupJob: Don't call virtual functions from dtor
       QSequentialAnimationGroupJob: Protect against self-deletion
+      Fix lookup of existing inline components by name
+      Do not auto-clean components with live inline components
+      Don't crash when trying to invoke non-existing string converter
       V4: Do not call dtor of an object we continue to use
 
 Vlad Zahorodnii (2):
       Fix sweep step for tainted QObject JavaScript wrappers
       Make sure QQuickWidget and its offscreen window's screens are always in sync
 
-Volker Hilsheimer (1):
+Volker Hilsheimer (4):
+      MouseArea: fix containsMouse behavior during visibility changes
+      Use unique_ptr to clarify ownership of QQuickDefaultClipNode objects
+      Revert "Use unique_ptr to clarify ownership of QQuickDefaultClipNode objects"
       QQuickItemAnimation: close potential memory leak
 
 Wang Chuan (2):
@@ -804,6 +841,100 @@ index 5152fa02ec..ff2f10fde3 100644
  
  QT_BEGIN_NAMESPACE
  
+diff --git a/src/particles/qquickimageparticle.cpp b/src/particles/qquickimageparticle.cpp
+index 4d67691771..d2a0e5545b 100644
+--- a/src/particles/qquickimageparticle.cpp
++++ b/src/particles/qquickimageparticle.cpp
+@@ -1132,6 +1132,7 @@ QQuickImageParticle::QQuickImageParticle(QQuickItem* parent)
+     , m_startedImageLoading(0)
+     , m_rhi(nullptr)
+     , m_apiChecked(false)
++    , m_previousActive(false)
+ {
+     setFlag(ItemHasContents);
+ }
+@@ -1960,11 +1961,13 @@ QSGNode *QQuickImageParticle::updatePaintNode(QSGNode *node, UpdatePaintNodeData
+     }
+ 
+     if (m_system && m_system->isRunning() && !m_system->isPaused()){
+-        prepareNextFrame(&node);
++        bool dirty = prepareNextFrame(&node);
+         if (node) {
+             update();
+-            foreach (QSGGeometryNode* n, m_nodes)
+-                n->markDirty(QSGNode::DirtyGeometry);
++            if (dirty) {
++                foreach (QSGGeometryNode* n, m_nodes)
++                    n->markDirty(QSGNode::DirtyGeometry);
++            }
+         } else if (m_startedImageLoading < 2) {
+             update();//To call prepareNextFrame() again from the renderThread
+         }
+@@ -1978,7 +1981,7 @@ QSGNode *QQuickImageParticle::updatePaintNode(QSGNode *node, UpdatePaintNodeData
+     return node;
+ }
+ 
+-void QQuickImageParticle::prepareNextFrame(QSGNode **node)
++bool QQuickImageParticle::prepareNextFrame(QSGNode **node)
+ {
+     if (*node == nullptr){//TODO: Staggered loading (as emitted)
+         buildParticleNodes(node);
+@@ -1994,7 +1997,7 @@ void QQuickImageParticle::prepareNextFrame(QSGNode **node)
+             qDebug() << "Total count: " << count;
+         }
+         if (*node == nullptr)
+-            return;
++            return false;
+     }
+     qint64 timeStamp = m_system->systemSync(this);
+ 
+@@ -2015,8 +2018,23 @@ void QQuickImageParticle::prepareNextFrame(QSGNode **node)
+         getState(m_material)->timestamp = time;
+         break;
+     }
+-    foreach (QSGGeometryNode* node, m_nodes)
+-        node->markDirty(QSGNode::DirtyMaterial);
++
++    bool active = false;
++    for (auto groupId : groupIds()) {
++        if (m_system->groupData[groupId]->isActive()) {
++            active = true;
++            break;
++        }
++    }
++
++    const bool dirty = active || m_previousActive;
++    if (dirty) {
++        foreach (QSGGeometryNode* node, m_nodes)
++            node->markDirty(QSGNode::DirtyMaterial);
++    }
++
++    m_previousActive = active;
++    return dirty;
+ }
+ 
+ void QQuickImageParticle::spritesUpdate(qreal time)
+diff --git a/src/particles/qquickimageparticle_p.h b/src/particles/qquickimageparticle_p.h
+index fdb404861c..b5fdfdadc9 100644
+--- a/src/particles/qquickimageparticle_p.h
++++ b/src/particles/qquickimageparticle_p.h
+@@ -363,7 +363,7 @@ protected:
+     void commit(int gIdx, int pIdx) override;
+ 
+     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *) override;
+-    void prepareNextFrame(QSGNode**);
++    bool prepareNextFrame(QSGNode**);
+     void buildParticleNodes(QSGNode**);
+ 
+     void sceneGraphInvalidated() override;
+@@ -460,6 +460,7 @@ private:
+     int m_startedImageLoading;
+     QRhi *m_rhi;
+     bool m_apiChecked;
++    bool m_previousActive;
+ };
+ 
+ QT_END_NAMESPACE
 diff --git a/src/particles/qquickitemparticle.cpp b/src/particles/qquickitemparticle.cpp
 index ce254c212d..60d368a2a3 100644
 --- a/src/particles/qquickitemparticle.cpp
@@ -816,6 +947,19 @@ index ce254c212d..60d368a2a3 100644
                  return;
              }
          }
+diff --git a/src/particles/qquickparticlesystem_p.h b/src/particles/qquickparticlesystem_p.h
+index ea890d20f4..c74be45c7a 100644
+--- a/src/particles/qquickparticlesystem_p.h
++++ b/src/particles/qquickparticlesystem_p.h
+@@ -205,6 +205,8 @@ public:
+ 
+     QString name();
+ 
++    bool isActive() { return freeList.count() > 0; }
++
+     void setSize(int newSize);
+ 
+     const ID index;
 diff --git a/src/particles/qtquickparticlesglobal_p.h b/src/particles/qtquickparticlesglobal_p.h
 index 927bc29050..91c2764060 100644
 --- a/src/particles/qtquickparticlesglobal_p.h
@@ -1089,6 +1233,38 @@ index cc8af723b2..95070fbb96 100644
  }
  
  void PlatformAssemblerCommon::prepareCallWithArgCount(int argc)
+diff --git a/src/qml/jsapi/qjsvalue.h b/src/qml/jsapi/qjsvalue.h
+index 2f95e0ff31..80641ff235 100644
+--- a/src/qml/jsapi/qjsvalue.h
++++ b/src/qml/jsapi/qjsvalue.h
+@@ -57,7 +57,6 @@ class QDateTime;
+ typedef QList<QJSValue> QJSValueList;
+ namespace QV4 {
+     struct ExecutionEngine;
+-    struct Value;
+ }
+ 
+ class Q_QML_EXPORT QJSValue
+diff --git a/src/qml/jsruntime/qv4arrayobject.cpp b/src/qml/jsruntime/qv4arrayobject.cpp
+index df9f117d04..03e5c29973 100644
+--- a/src/qml/jsruntime/qv4arrayobject.cpp
++++ b/src/qml/jsruntime/qv4arrayobject.cpp
+@@ -254,6 +254,7 @@ ReturnedValue ArrayPrototype::method_from(const FunctionObject *builtin, const V
+             }
+ 
+             if (mapfn) {
++                Q_ASSERT(mapArguments); // if mapfn is set, we always setup mapArguments with scope.alloc
+                 mapArguments[0] = *nextValue;
+                 mapArguments[1] = Value::fromDouble(k);
+                 mappedValue = mapfn->call(thisArg, mapArguments, 2);
+@@ -297,6 +298,7 @@ ReturnedValue ArrayPrototype::method_from(const FunctionObject *builtin, const V
+             CHECK_EXCEPTION();
+ 
+             if (mapfn) {
++                Q_ASSERT(mapArguments); // if mapfn is set, we always setup mapArguments with scope.alloc
+                 mapArguments[0] = kValue;
+                 mapArguments[1] = Value::fromDouble(k);
+                 mappedValue = mapfn->call(thisArg, mapArguments, 2);
 diff --git a/src/qml/jsruntime/qv4compilationunitmapper.cpp b/src/qml/jsruntime/qv4compilationunitmapper.cpp
 index 74f34a284d..86bcf229d1 100644
 --- a/src/qml/jsruntime/qv4compilationunitmapper.cpp
@@ -1284,6 +1460,58 @@ index fc13dc2602..0cb98641cd 100644
      if (!RtlDeleteFunctionTable(&record->handler)) {
          const unsigned int errorCode = GetLastError();
          qWarning() << "Failed to remove win64 unwind hook. Error code:" << errorCode;
+diff --git a/src/qml/jsruntime/qv4generatorobject.cpp b/src/qml/jsruntime/qv4generatorobject.cpp
+index 4eee6f4338..5077bf1d2b 100644
+--- a/src/qml/jsruntime/qv4generatorobject.cpp
++++ b/src/qml/jsruntime/qv4generatorobject.cpp
+@@ -97,24 +97,21 @@ ReturnedValue GeneratorFunction::virtualCall(const FunctionObject *f, const Valu
+     Function *function = gf->function();
+     ExecutionEngine *engine = gf->engine();
+ 
+-    // We need to set up a separate stack for the generator, as it's being re-entered
+-    uint stackSize = argc // space for the original arguments
+-                   + CppStackFrame::requiredJSStackFrameSize(function); // space for the JS stack frame
+-
+-    size_t requiredMemory = sizeof(GeneratorObject::Data) - sizeof(Value) + sizeof(Value) * stackSize;
+-
+     Scope scope(gf);
+-    Scoped<GeneratorObject> g(scope, scope.engine->memoryManager->allocManaged<GeneratorObject>(requiredMemory, scope.engine->classes[EngineBase::Class_GeneratorObject]));
++    Scoped<GeneratorObject> g(scope, engine->memoryManager->allocManaged<GeneratorObject>(sizeof(GeneratorObject::Data), engine->classes[EngineBase::Class_GeneratorObject]));
+     g->setPrototypeOf(ScopedObject(scope, gf->get(scope.engine->id_prototype())));
+ 
++    // We need to set up a separate JSFrame for the generator, as it's being re-entered
+     Heap::GeneratorObject *gp = g->d();
+-    gp->stack.size = stackSize;
+-    gp->stack.alloc = stackSize;
++    gp->values.set(engine, engine->newArrayObject(argc));
++    gp->jsFrame.set(engine, engine->newArrayObject(CppStackFrame::requiredJSStackFrameSize(function)));
+ 
+     // copy original arguments
+-    memcpy(gp->stack.values, argv, argc*sizeof(Value));
+-    gp->cppFrame.init(engine, function, gp->stack.values, argc);
+-    gp->cppFrame.setupJSFrame(&gp->stack.values[argc], *gf, gf->scope(),
++    for (int i = 0; i < argc; i++)
++        gp->values->arrayData->setArrayData(engine, i, argv[i]);
++
++    gp->cppFrame.init(engine, function, gp->values->arrayData->values.values, argc);
++    gp->cppFrame.setupJSFrame(gp->jsFrame->arrayData->values.values, *gf, gf->scope(),
+                               thisObject ? *thisObject : Value::undefinedValue(),
+                               Value::undefinedValue());
+ 
+diff --git a/src/qml/jsruntime/qv4generatorobject_p.h b/src/qml/jsruntime/qv4generatorobject_p.h
+index 366319723d..10eea5e46b 100644
+--- a/src/qml/jsruntime/qv4generatorobject_p.h
++++ b/src/qml/jsruntime/qv4generatorobject_p.h
+@@ -90,7 +90,8 @@ struct GeneratorPrototype : FunctionObject {
+     Member(class, Pointer, GeneratorFunction *, function) \
+     Member(class, NoMark, GeneratorState, state) \
+     Member(class, NoMark, CppStackFrame, cppFrame) \
+-    Member(class, ValueArray, ValueArray, stack)
++    Member(class, Pointer, ArrayObject *, values) \
++    Member(class, Pointer, ArrayObject *, jsFrame)
+ 
+ DECLARE_HEAP_OBJECT(GeneratorObject, Object) {
+     DECLARE_MARKOBJECTS(GeneratorObject);
 diff --git a/src/qml/jsruntime/qv4global_p.h b/src/qml/jsruntime/qv4global_p.h
 index c6a737b467..1cd2ecffa4 100644
 --- a/src/qml/jsruntime/qv4global_p.h
@@ -1459,6 +1687,25 @@ index 06caf04e5a..da149a67c4 100644
                  it = multiplyWrappedQObjects->erase(it);
              else
                  ++it;
+diff --git a/src/qml/qml/qqmlapplicationengine.cpp b/src/qml/qml/qqmlapplicationengine.cpp
+index 907825d28c..2b294ffff6 100644
+--- a/src/qml/qml/qqmlapplicationengine.cpp
++++ b/src/qml/qml/qqmlapplicationengine.cpp
+@@ -146,6 +146,14 @@ void QQmlApplicationEnginePrivate::finishLoad(QQmlComponent *c)
+         break;
+     case QQmlComponent::Ready: {
+         auto newObj = initialProperties.empty() ? c->create() : c->createWithInitialProperties(initialProperties);
++
++        if (c->isError()) {
++           qWarning() << "QQmlApplicationEngine failed to create component";
++           warning(c->errors());
++           q->objectCreated(nullptr, c->url());
++           break;
++        }
++
+         objects << newObj;
+         QObject::connect(newObj, &QObject::destroyed, q, [&](QObject *obj) { objects.removeAll(obj); });
+         q->objectCreated(objects.constLast(), c->url());
 diff --git a/src/qml/qml/qqmlextensionplugin.h b/src/qml/qml/qqmlextensionplugin.h
 index ef7ff422cd..afb3f99c4a 100644
 --- a/src/qml/qml/qqmlextensionplugin.h
@@ -1477,6 +1724,53 @@ index ef7ff422cd..afb3f99c4a 100644
  QT_BEGIN_NAMESPACE
  
  class QQmlEngine;
+diff --git a/src/qml/qml/qqmlimport.cpp b/src/qml/qml/qqmlimport.cpp
+index 6d4fba0aa4..10c6c41338 100644
+--- a/src/qml/qml/qqmlimport.cpp
++++ b/src/qml/qml/qqmlimport.cpp
+@@ -730,7 +730,8 @@ bool QQmlImportInstance::resolveType(QQmlTypeLoader *typeLoader, const QHashedSt
+             if (containingType.isValid()) {
+                 // we currently cannot reference a Singleton inside itself
+                 // in that case, containingType is still invalid
+-                if (int icID = containingType.lookupInlineComponentIdByName(typeStr) != -1) {
++                int icID = containingType.lookupInlineComponentIdByName(typeStr);
++                if (icID != -1) {
+                     *type_return = containingType.lookupInlineComponentById(icID);
+                 } else {
+                     auto icType = createICType();
+@@ -1408,11 +1409,16 @@ QQmlImports::LocalQmldirResult QQmlImportsPrivate::locateLocalQmldir(
+         if (!absoluteFilePath.isEmpty()) {
+             QString url;
+             const QStringRef absolutePath = absoluteFilePath.leftRef(absoluteFilePath.lastIndexOf(Slash) + 1);
+-            if (absolutePath.at(0) == Colon)
++            if (absolutePath.at(0) == Colon) {
+                 url = QLatin1String("qrc") + absolutePath;
+-            else
++            } else {
+                 url = QUrl::fromLocalFile(absolutePath.toString()).toString();
+-
++                // This handles the UNC path case as when the path is retrieved from the QUrl it
++                // will convert the host name from upper case to lower case. So the absoluteFilePath
++                // is changed at this point to make sure it will match later on in that case.
++                if (absoluteFilePath.startsWith(QLatin1String("//")))
++                    absoluteFilePath = QUrl::fromLocalFile(absoluteFilePath).toString(QUrl::RemoveScheme);
++            }
+             QQmlImportDatabase::QmldirCache *cache = new QQmlImportDatabase::QmldirCache;
+             cache->versionMajor = vmaj;
+             cache->versionMinor = vmin;
+diff --git a/src/qml/qml/qqmlincubator.cpp b/src/qml/qml/qqmlincubator.cpp
+index 0ad013e90b..244f9ad292 100644
+--- a/src/qml/qml/qqmlincubator.cpp
++++ b/src/qml/qml/qqmlincubator.cpp
+@@ -330,7 +330,7 @@ void QQmlIncubatorPrivate::incubate(QQmlInstantiationInterrupt &i)
+             ddata->rootObjectInCreation = false;
+             if (q) {
+                 q->setInitialState(result);
+-                if (!creator->requiredProperties().empty()) {
++                if (creator && !creator->requiredProperties().empty()) {
+                     const auto& unsetRequiredProperties = creator->requiredProperties();
+                     for (const auto& unsetRequiredProperty: unsetRequiredProperties)
+                         errors << QQmlComponentPrivate::unsetRequiredPropertyToQQmlError(unsetRequiredProperty);
 diff --git a/src/qml/qml/qqmlirloader.cpp b/src/qml/qml/qqmlirloader.cpp
 index 5609ba8aa8..7fa3d211a6 100644
 --- a/src/qml/qml/qqmlirloader.cpp
@@ -1495,6 +1789,85 @@ index 5609ba8aa8..7fa3d211a6 100644
      return object;
  }
  
+diff --git a/src/qml/qml/qqmllocale.cpp b/src/qml/qml/qqmllocale.cpp
+index 7af6af276a..f55bbe7ffc 100644
+--- a/src/qml/qml/qqmllocale.cpp
++++ b/src/qml/qml/qqmllocale.cpp
+@@ -891,7 +891,7 @@ ReturnedValue QQmlLocale::method_localeCompare(const QV4::FunctionObject *b, con
+ */
+ 
+ /*!
+-    \qmlproperty enumeration QtQml::Locale::NumberOption
++    \qmlproperty enumeration QtQml::Locale::numberOptions
+ 
+     Holds a set of options for number-to-string and
+     string-to-number conversions.
+diff --git a/src/qml/qml/qqmlmetatype.cpp b/src/qml/qml/qqmlmetatype.cpp
+index be4a79297c..40300b1fe3 100644
+--- a/src/qml/qml/qqmlmetatype.cpp
++++ b/src/qml/qml/qqmlmetatype.cpp
+@@ -1260,6 +1260,16 @@ void QQmlMetaType::unregisterType(int typeIndex)
+     }
+ }
+ 
++static bool hasActiveInlineComponents(const QQmlTypePrivate *d)
++{
++    for (const QQmlType &ic : qAsConst(d->objectIdToICType)) {
++        const QQmlTypePrivate *icPriv = ic.priv();
++        if (icPriv && icPriv->count() > 1)
++            return true;
++    }
++    return false;
++}
++
+ void QQmlMetaType::freeUnusedTypesAndCaches()
+ {
+     QQmlMetaTypeDataPtr data;
+@@ -1274,7 +1284,7 @@ void QQmlMetaType::freeUnusedTypesAndCaches()
+         QList<QQmlType>::Iterator it = data->types.begin();
+         while (it != data->types.end()) {
+             const QQmlTypePrivate *d = (*it).priv();
+-            if (d && d->count() == 1) {
++            if (d && d->count() == 1 && !hasActiveInlineComponents(d)) {
+                 deletedAtLeastOneType = true;
+ 
+                 removeQQmlTypePrivate(data->idToType, d);
+diff --git a/src/qml/qml/qqmlobjectcreator.cpp b/src/qml/qml/qqmlobjectcreator.cpp
+index 1c8f2b2091..6aeb567a86 100644
+--- a/src/qml/qml/qqmlobjectcreator.cpp
++++ b/src/qml/qml/qqmlobjectcreator.cpp
+@@ -679,8 +679,7 @@ void QQmlObjectCreator::setPropertyValue(const QQmlPropertyData *property, const
+         // otherwise, try a custom type assignment
+         QString stringValue = compilationUnit->bindingValueAsString(binding);
+         QQmlMetaType::StringConverter converter = QQmlMetaType::customStringConverter(property->propType());
+-        Q_ASSERT(converter);
+-        QVariant value = (*converter)(stringValue);
++        QVariant value = converter ? (*converter)(stringValue) : QVariant();
+ 
+         QMetaProperty metaProperty = _qobject->metaObject()->property(property->coreIndex());
+         if (value.isNull() || metaProperty.userType() != property->propType()) {
+diff --git a/src/qml/qml/qqmlproperty.cpp b/src/qml/qml/qqmlproperty.cpp
+index 8521de6ab3..9eb81e566e 100644
+--- a/src/qml/qml/qqmlproperty.cpp
++++ b/src/qml/qml/qqmlproperty.cpp
+@@ -918,6 +918,8 @@ QQmlPropertyPrivate::signalExpression(const QQmlProperty &that)
+     if (!(that.type() & QQmlProperty::SignalProperty))
+         return nullptr;
+ 
++    if (!that.d->object)
++        return nullptr;
+     QQmlData *data = QQmlData::get(that.d->object);
+     if (!data)
+         return nullptr;
+@@ -957,6 +959,8 @@ void QQmlPropertyPrivate::takeSignalExpression(const QQmlProperty &that,
+         return;
+     }
+ 
++    if (!that.d->object)
++        return;
+     QQmlData *data = QQmlData::get(that.d->object, nullptr != expr);
+     if (!data)
+         return;
 diff --git a/src/qml/qml/qqmlproperty_p.h b/src/qml/qml/qqmlproperty_p.h
 index 8abd83d7b4..b76a216cf3 100644
 --- a/src/qml/qml/qqmlproperty_p.h
@@ -1899,6 +2272,29 @@ index 1a1157138d..24df6ef7b3 100644
 +GHS_KEEP_REFERENCE(qml_register_types_QtQml_Models);
  
  #endif // QTQMLMODELSGLOBAL_P_H
+diff --git a/src/qmltest/quicktest.cpp b/src/qmltest/quicktest.cpp
+index 312769b8d3..150db84533 100644
+--- a/src/qmltest/quicktest.cpp
++++ b/src/qmltest/quicktest.cpp
+@@ -309,14 +309,17 @@ private:
+ 
+         if (!object) // Start at root of compilation unit if not enumerating a specific child
+             object = compilationUnit->objectAt(0);
++        if (object->flags & Object::IsInlineComponentRoot)
++            return result;
+ 
+         if (const auto superTypeUnit = compilationUnit->resolvedTypes.value(
+                     object->inheritedTypeNameIndex)->compilationUnit()) {
+             // We have a non-C++ super type, which could indicate we're a subtype of a TestCase
+             if (testCaseType.isValid() && superTypeUnit->url() == testCaseType.sourceUrl())
+                 result.isTestCase = true;
+-            else
++            else if (superTypeUnit->url() != compilationUnit->url()) { // urls are the same for inline component, avoid infinite recursion
+                 result = enumerateTestCases(superTypeUnit);
++            }
+ 
+             if (result.isTestCase) {
+                 // Look for override of name in this type
 diff --git a/src/qmltyperegistrar/qmltypes.prf b/src/qmltyperegistrar/qmltypes.prf
 index 354fa1736f..2cc0027b7e 100644
 --- a/src/qmltyperegistrar/qmltypes.prf
@@ -2070,7 +2466,7 @@ index 32406f8f2f..5f93dfdbe8 100644
 +//![1]
 +}
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 67c4611d9e..31cd317dc9 100644
+index 67c4611d9e..81b0db0b69 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
 @@ -1,9 +1,9 @@
@@ -2085,7 +2481,15 @@ index 67c4611d9e..31cd317dc9 100644
  **
  ** $QT_BEGIN_LICENSE:LGPL$
  ** Commercial License Usage
-@@ -1883,7 +1883,23 @@ void QQuickItemPrivate::updateSubFocusItem(QQuickItem *scope, bool focus)
+@@ -59,6 +59,7 @@
+ #include <QtCore/private/qnumeric_p.h>
+ #include <QtGui/qpa/qplatformtheme.h>
+ #include <QtCore/qloggingcategory.h>
++#include <QtCore/private/qduplicatetracker_p.h>
+ 
+ #include <private/qqmlglobal_p.h>
+ #include <private/qqmlengine_p.h>
+@@ -1883,7 +1884,23 @@ void QQuickItemPrivate::updateSubFocusItem(QQuickItem *scope, bool focus)
      \endqml
  
  
@@ -2110,7 +2514,39 @@ index 67c4611d9e..31cd317dc9 100644
  
      Key handling is available to all Item-based visual types via the \l Keys
      attached property.  The \e Keys attached property provides basic signals
-@@ -3650,6 +3666,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
+@@ -2504,6 +2521,7 @@ QQuickItem* QQuickItemPrivate::nextPrevItemInTabFocusChain(QQuickItem *item, boo
+     QQuickItem *current = item;
+     qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: startItem:" << startItem;
+     qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: firstFromItem:" << firstFromItem;
++    QDuplicateTracker<QQuickItem *> cycleDetector;
+     do {
+         qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: current:" << current;
+         qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: from:" << from;
+@@ -2570,7 +2588,10 @@ QQuickItem* QQuickItemPrivate::nextPrevItemInTabFocusChain(QQuickItem *item, boo
+         // traversed all of the chain (by compare the [current] item with [startItem])
+         // Since the [startItem] might be promoted to its parent if it is invisible,
+         // we still have to check [current] item with original start item
+-        if ((current == startItem || current == originalStartItem) && from == firstFromItem) {
++        // We might also run into a cycle before we reach firstFromItem again
++        // but note that we have to ignore current if we are meant to skip it
++        if (((current == startItem || current == originalStartItem) && from == firstFromItem) ||
++                (!skip && cycleDetector.hasSeen(current))) {
+             // wrapped around, avoid endless loops
+             if (item == contentItem) {
+                 qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: looped, return contentItem";
+@@ -3055,8 +3076,9 @@ Returns a transform that maps points from item space into window space.
+ */
+ QTransform QQuickItemPrivate::itemToWindowTransform() const
+ {
+-    // XXX todo
+-    QTransform rv = parentItem?QQuickItemPrivate::get(parentItem)->itemToWindowTransform():QTransform();
++    // item's parent must not be itself, otherwise calling itemToWindowTransform() on it is infinite recursion
++    Q_ASSERT(!parentItem || QQuickItemPrivate::get(parentItem) != this);
++    QTransform rv = parentItem ? QQuickItemPrivate::get(parentItem)->itemToWindowTransform() : QTransform();
+     itemToParentTransform(rv);
+     return rv;
+ }
+@@ -3650,6 +3672,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
  
      This property is useful if you need to access the collective geometry
      of an item's children in order to correctly size the item.
@@ -2121,7 +2557,7 @@ index 67c4611d9e..31cd317dc9 100644
  */
  /*!
      \property QQuickItem::childrenRect
-@@ -3659,6 +3679,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
+@@ -3659,6 +3685,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
  
      This property is useful if you need to access the collective geometry
      of an item's children in order to correctly size the item.
@@ -2132,7 +2568,7 @@ index 67c4611d9e..31cd317dc9 100644
  */
  QRectF QQuickItem::childrenRect()
  {
-@@ -3753,6 +3777,14 @@ void QQuickItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeo
+@@ -3753,6 +3783,14 @@ void QQuickItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeo
          emit widthChanged();
      if (change.heightChange())
          emit heightChanged();
@@ -2147,7 +2583,7 @@ index 67c4611d9e..31cd317dc9 100644
  }
  
  /*!
-@@ -7293,7 +7325,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
+@@ -7293,7 +7331,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
      If an item does not accept the mouse button for a particular mouse event,
      the mouse event will not be delivered to the item and will be delivered
      to the next item in the item hierarchy instead.
@@ -2158,7 +2594,7 @@ index 67c4611d9e..31cd317dc9 100644
  Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  {
      Q_D(const QQuickItem);
-@@ -7302,7 +7336,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
+@@ -7302,7 +7342,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  
  /*!
      Sets the mouse buttons accepted by this item to \a buttons.
@@ -2173,6 +2609,55 @@ index 67c4611d9e..31cd317dc9 100644
  void QQuickItem::setAcceptedMouseButtons(Qt::MouseButtons buttons)
  {
      Q_D(QQuickItem);
+@@ -7352,6 +7398,12 @@ bool QQuickItem::isUnderMouse() const
+     if (!d->window)
+         return false;
+ 
++    // QQuickWindow handles QEvent::Leave to reset the lastMousePosition
++    // FIXME: Using QPointF() as the reset value means an item will not be
++    // under the mouse if the mouse is at 0,0 of the window.
++    if (QQuickWindowPrivate::get(d->window)->lastMousePosition == QPointF())
++        return false;
++
+     QPointF cursorPos = QGuiApplicationPrivate::lastCursorPosition;
+     return contains(mapFromScene(d->window->mapFromGlobal(cursorPos.toPoint())));
+ }
+@@ -7766,22 +7818,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
+ }
+ 
+ /*!
+-  \qmlmethod bool QtQuick::Item::contains(point point)
++    \qmlmethod bool QtQuick::Item::contains(point point)
+ 
+-  Returns true if this item contains \a point, which is in local coordinates;
+-  returns false otherwise.
+-  */
++    Returns \c true if this item contains \a point, which is in local coordinates;
++    returns \c false otherwise.  This is the same check that is used for
++    hit-testing a QEventPoint during event delivery, and is affected by
++    containmentMask() if it is set.
++*/
+ /*!
+-  Returns true if this item contains \a point, which is in local coordinates;
+-  returns false otherwise.
++    Returns \c true if this item contains \a point, which is in local coordinates;
++    returns \c false otherwise.
+ 
+-  This function can be overwritten in order to handle point collisions in items
+-  with custom shapes. The default implementation checks if the point is inside
+-  the item's bounding rect.
++    This function can be overridden in order to handle point collisions in items
++    with custom shapes. The default implementation checks whether the point is inside
++    containmentMask() if it is set, or inside the bounding box otherwise.
+ 
+-  Note that this method is generally used to check whether the item is under the mouse cursor,
+-  and for that reason, the implementation of this function should be as light-weight
+-  as possible.
++    \note This method is used for hit-testing each QEventPoint during event
++    delivery, so the implementation should be kept as lightweight as possible.
+ */
+ bool QQuickItem::contains(const QPointF &point) const
+ {
 diff --git a/src/quick/items/qquickitemanimation.cpp b/src/quick/items/qquickitemanimation.cpp
 index 23694e2de3..dfb56ccc00 100644
 --- a/src/quick/items/qquickitemanimation.cpp
@@ -2209,6 +2694,158 @@ index 23694e2de3..dfb56ccc00 100644
      }
      return nullptr;
  }
+diff --git a/src/quick/items/qquicklistview.cpp b/src/quick/items/qquicklistview.cpp
+index 0f9394f695..1001b34c3c 100644
+--- a/src/quick/items/qquicklistview.cpp
++++ b/src/quick/items/qquicklistview.cpp
+@@ -382,6 +382,83 @@ private:
+     }
+ };
+ 
++/*! \internal
++    \brief A helper class for iterating over a model that might change
++
++    When populating the ListView from a model under normal
++    circumstances, we would iterate over the range of model indices
++    correspondning to the visual range, and basically call
++    createItem(index++) in order to create each item.
++
++    This will also emit Component.onCompleted() for each item, which
++    might do some weird things...  For instance, it might remove itself
++    from the model, and this might change model count and the indices
++    of the other subsequent entries in the model.
++
++    This class takes such changes to the model into consideration while
++    iterating, and will adjust the iterator index and keep track of
++    whether the iterator has reached the end of the range.
++
++    It keeps track of changes to the model by connecting to
++    QQmlInstanceModel::modelUpdated() from its constructor.
++    When destroyed, it will automatically disconnect. You can
++    explicitly disconnect earlier by calling \fn disconnect().
++*/
++class MutableModelIterator {
++public:
++    MutableModelIterator(QQmlInstanceModel *model, int iBegin, int iEnd)
++        : removedAtIndex(false)
++        , backwards(iEnd < iBegin)
++    {
++        conn = QObject::connect(model, &QQmlInstanceModel::modelUpdated,
++                [&] (const QQmlChangeSet &changeSet, bool /*reset*/)
++        {
++            for (const QQmlChangeSet::Change &rem : changeSet.removes()) {
++                idxEnd -= rem.count;
++                if (rem.start() <= index) {
++                    index -= rem.count;
++                    if (index < rem.start() + rem.count)
++                        removedAtIndex = true; // model index was removed
++                }
++            }
++            for (const QQmlChangeSet::Change &ins : changeSet.inserts()) {
++                idxEnd += ins.count;
++                if (ins.start() <= index)
++                    index += ins.count;
++            }
++        }
++        );
++        index = iBegin;
++        idxEnd = iEnd;
++    }
++
++    bool hasNext() const {
++        return backwards ? index > idxEnd : index < idxEnd;
++    }
++
++    void next() { index += (backwards ? -1 : +1); }
++
++    ~MutableModelIterator()
++    {
++        disconnect();
++    }
++
++    void disconnect()
++    {
++        if (conn) {
++            QObject::disconnect(conn);
++            conn = QMetaObject::Connection();   // set to nullptr
++        }
++    }
++    int index = 0;
++    int idxEnd;
++    unsigned removedAtIndex : 1;
++    unsigned backwards : 1;
++private:
++    QMetaObject::Connection conn;
++};
++
++
+ //----------------------------------------------------------------------------
+ 
+ bool QQuickListViewPrivate::isContentFlowReversed() const
+@@ -3570,7 +3647,6 @@ bool QQuickListViewPrivate::applyInsertionChange(const QQmlChangeSet::Change &ch
+     if (insertResult->visiblePos.isValid() && pos < insertResult->visiblePos) {
+         // Insert items before the visible item.
+         int insertionIdx = index;
+-        int i = 0;
+         qreal from = tempPos - displayMarginBeginning - buffer;
+ 
+         if (insertionIdx < visibleIndex) {
+@@ -3579,15 +3655,18 @@ bool QQuickListViewPrivate::applyInsertionChange(const QQmlChangeSet::Change &ch
+                 insertResult->sizeChangesBeforeVisiblePos += count * (averageSize + spacing);
+             }
+         } else {
+-            for (i = count-1; i >= 0 && pos >= from; --i) {
++            MutableModelIterator it(model, modelIndex + count - 1, modelIndex -1);
++            for (; it.hasNext() && pos >= from; it.next()) {
+                 // item is before first visible e.g. in cache buffer
+                 FxViewItem *item = nullptr;
+-                if (change.isMove() && (item = currentChanges.removedItems.take(change.moveKey(modelIndex + i))))
+-                    item->index = modelIndex + i;
++                if (change.isMove() && (item = currentChanges.removedItems.take(change.moveKey(it.index))))
++                    item->index = it.index;
+                 if (!item)
+-                    item = createItem(modelIndex + i, QQmlIncubator::Synchronous);
++                    item = createItem(it.index, QQmlIncubator::Synchronous);
+                 if (!item)
+                     return false;
++                if (it.removedAtIndex)
++                    continue;
+ 
+                 visibleAffected = true;
+                 visibleItems.insert(insertionIdx, item);
+@@ -3620,16 +3699,20 @@ bool QQuickListViewPrivate::applyInsertionChange(const QQmlChangeSet::Change &ch
+         }
+ 
+     } else {
+-        for (int i = 0; i < count && pos <= lastVisiblePos; ++i) {
++        MutableModelIterator it(model, modelIndex, modelIndex + count);
++        for (; it.hasNext() && pos <= lastVisiblePos; it.next()) {
+             visibleAffected = true;
+             FxViewItem *item = nullptr;
+-            if (change.isMove() && (item = currentChanges.removedItems.take(change.moveKey(modelIndex + i))))
+-                item->index = modelIndex + i;
++            if (change.isMove() && (item = currentChanges.removedItems.take(change.moveKey(it.index))))
++                item->index = it.index;
+             bool newItem = !item;
++            it.removedAtIndex = false;
+             if (!item)
+-                item = createItem(modelIndex + i, QQmlIncubator::Synchronous);
++                item = createItem(it.index, QQmlIncubator::Synchronous);
+             if (!item)
+                 return false;
++            if (it.removedAtIndex)
++                continue;
+ 
+             visibleItems.insert(index, item);
+             if (index == 0)
+@@ -3650,6 +3733,7 @@ bool QQuickListViewPrivate::applyInsertionChange(const QQmlChangeSet::Change &ch
+             pos += item->size() + spacing;
+             ++index;
+         }
++        it.disconnect();
+ 
+         if (0 < index && index < visibleItems.count()) {
+             FxViewItem *prevItem = visibleItems.at(index - 1);
 diff --git a/src/quick/items/qquickloader.cpp b/src/quick/items/qquickloader.cpp
 index 8cd63a4236..7fbe66fdda 100644
 --- a/src/quick/items/qquickloader.cpp
@@ -2290,10 +2927,65 @@ index 4deb6c70a3..c0a1ccab78 100644
  protected:
      void releaseResources() override;
 diff --git a/src/quick/items/qquicktableview.cpp b/src/quick/items/qquicktableview.cpp
-index 7b73fcb393..1349d308d7 100644
+index 7b73fcb393..f9454fc5cb 100644
 --- a/src/quick/items/qquicktableview.cpp
 +++ b/src/quick/items/qquicktableview.cpp
-@@ -1760,11 +1760,8 @@ void QQuickTableViewPrivate::calculateTopLeft(QPoint &topLeftCell, QPointF &topL
+@@ -642,6 +642,28 @@ int QQuickTableViewPrivate::nextVisibleEdgeIndex(Qt::Edge edge, int startIndex)
+     return foundIndex;
+ }
+ 
++bool QQuickTableViewPrivate::allColumnsLoaded()
++{
++    // Returns true if all the columns in the model (that are not
++    // hidden by the columnWidthProvider) are currently loaded and visible.
++    const bool firstColumnLoaded = nextVisibleEdgeIndexAroundLoadedTable(Qt::LeftEdge) == kEdgeIndexAtEnd;
++    if (!firstColumnLoaded)
++        return false;
++    bool lastColumnLoaded = nextVisibleEdgeIndexAroundLoadedTable(Qt::RightEdge) == kEdgeIndexAtEnd;
++    return lastColumnLoaded;
++}
++
++bool QQuickTableViewPrivate::allRowsLoaded()
++{
++    // Returns true if all the rows in the model (that are not hidden
++    // by the columnWidthProvider) are currently loaded and visible.
++    const bool firstColumnLoaded = nextVisibleEdgeIndexAroundLoadedTable(Qt::TopEdge) == kEdgeIndexAtEnd;
++    if (!firstColumnLoaded)
++        return false;
++    bool lastColumnLoaded = nextVisibleEdgeIndexAroundLoadedTable(Qt::BottomEdge) == kEdgeIndexAtEnd;
++    return lastColumnLoaded;
++}
++
+ void QQuickTableViewPrivate::updateContentWidth()
+ {
+     // Note that we actually never really know what the content size / size of the full table will
+@@ -927,6 +949,15 @@ void QQuickTableViewPrivate::syncLoadedTableRectFromLoadedTable()
+ 
+ QQuickTableViewPrivate::RebuildOptions QQuickTableViewPrivate::checkForVisibilityChanges()
+ {
++    // This function will check if there are any visibility changes among
++    // the _already loaded_ rows and columns. Note that there can be rows
++    // and columns to the bottom or right that was not loaded, but should
++    // now become visible (in case there is free space around the table).
++    if (loadedItems.isEmpty()) {
++        // Report no changes
++        return RebuildOption::None;
++    }
++
+     // Go through all columns from first to last, find the columns that used
+     // to be hidden and not loaded, and check if they should become visible
+     // (and vice versa). If there is a change, we need to rebuild.
+@@ -971,9 +1002,6 @@ QQuickTableViewPrivate::RebuildOptions QQuickTableViewPrivate::checkForVisibilit
+ 
+ void QQuickTableViewPrivate::forceLayout()
+ {
+-    if (loadedItems.isEmpty())
+-        return;
+-
+     clearEdgeSizeCache();
+     RebuildOptions rebuildOptions = RebuildOption::None;
+ 
+@@ -1760,11 +1788,8 @@ void QQuickTableViewPrivate::calculateTopLeft(QPoint &topLeftCell, QPointF &topL
          const auto syncView_d = syncView->d_func();
  
          if (syncView_d->loadedItems.isEmpty()) {
@@ -2307,8 +2999,36 @@ index 7b73fcb393..1349d308d7 100644
              return;
          }
  
+@@ -1926,12 +1951,12 @@ void QQuickTableViewPrivate::layoutAfterLoadingInitialTable()
+     relayoutTableItems();
+     syncLoadedTableRectFromLoadedTable();
+ 
+-    if (rebuildOptions.testFlag(RebuildOption::CalculateNewContentWidth)) {
++    if (rebuildOptions.testFlag(RebuildOption::CalculateNewContentWidth) || allColumnsLoaded()) {
+         updateAverageColumnWidth();
+         updateContentWidth();
+     }
+ 
+-    if (rebuildOptions.testFlag(RebuildOption::CalculateNewContentHeight)) {
++    if (rebuildOptions.testFlag(RebuildOption::CalculateNewContentHeight) || allRowsLoaded()) {
+         updateAverageRowHeight();
+         updateContentHeight();
+     }
+diff --git a/src/quick/items/qquicktableview_p_p.h b/src/quick/items/qquicktableview_p_p.h
+index 403a77c3ea..df52672424 100644
+--- a/src/quick/items/qquicktableview_p_p.h
++++ b/src/quick/items/qquicktableview_p_p.h
+@@ -368,6 +368,8 @@ public:
+ 
+     int nextVisibleEdgeIndex(Qt::Edge edge, int startIndex);
+     int nextVisibleEdgeIndexAroundLoadedTable(Qt::Edge edge);
++    bool allColumnsLoaded();
++    bool allRowsLoaded();
+     inline int edgeToArrayIndex(Qt::Edge edge);
+     void clearEdgeSizeCache();
+ 
 diff --git a/src/quick/items/qquicktext.cpp b/src/quick/items/qquicktext.cpp
-index 90469ee82b..459dea8f74 100644
+index 90469ee82b..e823ca1095 100644
 --- a/src/quick/items/qquicktext.cpp
 +++ b/src/quick/items/qquicktext.cpp
 @@ -398,6 +398,8 @@ void QQuickTextPrivate::updateSize()
@@ -2320,6 +3040,17 @@ index 90469ee82b..459dea8f74 100644
          updateType = UpdatePaintNode;
          q->update();
          return;
+@@ -1177,8 +1179,8 @@ QRectF QQuickTextPrivate::setupTextLayout(qreal *const baseline)
+     QTextLine firstLine = visibleCount == 1 && elideLayout
+             ? elideLayout->lineAt(0)
+             : layout.lineAt(0);
+-    Q_ASSERT(firstLine.isValid());
+-    *baseline = firstLine.y() + firstLine.ascent();
++    if (firstLine.isValid())
++        *baseline = firstLine.y() + firstLine.ascent();
+ 
+     if (!customLayout)
+         br.setHeight(height);
 @@ -2166,7 +2168,7 @@ void QQuickText::resetMaximumLineCount()
      <img src="" align="top,middle,bottom" width="" height=""> - inline images
      <ol type="">, <ul type=""> and <li> - ordered and unordered lists
@@ -2341,6 +3072,23 @@ index 90469ee82b..459dea8f74 100644
      }
  
      if (d->updateOnComponentComplete || d->textHasChanged) {
+diff --git a/src/quick/items/qquicktextcontrol.cpp b/src/quick/items/qquicktextcontrol.cpp
+index 8db2a38b11..742d36a789 100644
+--- a/src/quick/items/qquicktextcontrol.cpp
++++ b/src/quick/items/qquicktextcontrol.cpp
+@@ -949,6 +949,12 @@ void QQuickTextControlPrivate::keyPressEvent(QKeyEvent *e)
+ process:
+     {
+         if (q->isAcceptableInput(e)) {
++#if QT_CONFIG(im)
++            // QTBUG-90362
++            // Before key press event will be handled, pre-editing part should be finished
++            if (isPreediting())
++                commitPreedit();
++#endif
+             if (overwriteMode
+                 // no need to call deleteChar() if we have a selection, insertText
+                 // does it already
 diff --git a/src/quick/items/qquicktextedit.cpp b/src/quick/items/qquicktextedit.cpp
 index 068571f15e..5df5e5adcf 100644
 --- a/src/quick/items/qquicktextedit.cpp
@@ -2378,7 +3126,7 @@ index 068571f15e..5df5e5adcf 100644
      }
  }
 diff --git a/src/quick/items/qquicktextinput.cpp b/src/quick/items/qquicktextinput.cpp
-index 6275b298ed..7d0d05700a 100644
+index 6275b298ed..0e7f52e816 100644
 --- a/src/quick/items/qquicktextinput.cpp
 +++ b/src/quick/items/qquicktextinput.cpp
 @@ -2952,6 +2952,7 @@ void QQuickTextInputPrivate::setTopPadding(qreal value, bool reset)
@@ -2413,7 +3161,45 @@ index 6275b298ed..7d0d05700a 100644
          emit q->bottomPaddingChanged();
      }
  }
-@@ -3494,11 +3498,10 @@ void QQuickTextInputPrivate::processInputMethodEvent(QInputMethodEvent *event)
+@@ -3429,17 +3433,19 @@ void QQuickTextInputPrivate::processInputMethodEvent(QInputMethodEvent *event)
+     if (event->replacementStart() <= 0)
+         c += event->commitString().length() - qMin(-event->replacementStart(), event->replacementLength());
+ 
+-    m_cursor += event->replacementStart();
+-    if (m_cursor < 0)
+-        m_cursor = 0;
++    int cursorInsertPos = m_cursor + event->replacementStart();
++    if (cursorInsertPos < 0)
++        cursorInsertPos = 0;
+ 
+     // insert commit string
+     if (event->replacementLength()) {
+-        m_selstart = m_cursor;
++        m_selstart = cursorInsertPos;
+         m_selend = m_selstart + event->replacementLength();
+         m_selend = qMin(m_selend, m_text.length());
+         removeSelectedText();
+     }
++    m_cursor = cursorInsertPos;
++
+     if (!event->commitString().isEmpty()) {
+         internalInsert(event->commitString());
+         cursorPositionChanged = true;
+@@ -3466,8 +3472,12 @@ void QQuickTextInputPrivate::processInputMethodEvent(QInputMethodEvent *event)
+     }
+     QString oldPreeditString = m_textLayout.preeditAreaText();
+     m_textLayout.setPreeditArea(m_cursor, event->preeditString());
+-    if (oldPreeditString != m_textLayout.preeditAreaText())
++    if (oldPreeditString != m_textLayout.preeditAreaText()) {
+         emit q->preeditTextChanged();
++        if (!event->preeditString().isEmpty() && m_undoPreeditState == -1)
++            // Pre-edit text started. Remember state for undo purpose.
++            m_undoPreeditState = priorState;
++    }
+     const int oldPreeditCursor = m_preeditCursor;
+     m_preeditCursor = event->preeditString().length();
+     hasImState = !event->preeditString().isEmpty();
+@@ -3494,11 +3504,10 @@ void QQuickTextInputPrivate::processInputMethodEvent(QInputMethodEvent *event)
      m_textLayout.setFormats(formats);
  
      updateDisplayText(/*force*/ true);
@@ -2428,7 +3214,42 @@ index 6275b298ed..7d0d05700a 100644
  
      if (isGettingInput)
          finishChange(priorState);
-@@ -3831,8 +3834,7 @@ void QQuickTextInputPrivate::parseInputMask(const QString &maskFields)
+@@ -3510,6 +3519,11 @@ void QQuickTextInputPrivate::processInputMethodEvent(QInputMethodEvent *event)
+         q->updateInputMethod(Qt::ImCursorRectangle | Qt::ImAnchorRectangle
+                             | Qt::ImCurrentSelection);
+     }
++
++    // Empty pre-edit text handled. Clean m_undoPreeditState
++    if (event->preeditString().isEmpty())
++        m_undoPreeditState = -1;
++
+ }
+ #endif // im
+ 
+@@ -3586,6 +3600,12 @@ bool QQuickTextInputPrivate::finishChange(int validateFromState, bool update, bo
+         if (m_maskData)
+             checkIsValid();
+ 
++#if QT_CONFIG(im)
++        // If we were during pre-edit, validateFromState should point to the state before pre-edit
++        // has been started. Choose the correct oldest remembered state
++        if (m_undoPreeditState >= 0 && (m_undoPreeditState < validateFromState || validateFromState < 0))
++                validateFromState = m_undoPreeditState;
++#endif
+         if (validateFromState >= 0 && wasValidInput && !m_validInput) {
+             if (m_transactions.count())
+                 return false;
+@@ -3658,6 +3678,9 @@ void QQuickTextInputPrivate::internalSetText(const QString &txt, int pos, bool e
+     }
+     m_history.clear();
+     m_undoState = 0;
++#if QT_CONFIG(im)
++    m_undoPreeditState = -1;
++#endif
+     m_cursor = (pos < 0 || pos > m_text.length()) ? m_text.length() : pos;
+     m_textDirty = (oldText != m_text);
+ 
+@@ -3831,8 +3854,7 @@ void QQuickTextInputPrivate::parseInputMask(const QString &maskFields)
      int delimiter = maskFields.indexOf(QLatin1Char(';'));
      if (maskFields.isEmpty() || delimiter == 0) {
          if (m_maskData) {
@@ -2438,7 +3259,7 @@ index 6275b298ed..7d0d05700a 100644
              m_maxLength = 32767;
              internalSetText(QString());
          }
-@@ -3863,8 +3865,7 @@ void QQuickTextInputPrivate::parseInputMask(const QString &maskFields)
+@@ -3863,8 +3885,7 @@ void QQuickTextInputPrivate::parseInputMask(const QString &maskFields)
              m_maxLength++;
      }
  
@@ -2448,7 +3269,7 @@ index 6275b298ed..7d0d05700a 100644
  
      MaskInputData::Casemode m = MaskInputData::NoCaseMode;
      c = 0;
-@@ -4715,6 +4716,7 @@ void QQuickTextInput::setPadding(qreal padding)
+@@ -4715,6 +4736,7 @@ void QQuickTextInput::setPadding(qreal padding)
  
      d->extra.value().padding = padding;
      d->updateLayout();
@@ -2457,7 +3278,7 @@ index 6275b298ed..7d0d05700a 100644
      if (!d->extra.isAllocated() || !d->extra->explicitTopPadding)
          emit topPaddingChanged();
 diff --git a/src/quick/items/qquicktextinput_p_p.h b/src/quick/items/qquicktextinput_p_p.h
-index 7965f3d3f4..7fbba49405 100644
+index 7965f3d3f4..fa92e608b7 100644
 --- a/src/quick/items/qquicktextinput_p_p.h
 +++ b/src/quick/items/qquicktextinput_p_p.h
 @@ -58,6 +58,8 @@
@@ -2469,7 +3290,15 @@ index 7965f3d3f4..7fbba49405 100644
  //
  //  W A R N I N G
  //  -------------
-@@ -230,7 +232,7 @@ public:
+@@ -108,6 +110,7 @@ public:
+         , m_cursor(0)
+ #if QT_CONFIG(im)
+         , m_preeditCursor(0)
++        , m_undoPreeditState(-1)
+ #endif
+         , m_blinkEnabled(false)
+         , m_blinkTimer(0)
+@@ -230,7 +233,7 @@ public:
  
      QQuickItem *cursorItem;
      QQuickTextNode *textNode;
@@ -2478,6 +3307,29 @@ index 7965f3d3f4..7fbba49405 100644
      QInputControl *m_inputControl;
  
      QList<int> m_transactions;
+@@ -246,6 +249,7 @@ public:
+     int m_cursor;
+ #if QT_CONFIG(im)
+     int m_preeditCursor;
++    int m_undoPreeditState;
+ #endif
+     bool m_blinkEnabled;
+     int m_blinkTimer;
+@@ -333,7 +337,13 @@ public:
+ 
+     bool isUndoAvailable() const { return !m_readOnly && m_undoState; }
+     bool isRedoAvailable() const { return !m_readOnly && m_undoState < (int)m_history.size(); }
+-    void clearUndo() { m_history.clear(); m_undoState = 0; }
++    void clearUndo() {
++            m_history.clear();
++            m_undoState = 0;
++#if QT_CONFIG(im)
++            m_undoPreeditState = -1;
++#endif
++    }
+ 
+     bool allSelected() const { return !m_text.isEmpty() && m_selstart == 0 && m_selend == (int)m_text.length(); }
+     bool hasSelectedText() const { return !m_text.isEmpty() && m_selend > m_selstart; }
 diff --git a/src/quick/items/qquickview.cpp b/src/quick/items/qquickview.cpp
 index 97f6689d8a..b3a5270e9b 100644
 --- a/src/quick/items/qquickview.cpp
@@ -2569,10 +3421,23 @@ index 80e59563c7..97680569e7 100644
  QT_BEGIN_NAMESPACE
  
 diff --git a/src/quick/scenegraph/coreapi/qsgbatchrenderer.cpp b/src/quick/scenegraph/coreapi/qsgbatchrenderer.cpp
-index 3b49b88182..73c02d793b 100644
+index 3b49b88182..31671c8639 100644
 --- a/src/quick/scenegraph/coreapi/qsgbatchrenderer.cpp
 +++ b/src/quick/scenegraph/coreapi/qsgbatchrenderer.cpp
-@@ -2432,18 +2432,20 @@ ClipState::ClipType Renderer::updateStencilClip(const QSGClipNode *clip)
+@@ -1958,7 +1958,11 @@ void Renderer::prepareAlphaBatches()
+ 
+             if (gni->clipList() == gnj->clipList()
+                     && gni->geometry()->drawingMode() == gnj->geometry()->drawingMode()
+-                    && (gni->geometry()->drawingMode() != QSGGeometry::DrawLines || gni->geometry()->lineWidth() == gnj->geometry()->lineWidth())
++                    && (gni->geometry()->drawingMode() != QSGGeometry::DrawLines
++                        || (gni->geometry()->lineWidth() == gnj->geometry()->lineWidth()
++                            // Must not do overlap checks when the line width is not 1,
++                            // we have no knowledge how such lines are rasterized.
++                            && gni->geometry()->lineWidth() == 1.0f))
+                     && gni->geometry()->attributes() == gnj->geometry()->attributes()
+                     && gni->inheritedOpacity() == gnj->inheritedOpacity()
+                     && gni->activeMaterial()->type() == gnj->activeMaterial()->type()
+@@ -2432,18 +2436,20 @@ ClipState::ClipType Renderer::updateStencilClip(const QSGClipNode *clip)
          // TODO: Check for multisampling and pixel grid alignment.
          bool isRectangleWithNoPerspective = clip->isRectangular()
                  && qFuzzyIsNull(m(3, 0)) && qFuzzyIsNull(m(3, 1));
@@ -2598,7 +3463,7 @@ index 3b49b88182..73c02d793b 100644
                  fx1 = (bbox.bottom() * m(0, 1) + m(0, 3)) * invW;
                  fy1 = (bbox.left() * m(1, 0) + m(1, 3)) * invW;
                  fx2 = (bbox.top() * m(0, 1) + m(0, 3)) * invW;
-@@ -2462,18 +2464,12 @@ ClipState::ClipType Renderer::updateStencilClip(const QSGClipNode *clip)
+@@ -2462,18 +2468,12 @@ ClipState::ClipType Renderer::updateStencilClip(const QSGClipNode *clip)
              GLint ix2 = qRound((fx2 + 1) * deviceRect.width() * qreal(0.5));
              GLint iy2 = qRound((fy2 + 1) * deviceRect.height() * qreal(0.5));
  
@@ -2619,7 +3484,7 @@ index 3b49b88182..73c02d793b 100644
              }
              glScissor(m_currentScissorRect.x(), m_currentScissorRect.y(),
                        m_currentScissorRect.width(), m_currentScissorRect.height());
-@@ -2488,31 +2484,9 @@ ClipState::ClipType Renderer::updateStencilClip(const QSGClipNode *clip)
+@@ -2488,31 +2488,9 @@ ClipState::ClipType Renderer::updateStencilClip(const QSGClipNode *clip)
                      m_clipProgram.link();
                      m_clipMatrixId = m_clipProgram.uniformLocation("matrix");
                  }
@@ -2651,6 +3516,27 @@ index 3b49b88182..73c02d793b 100644
                  glEnable(GL_STENCIL_TEST);
                  glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
                  glDepthMask(GL_FALSE);
+@@ -4470,6 +4448,9 @@ void Renderer::renderRenderNode(Batch *batch) // legacy (GL-only)
+         opacity = opacity->parent();
+     }
+ 
++    // having DepthAwareRendering leaves depth test on in the alpha pass
++    const bool depthTestWasEnabled = m_useDepthBuffer;
++
+     glDisable(GL_STENCIL_TEST);
+     glDisable(GL_SCISSOR_TEST);
+     glDisable(GL_DEPTH_TEST);
+@@ -4504,7 +4485,9 @@ void Renderer::renderRenderNode(Batch *batch) // legacy (GL-only)
+         m_currentClipType = ClipState::NoClip;
+     }
+ 
+-    if (changes & QSGRenderNode::DepthState)
++    if (depthTestWasEnabled)
++        glEnable(GL_DEPTH_TEST);
++    else if (changes & QSGRenderNode::DepthState)
+         glDisable(GL_DEPTH_TEST);
+ 
+     if (changes & QSGRenderNode::ColorState)
 diff --git a/src/quick/scenegraph/qsgdefaultglyphnode_p.cpp b/src/quick/scenegraph/qsgdefaultglyphnode_p.cpp
 index 3c60f830de..0fd6581dc4 100644
 --- a/src/quick/scenegraph/qsgdefaultglyphnode_p.cpp
@@ -3745,6 +4631,90 @@ index d0c8390a74..3c59f7bd56 100644
  QTEST_MAIN(tst_qmldiskcache)
  
  #include "tst_qmldiskcache.moc"
+diff --git a/tests/auto/qml/qmltyperegistrar/foreign/foreign.pro b/tests/auto/qml/qmltyperegistrar/foreign/foreign.pro
+index 87521eac43..006439b58a 100644
+--- a/tests/auto/qml/qmltyperegistrar/foreign/foreign.pro
++++ b/tests/auto/qml/qmltyperegistrar/foreign/foreign.pro
+@@ -2,7 +2,6 @@ TEMPLATE = lib
+ QT = core
+ 
+ macos:CONFIG -= app_bundle
+-CONFIG -= debug_and_release_target
+ 
+ SOURCES = foreign.cpp
+ HEADERS = foreign.h
+diff --git a/tests/auto/qml/qmltyperegistrar/tst_qmltyperegistrar.pro b/tests/auto/qml/qmltyperegistrar/tst_qmltyperegistrar.pro
+index fe21b122c2..3589743f0c 100644
+--- a/tests/auto/qml/qmltyperegistrar/tst_qmltyperegistrar.pro
++++ b/tests/auto/qml/qmltyperegistrar/tst_qmltyperegistrar.pro
+@@ -17,4 +17,9 @@ QML_IMPORT_NAME = QmlTypeRegistrarTest
+ QML_IMPORT_VERSION = 1.0
+ 
+ INCLUDEPATH += foreign
+-LIBS += -Lforeign -lforeign
++debug_and_release {
++    CONFIG(release, debug|release): LIBS += -Lforeign/release -lforeign
++    else:  LIBS += -Lforeign/debug -lforeign
++} else {
++    LIBS += -Lforeign -lforeign
++}
+diff --git a/tests/auto/qml/qqmlapplicationengine/data/Required.qml b/tests/auto/qml/qqmlapplicationengine/data/Required.qml
+new file mode 100644
+index 0000000000..acf4a00ce6
+--- /dev/null
++++ b/tests/auto/qml/qqmlapplicationengine/data/Required.qml
+@@ -0,0 +1,6 @@
++import QtQml 2.15
++
++QtObject
++{
++    required property int foo
++}
+diff --git a/tests/auto/qml/qqmlapplicationengine/data/requiredViolation.qml b/tests/auto/qml/qqmlapplicationengine/data/requiredViolation.qml
+new file mode 100644
+index 0000000000..c5de4661a9
+--- /dev/null
++++ b/tests/auto/qml/qqmlapplicationengine/data/requiredViolation.qml
+@@ -0,0 +1,3 @@
++import QtQml 2.15
++
++Required {}
+diff --git a/tests/auto/qml/qqmlapplicationengine/tst_qqmlapplicationengine.cpp b/tests/auto/qml/qqmlapplicationengine/tst_qqmlapplicationengine.cpp
+index f636e527c3..4306c7b8ca 100644
+--- a/tests/auto/qml/qqmlapplicationengine/tst_qqmlapplicationengine.cpp
++++ b/tests/auto/qml/qqmlapplicationengine/tst_qqmlapplicationengine.cpp
+@@ -56,6 +56,7 @@ private slots:
+     void translationChange();
+     void setInitialProperties();
+     void failureToLoadTriggersWarningSignal();
++    void errorWhileCreating();
+ 
+ private:
+     QString buildDir;
+@@ -333,6 +334,23 @@ void tst_qqmlapplicationengine::failureToLoadTriggersWarningSignal()
+     QTRY_COMPARE(warningObserver.count(), 1);
+ }
+ 
++void tst_qqmlapplicationengine::errorWhileCreating()
++{
++    auto url = testFileUrl("requiredViolation.qml");
++    QQmlApplicationEngine test;
++    QSignalSpy observer(&test, &QQmlApplicationEngine::objectCreated);
++
++    QTest::ignoreMessage(QtMsgType::QtWarningMsg, "QQmlApplicationEngine failed to create component");
++    QTest::ignoreMessage(QtMsgType::QtWarningMsg, qPrintable(QStringLiteral("%1:5:5: Required property foo was not initialized").arg(testFileUrl("Required.qml").toString())));
++
++    test.load(url);
++
++    QTRY_COMPARE(observer.count(), 1);
++    QList<QVariant> args = observer.takeFirst();
++    QVERIFY(args.at(0).isNull());
++    QCOMPARE(args.at(1).toUrl(), url);
++}
++
+ QTEST_MAIN(tst_qqmlapplicationengine)
+ 
+ #include "tst_qqmlapplicationengine.moc"
 diff --git a/tests/auto/qml/qqmldelegatemodel/data/redrawUponColumnChange.qml b/tests/auto/qml/qqmldelegatemodel/data/redrawUponColumnChange.qml
 new file mode 100644
 index 0000000000..206133bb39
@@ -3762,6 +4732,57 @@ index 0000000000..206133bb39
 +        text: display
 +    }
 +}
+diff --git a/tests/auto/qml/qqmldelegatemodel/data/removeFromGroup.qml b/tests/auto/qml/qqmldelegatemodel/data/removeFromGroup.qml
+new file mode 100644
+index 0000000000..4ae1a8aacc
+--- /dev/null
++++ b/tests/auto/qml/qqmldelegatemodel/data/removeFromGroup.qml
+@@ -0,0 +1,45 @@
++import QtQuick 2.8
++import QtQml.Models 2.1
++
++Item {
++    id: root
++    width: 200
++    height: 200
++
++    DelegateModel {
++        id: visualModel
++        model: ListModel {
++            id: myLM
++            ListElement {
++                name: "Apple"
++            }
++            ListElement {
++                name: "Banana"
++            }
++            ListElement {
++                name: "Orange"
++            }
++        }
++        filterOnGroup: "selected"
++        groups: [
++            DelegateModelGroup {
++                name: "selected"
++                includeByDefault: true
++            }
++        ]
++        delegate: Text {
++            Component.onCompleted: {
++                if (index === 1) {
++                    DelegateModel.inSelected = false
++                }
++            }
++            text: index + ": " + model.name
++        }
++    }
++
++    // Needs an actual ListView in order for the DelegateModel to instantiate all items
++    ListView {
++        model: visualModel
++        anchors.fill: parent
++    }
++}
 diff --git a/tests/auto/qml/qqmldelegatemodel/qqmldelegatemodel.pro b/tests/auto/qml/qqmldelegatemodel/qqmldelegatemodel.pro
 index 7fdd3ab5f1..fbd72f6a44 100644
 --- a/tests/auto/qml/qqmldelegatemodel/qqmldelegatemodel.pro
@@ -3776,7 +4797,7 @@ index 7fdd3ab5f1..fbd72f6a44 100644
  SOURCES += tst_qqmldelegatemodel.cpp
  
 diff --git a/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp b/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp
-index 87f42c0c8a..1d338ac330 100644
+index 87f42c0c8a..4c1eae7ac7 100644
 --- a/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp
 +++ b/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp
 @@ -27,8 +27,12 @@
@@ -3792,18 +4813,31 @@ index 87f42c0c8a..1d338ac330 100644
  
  #include "../../shared/util.h"
  
-@@ -42,6 +46,7 @@ public:
+@@ -42,6 +46,8 @@ public:
  private slots:
      void valueWithoutCallingObjectFirst_data();
      void valueWithoutCallingObjectFirst();
++    void filterOnGroup_removeWhenCompleted();
 +    void redrawUponColumnChange();
  };
  
  class AbstractItemModel : public QAbstractItemModel
-@@ -134,6 +139,30 @@ void tst_QQmlDelegateModel::valueWithoutCallingObjectFirst()
+@@ -134,6 +140,42 @@ void tst_QQmlDelegateModel::valueWithoutCallingObjectFirst()
      QCOMPARE(model->variantValue(index, role), expectedValue);
  }
  
++void tst_QQmlDelegateModel::filterOnGroup_removeWhenCompleted()
++{
++    QQuickView view(testFileUrl("removeFromGroup.qml"));
++    QCOMPARE(view.status(), QQuickView::Ready);
++    view.show();
++    QQuickItem *root = view.rootObject();
++    QVERIFY(root);
++    QQmlDelegateModel *model = root->findChild<QQmlDelegateModel*>();
++    QVERIFY(model);
++    QTest::qWaitFor([=]{ return model->count() == 2; } );
++}
++
 +void tst_QQmlDelegateModel::redrawUponColumnChange()
 +{
 +    QStandardItemModel m1;
@@ -3831,6 +4865,32 @@ index 87f42c0c8a..1d338ac330 100644
  QTEST_MAIN(tst_QQmlDelegateModel)
  
  #include "tst_qqmldelegatemodel.moc"
+diff --git a/tests/auto/qml/qqmlecmascript/data/generatorCrashNewProperty.qml b/tests/auto/qml/qqmlecmascript/data/generatorCrashNewProperty.qml
+new file mode 100644
+index 0000000000..f775b4c613
+--- /dev/null
++++ b/tests/auto/qml/qqmlecmascript/data/generatorCrashNewProperty.qml
+@@ -0,0 +1,20 @@
++// QTBUG-91491
++import QtQml 2.15
++
++QtObject {
++   property int a: 42
++   property int b: 0
++   property int c: 0
++
++   function f(myfunc) {
++      let gen = myfunc();
++      gen["u"] = 0 // Adding members to the generator used to cause crashes when calling next()
++      c = gen.next().value
++   }
++
++   function refreshA() {
++      f(function*() { b = 12; return a });
++   }
++
++   Component.onCompleted: refreshA();
++}
 diff --git a/tests/auto/qml/qqmlecmascript/data/proxyIteration.qml b/tests/auto/qml/qqmlecmascript/data/proxyIteration.qml
 new file mode 100644
 index 0000000000..affba7d9f1
@@ -3867,10 +4927,18 @@ index 0000000000..affba7d9f1
 +  }
 +}
 diff --git a/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp b/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp
-index 1e10841430..9198d3bebf 100644
+index 1e10841430..3c3a2a7a99 100644
 --- a/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp
 +++ b/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp
-@@ -382,7 +382,8 @@ private slots:
+@@ -239,6 +239,7 @@ private slots:
+     void eval();
+     void function();
+     void topLevelGeneratorFunction();
++    void generatorCrashNewProperty();
+     void qtbug_10696();
+     void qtbug_11606();
+     void qtbug_11600();
+@@ -382,7 +383,8 @@ private slots:
      void semicolonAfterProperty();
      void hugeStack();
      void variantConversionMethod();
@@ -3880,7 +4948,29 @@ index 1e10841430..9198d3bebf 100644
      void gcCrashRegressionTest();
  
  private:
-@@ -9306,6 +9307,44 @@ void tst_qqmlecmascript::variantConversionMethod()
+@@ -6488,6 +6490,21 @@ void tst_qqmlecmascript::topLevelGeneratorFunction()
+     QCOMPARE(it.property("next").callWithInstance(it).property("value").toInt(), 1);
+ }
+ 
++// QTBUG-91491
++void tst_qqmlecmascript::generatorCrashNewProperty()
++{
++    QQmlEngine engine;
++    QQmlComponent component(&engine, testFileUrl("generatorCrashNewProperty.qml"));
++
++    QScopedPointer<QObject> o(component.create());
++
++    QVERIFY2(o != nullptr, qPrintable(component.errorString()));
++
++    QCOMPARE(o->property("a").toInt(), 42);
++    QCOMPARE(o->property("b").toInt(), 12);
++    QCOMPARE(o->property("c").toInt(), 42);
++}
++
+ // Test the "Qt.include" method
+ void tst_qqmlecmascript::include()
+ {
+@@ -9306,6 +9323,44 @@ void tst_qqmlecmascript::variantConversionMethod()
      QCOMPARE(obj.funcCalled, QLatin1String("QModelIndex"));
  }
  
@@ -3925,6 +5015,87 @@ index 1e10841430..9198d3bebf 100644
  QTEST_MAIN(tst_qqmlecmascript)
  
  #include "tst_qqmlecmascript.moc"
+diff --git a/tests/auto/qml/qqmlincubator/tst_qqmlincubator.cpp b/tests/auto/qml/qqmlincubator/tst_qqmlincubator.cpp
+index 549aae8c2b..25adf4f31d 100644
+--- a/tests/auto/qml/qqmlincubator/tst_qqmlincubator.cpp
++++ b/tests/auto/qml/qqmlincubator/tst_qqmlincubator.cpp
+@@ -71,6 +71,7 @@ private slots:
+     void contextDelete();
+     void garbageCollection();
+     void requiredProperties();
++    void deleteInSetInitialState();
+ 
+ private:
+     QQmlIncubationController controller;
+@@ -1213,6 +1214,38 @@ void tst_qqmlincubator::requiredProperties()
+     }
+ }
+ 
++class DeletingIncubator : public QQmlIncubator
++{
++
++
++    // QQmlIncubator interface
++protected:
++    void statusChanged(Status) override
++    {
++
++    }
++    void setInitialState(QObject *obj) override
++    {
++        delete obj;
++        clear();
++    }
++};
++
++void tst_qqmlincubator::deleteInSetInitialState()
++{
++    QQmlComponent component(&engine, testFileUrl("requiredProperty.qml"));
++    QVERIFY(component.isReady());
++    // forceCompletion immediately after creating an asynchronous object completes it
++    DeletingIncubator incubator;
++    incubator.setInitialProperties({{"requiredProperty", 42}});
++    QVERIFY(incubator.isNull());
++    component.create(incubator);
++    QVERIFY(incubator.isLoading());
++    incubator.forceCompletion(); // no crash
++    QVERIFY(incubator.isNull());
++    QCOMPARE(incubator.object(), nullptr); // object was deleted
++}
++
+ QTEST_MAIN(tst_qqmlincubator)
+ 
+ #include "tst_qqmlincubator.moc"
+diff --git a/tests/auto/qml/qqmllanguage/data/Tab1.qml b/tests/auto/qml/qqmllanguage/data/Tab1.qml
+new file mode 100644
+index 0000000000..e1cd6d8c34
+--- /dev/null
++++ b/tests/auto/qml/qqmllanguage/data/Tab1.qml
+@@ -0,0 +1,9 @@
++import QtQuick 2.15
++
++Item {
++    component LeftTab: Item {
++    }
++
++    component RightTab: Item {
++    }
++}
+diff --git a/tests/auto/qml/qqmllanguage/data/bareInline.qml b/tests/auto/qml/qqmllanguage/data/bareInline.qml
+new file mode 100644
+index 0000000000..cb79021250
+--- /dev/null
++++ b/tests/auto/qml/qqmllanguage/data/bareInline.qml
+@@ -0,0 +1,9 @@
++import QtQuick 2.9
++
++Item {
++    width: 800
++    height: 600
++    visible: true
++
++    Tab1.RightTab {}
++}
 diff --git a/tests/auto/qml/qqmllanguage/data/inlineComponentsSameFile.qml b/tests/auto/qml/qqmllanguage/data/inlineComponentsSameFile.qml
 new file mode 100644
 index 0000000000..87cac10200
@@ -3943,10 +5114,26 @@ index 0000000000..87cac10200
 +    property list<IC> listProp: [IC { name: "Alfred Ill"; age: 65 }, IC { name: "Claire Zachanassian"; age: 62}]
 +}
 diff --git a/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp b/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp
-index 8adcbc1837..e247a139ec 100644
+index 8adcbc1837..de8b2ef7eb 100644
 --- a/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp
 +++ b/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp
-@@ -5604,6 +5604,7 @@ void tst_qqmllanguage::inlineComponent_data()
+@@ -48,6 +48,7 @@
+ #include <private/qqmlscriptstring_p.h>
+ #include <private/qqmlvmemetaobject_p.h>
+ #include <private/qqmlcomponent_p.h>
++#include <private/qqmltype_p_p.h>
+ 
+ #include "testtypes.h"
+ #include "testhttpserver.h"
+@@ -331,6 +332,7 @@ private slots:
+     void arrayToContainer();
+     void qualifiedScopeInCustomParser();
+     void accessNullPointerPropertyCache();
++    void bareInlineComponent();
+ 
+ private:
+     QQmlEngine engine;
+@@ -5604,6 +5606,7 @@ void tst_qqmllanguage::inlineComponent_data()
      QTest::newRow("Alias resolves correctly") << testFileUrl("inlineComponentWithAlias.qml") << QColorConstants::Svg::lime << 42 << true;
  
      QTest::newRow("Two inline components in same do not crash (QTBUG-86989)") << testFileUrl("twoInlineComponents.qml") << QColor() << 0 << false;
@@ -3954,6 +5141,39 @@ index 8adcbc1837..e247a139ec 100644
  }
  
  void tst_qqmllanguage::inlineComponentReferenceCycle_data()
+@@ -5812,6 +5815,32 @@ void tst_qqmllanguage::accessNullPointerPropertyCache()
+     QVERIFY(!obj.isNull());
+ }
+ 
++void tst_qqmllanguage::bareInlineComponent()
++{
++    QQmlEngine engine;
++
++    QQmlComponent c(&engine, testFileUrl("bareInline.qml"));
++    QVERIFY2(c.isReady(), qPrintable(c.errorString()));
++    QScopedPointer<QObject> o(c.create());
++    QVERIFY(!o.isNull());
++
++    QQmlMetaType::freeUnusedTypesAndCaches();
++
++    bool tab1Found = false;
++    const auto types = QQmlMetaType::qmlTypes();
++    for (const QQmlType &type : types) {
++        if (type.elementName() == QStringLiteral("Tab1")) {
++            QVERIFY(type.module().isEmpty());
++            tab1Found = true;
++            const auto ics = type.priv()->objectIdToICType;
++            QVERIFY(ics.size() > 0);
++            for (const QQmlType &ic : ics)
++                QVERIFY(ic.containingType() == type);
++        }
++    }
++    QVERIFY(tab1Found);
++}
++
+ QTEST_MAIN(tst_qqmllanguage)
+ 
+ #include "tst_qqmllanguage.moc"
 diff --git a/tests/auto/qml/qqmllistmodel/tst_qqmllistmodel.cpp b/tests/auto/qml/qqmllistmodel/tst_qqmllistmodel.cpp
 index d54e3467b7..1953798a15 100644
 --- a/tests/auto/qml/qqmllistmodel/tst_qqmllistmodel.cpp
@@ -4450,6 +5670,34 @@ index 7d0c10a702..822fe33b83 100644
  
  QTEST_MAIN(tst_qqmllocale)
  
+diff --git a/tests/auto/qml/qqmlproperty/tst_qqmlproperty.cpp b/tests/auto/qml/qqmlproperty/tst_qqmlproperty.cpp
+index 8a96fc52c5..5363cc8fcb 100644
+--- a/tests/auto/qml/qqmlproperty/tst_qqmlproperty.cpp
++++ b/tests/auto/qml/qqmlproperty/tst_qqmlproperty.cpp
+@@ -164,6 +164,8 @@ private slots:
+     void nestedQQmlPropertyMap();
+ 
+     void underscorePropertyChangeHandler();
++
++    void signalExpressionWithoutObject();
+ private:
+     QQmlEngine engine;
+ };
+@@ -2210,6 +2212,14 @@ void tst_qqmlproperty::underscorePropertyChangeHandler()
+     QVERIFY(changeHandler.isSignalProperty());
+ }
+ 
++void tst_qqmlproperty::signalExpressionWithoutObject()
++{
++    QQmlProperty invalid;
++    QQmlPropertyPrivate::setSignalExpression(invalid, nullptr);
++    QQmlBoundSignalExpression *expr = QQmlPropertyPrivate::signalExpression(invalid);
++    QVERIFY(!expr);
++}
++
+ QTEST_MAIN(tst_qqmlproperty)
+ 
+ #include "tst_qqmlproperty.moc"
 diff --git a/tests/auto/qml/qv4mm/tst_qv4mm.cpp b/tests/auto/qml/qv4mm/tst_qv4mm.cpp
 index 5d635aa63b..824fd89e5b 100644
 --- a/tests/auto/qml/qv4mm/tst_qv4mm.cpp
@@ -4468,6 +5716,55 @@ index 5d635aa63b..824fd89e5b 100644
  
          // engine2 doesn't own the object as engine1 was the first to wrap it above.
          // Therefore, no effect here.
+diff --git a/tests/auto/quick/qquickitem2/data/activeFocusOnTab_infiniteLoop3.qml b/tests/auto/quick/qquickitem2/data/activeFocusOnTab_infiniteLoop3.qml
+new file mode 100644
+index 0000000000..889e480f3b
+--- /dev/null
++++ b/tests/auto/quick/qquickitem2/data/activeFocusOnTab_infiniteLoop3.qml
+@@ -0,0 +1,13 @@
++import QtQuick 2.6
++
++Item {
++    visible: true
++    Item {
++        visible: false
++        Item {
++            objectName: "hiddenChild"
++            activeFocusOnTab: true
++            focus: true
++        }
++    }
++}
+diff --git a/tests/auto/quick/qquickitem2/tst_qquickitem.cpp b/tests/auto/quick/qquickitem2/tst_qquickitem.cpp
+index f65650cf9c..eeff768bb4 100644
+--- a/tests/auto/quick/qquickitem2/tst_qquickitem.cpp
++++ b/tests/auto/quick/qquickitem2/tst_qquickitem.cpp
+@@ -66,6 +66,7 @@ private slots:
+     void activeFocusOnTab10();
+     void activeFocusOnTab_infiniteLoop_data();
+     void activeFocusOnTab_infiniteLoop();
++    void activeFocusOnTab_infiniteLoopControls();
+ 
+     void nextItemInFocusChain();
+     void nextItemInFocusChain2();
+@@ -1055,6 +1056,17 @@ void tst_QQuickItem::activeFocusOnTab_infiniteLoop()
+     QCOMPARE(item, window->rootObject());
+ }
+ 
++
++void tst_QQuickItem::activeFocusOnTab_infiniteLoopControls()
++{
++    auto source = testFileUrl("activeFocusOnTab_infiniteLoop3.qml");
++    QScopedPointer<QQuickView>window(new QQuickView());
++    window->setSource(source);
++    window->show();
++    QVERIFY(window->errors().isEmpty());
++    QTest::keyClick(window.get(), Qt::Key_Tab); // should not hang
++}
++
+ void tst_QQuickItem::nextItemInFocusChain()
+ {
+     if (!qt_tab_all_widgets())
 diff --git a/tests/auto/quick/qquicklayouts/data/tst_rowlayout.qml b/tests/auto/quick/qquicklayouts/data/tst_rowlayout.qml
 index 85fe54eca6..87e0a01df2 100644
 --- a/tests/auto/quick/qquicklayouts/data/tst_rowlayout.qml
@@ -4716,6 +6013,94 @@ index f4b682f3f4..dddacbaa0b 100644
  QTEST_MAIN(tst_QQuickLoader)
  
  #include "tst_qquickloader.moc"
+diff --git a/tests/auto/quick/qquickmousearea/data/containsMouse.qml b/tests/auto/quick/qquickmousearea/data/containsMouse.qml
+new file mode 100644
+index 0000000000..c4f1299e49
+--- /dev/null
++++ b/tests/auto/quick/qquickmousearea/data/containsMouse.qml
+@@ -0,0 +1,14 @@
++import QtQuick 2.15
++
++Rectangle {
++    width: 200
++    height: 200
++    visible: true
++    MouseArea {
++        id: mouseArea
++        objectName: "mouseArea"
++        anchors.fill: parent
++        hoverEnabled: true
++        visible: false
++    }
++}
+diff --git a/tests/auto/quick/qquickmousearea/tst_qquickmousearea.cpp b/tests/auto/quick/qquickmousearea/tst_qquickmousearea.cpp
+index 91fcae40af..1c99357ab7 100644
+--- a/tests/auto/quick/qquickmousearea/tst_qquickmousearea.cpp
++++ b/tests/auto/quick/qquickmousearea/tst_qquickmousearea.cpp
+@@ -160,6 +160,7 @@ private slots:
+     void mask();
+     void nestedEventDelivery();
+     void settingHiddenInPressUngrabs();
++    void containsMouseAndVisibility();
+ 
+ private:
+     int startDragDistance() const {
+@@ -2450,6 +2451,55 @@ void tst_QQuickMouseArea::settingHiddenInPressUngrabs()
+     QVERIFY(!mouseArea->pressed());
+ }
+ 
++// QTBUG-87197
++void tst_QQuickMouseArea::containsMouseAndVisibility()
++{
++    QQuickView window;
++    QByteArray errorMessage;
++    QVERIFY2(QQuickTest::initView(window, testFileUrl("containsMouse.qml"), true, &errorMessage), errorMessage.constData());
++    window.show();
++    window.requestActivate();
++    QVERIFY(QTest::qWaitForWindowExposed(&window));
++
++    QQuickMouseArea *mouseArea = window.rootObject()->findChild<QQuickMouseArea*>("mouseArea");
++    QVERIFY(mouseArea != nullptr);
++    QVERIFY(!mouseArea->isVisible());
++
++    QTest::mouseMove(&window, QPoint(10, 10));
++    QTRY_VERIFY(!mouseArea->hovered());
++
++    mouseArea->setVisible(true);
++    QVERIFY(mouseArea->isVisible());
++    QTRY_VERIFY(mouseArea->hovered());
++
++    /* we (ab-)use QPointF() as the 'reset' value in QQuickWindow's leave-event handling,
++       but can't verify that this leaves an invalid interpretation of states for position
++       QPoint(0, 0) as QTest::mouseMove interprets a null-position as "center of the window".
++
++       So instead, verify the current (unexpectedly expected) behavior as far as testing is
++       concern.
++    */
++    QTest::mouseMove(&window, QPoint(0, 0));
++    QTRY_VERIFY(mouseArea->hovered());
++    QTRY_VERIFY(mouseArea->isUnderMouse());
++
++    // move to the edge (can't move outside)
++    QTest::mouseMove(&window, QPoint(window.width() - 1, window.height() / 2));
++    // then pretend we left
++    QEvent event(QEvent::Leave);
++    QGuiApplication::sendEvent(&window, &event);
++    QVERIFY(!mouseArea->hovered());
++
++    // toggle mouse area visibility - the hover state should not change
++    mouseArea->setVisible(false);
++    QVERIFY(!mouseArea->isVisible());
++    QVERIFY(!mouseArea->hovered());
++
++    mouseArea->setVisible(true);
++    QVERIFY(mouseArea->isVisible());
++    QVERIFY(!mouseArea->hovered());
++}
++
+ QTEST_MAIN(tst_QQuickMouseArea)
+ 
+ #include "tst_qquickmousearea.moc"
 diff --git a/tests/auto/quick/qquickshortcut/tst_qquickshortcut.cpp b/tests/auto/quick/qquickshortcut/tst_qquickshortcut.cpp
 index 4962690796..1985f3aa31 100644
 --- a/tests/auto/quick/qquickshortcut/tst_qquickshortcut.cpp
@@ -5085,11 +6470,101 @@ index d5fea3cb28..849522454f 100644
  
  QTEST_MAIN(tst_qquickstates)
  
+diff --git a/tests/auto/quick/qquicktableview/data/sizefromdelegate.qml b/tests/auto/quick/qquicktableview/data/sizefromdelegate.qml
+new file mode 100644
+index 0000000000..b4a04c89cb
+--- /dev/null
++++ b/tests/auto/quick/qquicktableview/data/sizefromdelegate.qml
+@@ -0,0 +1,74 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the QtQuick module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:LGPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU Lesser General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU Lesser
++** General Public License version 3 as published by the Free Software
++** Foundation and appearing in the file LICENSE.LGPL3 included in the
++** packaging of this file. Please review the following information to
++** ensure the GNU Lesser General Public License version 3 requirements
++** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 2.0 or (at your option) the GNU General
++** Public license version 3 or any later version approved by the KDE Free
++** Qt Foundation. The licenses are as published by the Free Software
++** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-2.0.html and
++** https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++import QtQuick 2.12
++import QtQuick.Window 2.3
++
++Item {
++    width: 640
++    height: 450
++
++    property alias tableView: tableView
++
++    TableView {
++        id: tableView
++        width: 600
++        height: 400
++        anchors.margins: 1
++        delegate: tableViewDelegate
++        columnSpacing: 1
++        rowSpacing: 1
++    }
++
++    Component {
++        id: tableViewDelegate
++        Rectangle {
++            color: "lightgray"
++            implicitWidth: text.width
++            implicitHeight: text.height
++
++            Text {
++                id: text
++                anchors.centerIn: parent
++                text: modelData
++            }
++        }
++    }
++
++}
 diff --git a/tests/auto/quick/qquicktableview/tst_qquicktableview.cpp b/tests/auto/quick/qquicktableview/tst_qquicktableview.cpp
-index 54f73c6e0c..d489a873e4 100644
+index 54f73c6e0c..d14c37d8e3 100644
 --- a/tests/auto/quick/qquicktableview/tst_qquicktableview.cpp
 +++ b/tests/auto/quick/qquicktableview/tst_qquicktableview.cpp
-@@ -176,6 +176,7 @@ private slots:
+@@ -121,7 +121,9 @@ private slots:
+     void checkForceLayoutFunction();
+     void checkForceLayoutEndUpDoingALayout();
+     void checkForceLayoutDuringModelChange();
++    void checkForceLayoutWhenAllItemsAreHidden();
+     void checkContentWidthAndHeight();
++    void checkContentWidthAndHeightForSmallTables();
+     void checkPageFlicking();
+     void checkExplicitContentWidthAndHeight();
+     void checkExtents_origin();
+@@ -176,6 +178,7 @@ private slots:
      void checkSyncView_connect_late_data();
      void checkSyncView_connect_late();
      void checkSyncView_pageFlicking();
@@ -5097,7 +6572,77 @@ index 54f73c6e0c..d489a873e4 100644
      void delegateWithRequiredProperties();
      void checkThatFetchMoreIsCalledWhenScrolledToTheEndOfTable();
      void replaceModel();
-@@ -2731,6 +2732,48 @@ void tst_QQuickTableView::checkSyncView_pageFlicking()
+@@ -624,6 +627,38 @@ void tst_QQuickTableView::checkForceLayoutDuringModelChange()
+     QCOMPARE(tableView->rows(), initialRowCount + 1);
+ }
+ 
++void tst_QQuickTableView::checkForceLayoutWhenAllItemsAreHidden()
++{
++    // Check that you can have a TableView where all columns are
++    // initially hidden, and then show some columns and call
++    // forceLayout(). This should make the columns become visible.
++    LOAD_TABLEVIEW("forcelayout.qml");
++
++    // Tell all columns to be hidden
++    const char *propertyName = "columnWidths";
++    view->rootObject()->setProperty(propertyName, 0);
++
++    const int rows = 3;
++    const int columns = 3;
++    auto model = TestModelAsVariant(rows, columns);
++    tableView->setModel(model);
++
++    WAIT_UNTIL_POLISHED;
++
++    // Check that the we have no items loaded
++    QCOMPARE(tableViewPrivate->loadedColumns.count(), 0);
++    QCOMPARE(tableViewPrivate->loadedRows.count(), 0);
++    QCOMPARE(tableViewPrivate->loadedItems.count(), 0);
++
++    // Tell all columns to be visible
++    view->rootObject()->setProperty(propertyName, 10);
++    tableView->forceLayout();
++
++    QCOMPARE(tableViewPrivate->loadedRows.count(), rows);
++    QCOMPARE(tableViewPrivate->loadedColumns.count(), columns);
++    QCOMPARE(tableViewPrivate->loadedItems.count(), rows * columns);
++}
++
+ void tst_QQuickTableView::checkContentWidthAndHeight()
+ {
+     // Check that contentWidth/Height reports the correct size of the
+@@ -672,6 +707,30 @@ void tst_QQuickTableView::checkContentWidthAndHeight()
+     QCOMPARE(tableView->contentHeight(), expectedSizeInit);
+ }
+ 
++void tst_QQuickTableView::checkContentWidthAndHeightForSmallTables()
++{
++    // For tables where all the columns in the model are loaded, we know
++    // the exact table width, and can therefore update the content width
++    // if e.g new rows are added or removed. The same is true for rows.
++    // This test will check that we do so.
++    LOAD_TABLEVIEW("sizefromdelegate.qml");
++
++    TestModel model(3, 3);
++    tableView->setModel(QVariant::fromValue(&model));
++    WAIT_UNTIL_POLISHED;
++
++    const qreal initialContentWidth = tableView->contentWidth();
++    const qreal initialContentHeight = tableView->contentHeight();
++    const QString longText = QStringLiteral("Adding a row with a very long text");
++    model.insertRow(0);
++    model.setModelData(QPoint(0, 0), QSize(1, 1), longText);
++
++    WAIT_UNTIL_POLISHED;
++
++    QVERIFY(tableView->contentWidth() > initialContentWidth);
++    QVERIFY(tableView->contentHeight() > initialContentHeight);
++}
++
+ void tst_QQuickTableView::checkPageFlicking()
+ {
+     // Check that we rebuild the table instead of refilling edges, if the viewport moves
+@@ -2731,6 +2790,48 @@ void tst_QQuickTableView::checkSyncView_pageFlicking()
      QVERIFY(tableViewPrivate->scheduledRebuildOptions & QQuickTableViewPrivate::RebuildOption::CalculateNewTopLeftRow);
  }
  
@@ -5466,6 +7011,144 @@ index 541bfdd527..45bcf8a9ce 100644
      qquickcanvasitem \
      qquickdesignersupport \
      qquickscreen \
+diff --git a/tests/auto/quicktest/quicktest.pro b/tests/auto/quicktest/quicktest.pro
+index 6d09f76c1d..2116e4d3ac 100644
+--- a/tests/auto/quicktest/quicktest.pro
++++ b/tests/auto/quicktest/quicktest.pro
+@@ -3,4 +3,5 @@ SUBDIRS = \
+     polish \
+     signalspy \
+     quicktestmainwithsetup \
+-    testfiltering
++    testfiltering \
++    testwithcomponents
+diff --git a/tests/auto/quicktest/testwithcomponents/data/Sample.qml b/tests/auto/quicktest/testwithcomponents/data/Sample.qml
+new file mode 100644
+index 0000000000..78e3008b01
+--- /dev/null
++++ b/tests/auto/quicktest/testwithcomponents/data/Sample.qml
+@@ -0,0 +1,8 @@
++import QtQuick 2.15
++
++Item {
++    id: root
++
++    component InlineComponent: Rectangle {}
++    InlineComponent{}
++}
+diff --git a/tests/auto/quicktest/testwithcomponents/data/tst_setup.qml b/tests/auto/quicktest/testwithcomponents/data/tst_setup.qml
+new file mode 100644
+index 0000000000..533027147e
+--- /dev/null
++++ b/tests/auto/quicktest/testwithcomponents/data/tst_setup.qml
+@@ -0,0 +1,53 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the test suite of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:GPL-EXCEPT$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 3 as published by the Free Software
++** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++import QtQuick 2.0
++import QtTest 1.2
++
++
++Item {
++
++    Component {
++        id: mock
++        Sample {
++        }
++    }
++
++    component Mock : Sample {}
++
++    TestCase {
++        id: root
++        name: "ComponentTest"
++
++        function test_create()
++        {
++            let dialog = createTemporaryObject(mock, root);
++            verify(dialog);
++        }
++    }
++}
+diff --git a/tests/auto/quicktest/testwithcomponents/testwithcomponents.pro b/tests/auto/quicktest/testwithcomponents/testwithcomponents.pro
+new file mode 100644
+index 0000000000..8f64dc2ebb
+--- /dev/null
++++ b/tests/auto/quicktest/testwithcomponents/testwithcomponents.pro
+@@ -0,0 +1,10 @@
++CONFIG += qmltestcase
++macos:CONFIG -= app_bundle
++TARGET = tst_quicktestwithcomponents
++
++QT += testlib quick
++
++SOURCES += tst_quicktestwithcomponents.cpp
++
++TESTDATA += \
++    $$PWD/data/*.qml
+diff --git a/tests/auto/quicktest/testwithcomponents/tst_quicktestwithcomponents.cpp b/tests/auto/quicktest/testwithcomponents/tst_quicktestwithcomponents.cpp
+new file mode 100644
+index 0000000000..9692347cb8
+--- /dev/null
++++ b/tests/auto/quicktest/testwithcomponents/tst_quicktestwithcomponents.cpp
+@@ -0,0 +1,32 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the test suite of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:GPL-EXCEPT$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 3 as published by the Free Software
++** Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++#include <QtTest/qtest.h>
++#include <QtQuickTest/quicktest.h>
++
++QUICK_TEST_MAIN(data)
 diff --git a/tests/manual/scenegraph_lancelot/data/rotation/rotation_clip_multi.qml b/tests/manual/scenegraph_lancelot/data/rotation/rotation_clip_multi.qml
 new file mode 100644
 index 0000000000..277ac4f2db
