@@ -105,8 +105,10 @@ Laszlo Agocs (6):
 Li Xinwei (1):
       Use load(qt_tool) for qmltime
 
-Marc Mutz (1):
+Marc Mutz (3):
       QQmlJs::FixedPoolArray: fix UB (precondition violation) in allocate()
+      QSGOpenGLDistanceFieldGlyphCache: fix multiplication result truncation
+      QSGOpenGLDistanceFieldGlyphCache: fix UB (ordering of pointers not from the same array)
 
 Maximilian Goldstein (8):
       Revert "qquickloader: Free memory of loaded components after source change"
@@ -3662,6 +3664,39 @@ index 3c60f830de..0fd6581dc4 100644
          changed = true;
      }
  
+diff --git a/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp b/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp
+index 53b6fe117f..219cdd5966 100644
+--- a/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp
++++ b/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp
+@@ -446,7 +446,7 @@ bool QSGRhiDistanceFieldGlyphCache::loadPregeneratedCache(const QRawFont &font)
+ 
+         const char *textureRecord = allocatorData;
+         for (int i = 0; i < textureCount; ++i, textureRecord += Qtdf::TextureRecordSize) {
+-            if (textureRecord + Qtdf::TextureRecordSize > qtdfTableEnd) {
++            if (qtdfTableEnd - textureRecord < Qtdf::TextureRecordSize) {
+                 qWarning("qtdf table too small in font '%s'.",
+                          qPrintable(font.familyName()));
+                 return false;
+@@ -462,7 +462,7 @@ bool QSGRhiDistanceFieldGlyphCache::loadPregeneratedCache(const QRawFont &font)
+ 
+         const char *glyphRecord = textureRecord;
+         for (quint32 i = 0; i < glyphCount; ++i, glyphRecord += Qtdf::GlyphRecordSize) {
+-            if (glyphRecord + Qtdf::GlyphRecordSize > qtdfTableEnd) {
++            if (qtdfTableEnd - glyphRecord < Qtdf:: GlyphRecordSize) {
+                 qWarning("qtdf table too small in font '%s'.",
+                          qPrintable(font.familyName()));
+                 return false;
+@@ -512,8 +512,8 @@ bool QSGRhiDistanceFieldGlyphCache::loadPregeneratedCache(const QRawFont &font)
+ 
+             int width = texInfo->allocatedArea.width();
+             int height = texInfo->allocatedArea.height();
+-            qint64 size = width * height;
+-            if (reinterpret_cast<const char *>(textureData + size) > qtdfTableEnd) {
++            qint64 size = qint64(width) * height;
++            if (qtdfTableEnd - reinterpret_cast<const char *>(textureData) < size) {
+                 qWarning("qtdf table too small in font '%s'.",
+                          qPrintable(font.familyName()));
+                 return false;
 diff --git a/src/quick/scenegraph/shaders_ng/24bittextmask.frag b/src/quick/scenegraph/shaders_ng/24bittextmask.frag
 index bc3826a924..ed8da4cd30 100644
 --- a/src/quick/scenegraph/shaders_ng/24bittextmask.frag
