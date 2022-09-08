@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : qtdeclarative
 Version  : 5.15.2
-Release  : 39
+Release  : 40
 URL      : https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtdeclarative-everywhere-src-5.15.2.tar.xz
 Source0  : https://download.qt.io/official_releases/qt/5.15/5.15.2/submodules/qtdeclarative-everywhere-src-5.15.2.tar.xz
 Summary  : No detailed summary available
@@ -112,16 +112,16 @@ test -r config.log && cat config.log
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1657472892
+export SOURCE_DATE_EPOCH=1662656013
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/qtdeclarative
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/LICENSE.FDL %{buildroot}/usr/share/package-licenses/qtdeclarative/61907422fefcd2313a9b570c31d203a6dbebd333
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/LICENSE.GPL2 %{buildroot}/usr/share/package-licenses/qtdeclarative/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/LICENSE.GPL3 %{buildroot}/usr/share/package-licenses/qtdeclarative/8624bcdae55baeef00cd11d5dfcfa60f68710a02
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/LICENSE.GPL3-EXCEPT %{buildroot}/usr/share/package-licenses/qtdeclarative/e93757aefa405f2c9a8a55e780ae9c39542dfc3a
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/LICENSE.LGPL3 %{buildroot}/usr/share/package-licenses/qtdeclarative/f45ee1c765646813b442ca58de72e20a64a7ddba
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/src/3rdparty/masm/LICENSE %{buildroot}/usr/share/package-licenses/qtdeclarative/44e1901a0431142ff9d717f734bb3f9987ffe8f8
-cp %{_builddir}/qtdeclarative-everywhere-src-5.15.2/tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/package-licenses/qtdeclarative/0842c861b2836e376a86b28bc48509584d99c549
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/LICENSE.FDL %{buildroot}/usr/share/package-licenses/qtdeclarative/61907422fefcd2313a9b570c31d203a6dbebd333 || :
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/LICENSE.GPL2 %{buildroot}/usr/share/package-licenses/qtdeclarative/4cc77b90af91e615a64ae04893fdffa7939db84c || :
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/LICENSE.GPL3 %{buildroot}/usr/share/package-licenses/qtdeclarative/8624bcdae55baeef00cd11d5dfcfa60f68710a02 || :
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/LICENSE.GPL3-EXCEPT %{buildroot}/usr/share/package-licenses/qtdeclarative/e93757aefa405f2c9a8a55e780ae9c39542dfc3a || :
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/LICENSE.LGPL3 %{buildroot}/usr/share/package-licenses/qtdeclarative/f45ee1c765646813b442ca58de72e20a64a7ddba || :
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/src/3rdparty/masm/LICENSE %{buildroot}/usr/share/package-licenses/qtdeclarative/44e1901a0431142ff9d717f734bb3f9987ffe8f8 || :
+cp %{_builddir}/qtdeclarative-everywhere-src-%{version}/tests/auto/qml/ecmascripttests/test262/LICENSE %{buildroot}/usr/share/package-licenses/qtdeclarative/0842c861b2836e376a86b28bc48509584d99c549 || :
 %make_install
 
 %files

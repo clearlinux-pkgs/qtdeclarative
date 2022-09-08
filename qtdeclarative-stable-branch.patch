@@ -19,10 +19,11 @@ Alexey Edelev (2):
 Allan Sandfeld Jensen (1):
       Fix release-only windows builds
 
-Andreas Buhr (3):
+Andreas Buhr (4):
       Fix QQuickShortcut::setContext so re-grab all shortcuts
       Change QQuickShortcut::setSequences to bind to all sequences
       Consistent naming for (to|from)Is(Defined|Sourced) in animations
+      Fix warnings
 
 Andreas Hartmetz (1):
       QQuickWindow: don't leak old screenChanged connections
@@ -30,11 +31,12 @@ Andreas Hartmetz (1):
 Andrei Golubev (1):
       Fix QML property cache leaks of delegate items
 
-Andy Shaw (4):
+Andy Shaw (5):
       Show a tableview even if the syncView has an empty model
       Ensure that the case of the path will match then QUrl for a UNC path
       Remove unnecessary forward declaration
       Doc: Fix the Shapes table to reflect reality
+      When setting the line dash to be an empty array reset the style to Solid
 
 Antti Kokko (1):
       Add changes file for Qt 5.15.2
@@ -48,13 +50,14 @@ Bartlomiej Moskal (4):
 Dmitry Shachnev (1):
       Include <limits> in Yarr.h to fix build with GCC 11
 
-Edward Welbourne (1):
+Edward Welbourne (2):
       Correct #if-ery in QML locale's time-zone update test
+      Use QDateTime to get offsets for emscripten (wasm)
 
 Eskil Abrahamsen Blomfeldt (1):
       Fix distorted text with subpixel matrix translation
 
-Fabian Kosmale (17):
+Fabian Kosmale (20):
       Inline components: Fix custom parser support
       QQuickView docs: show correct usage of setInitialProperties
       QQuickTextInput: Store mask data in std::unique_ptr
@@ -71,6 +74,9 @@ Fabian Kosmale (17):
       Assert that pointer is non-null
       QQmlComponentPrivate::setInitialProperty: improve error message
       MASM: Put pageSize into an inline namespace
+      Ensure model is in context if required properties are not used
+      QV4::Heap::GeneratorObject: remove unused member
+      DropArea: Tell qdoc that DropArea indeed inherits Item
       QQuickItem: Guard against cycles in nextPrevItemInTabFocusChain
 
 Fabio Falsini (1):
@@ -78,6 +84,9 @@ Fabio Falsini (1):
 
 Ivan Solovev (1):
       QuickLayouts: fix crash when layout width depends on parent width
+
+Ivan Tkachenko (1):
+      Fix QtQtuickImage docs: correct properties' signatures
 
 Jan Arve Sæther (5):
       export QAcccessibleQuickItem
@@ -93,19 +102,23 @@ Jani Heikkinen (2):
 Jarek Kobus (1):
       Fix build with GCC 11: include <limits>
 
+Jeremy Katz (1):
+      Doc: fix AnchorChanges typo
+
 Joni Poikelin (1):
       Fix crash during model reset
 
 Kimmo Ollila (1):
       Avoid GHS linker to optimize away QML type registrations
 
-Laszlo Agocs (7):
+Laszlo Agocs (8):
       Add Lancelot tests for both types of clipping
       Regenerate Shape fill geometry when alpha changes to non-zero
       Revert "Set the stencil buffer zone" and "Add clipNext null pointer guard"
       Fix incorrect depth test state with QSGRenderNode::DepthAwareRendering
       Do not batch lines with > 1 width in alpha pass
       Do full overlap checks within the alpha render list when rebuilding
+      Sync shadereffect materialType cleanup between renderloops
       Revert "Fix for possible crash in QSGDefaultLayer::grab"
 
 Li Xinwei (1):
@@ -116,7 +129,7 @@ Marc Mutz (3):
       QSGOpenGLDistanceFieldGlyphCache: fix multiplication result truncation
       QSGOpenGLDistanceFieldGlyphCache: fix UB (ordering of pointers not from the same array)
 
-Maximilian Goldstein (10):
+Maximilian Goldstein (11):
       Revert "qquickloader: Free memory of loaded components after source change"
       qmlfunctions.qdoc: Add clarification to QML_FOREIGN
       qv4qmlcontext: Fix bounded signal expressions when debugging
@@ -127,6 +140,7 @@ Maximilian Goldstein (10):
       qqmlapplicationengine: Handle errors during component creation
       qqmlirbuilder: Fix treating parser warnings as errros
       Fix warning and assert when removing items from groups
+      Avoid crash for deep aliases
 
 Michael Brasser (1):
       Do less work when there are no active ImageParticle particles
@@ -143,6 +157,10 @@ Mitch Curtis (5):
       Document that QML_SINGLETON only works with QObjects
       Document QQmlComponent::createWithInitialProperties() error handling
       Remove tst_pixel
+
+Morten Johan Sørvig (2):
+      Set a11y role for QQuickTextInput to EditableText
+      a11y: make links have pressAction first
 
 Paul Wicking (1):
       Doc: Fix broken QDoc markup
@@ -163,7 +181,7 @@ Richard Weickelt (1):
 Romain Pokrzywka (1):
       Avoid stale QSGTexture pointer accesses
 
-Shawn Rutledge (9):
+Shawn Rutledge (15):
       doc: explain QQItem event delivery, handlers, setAcceptTouchEvents()
       docs: Fix documentation of the Locale numberOptions property
       doc: fix up QQuickItem::contains() docs
@@ -172,6 +190,12 @@ Shawn Rutledge (9):
       TextEdit: update all glyphnodes on QTD::contentsChanged() signal
       docs: Clarify EventPoint properties
       doc: Improve QQuickItem::ItemChangeData docs
+      QQuickItem::forceActiveFocus(): actually force active focus
+      doc: Use DragHandler rather than MouseArea in the externaldrag snippet
+      doc: Improve QQuickItem::containmentMask() docs
+      Emit grabChanged() from DragHandler and PinchHandler
+      Don't let PointerHandler steal mouse grab from keepMouseGrab layer
+      doc: Improve the Input Handlers index page
       Fix Flickable wheel velocity calculation
 
 Shinichi Okada (1):
@@ -180,14 +204,22 @@ Shinichi Okada (1):
 Siyeon Seo (1):
       Avoid crash when accessing an empty QTextLine
 
-Tarja Sundqvist (5):
+Tarja Sundqvist (7):
       Update commercial license headers
       Revert "Update commercial license headers"
       Bump version
+      Bump version
       Merge remote-tracking branch 'origin/tqtc/lts-5.15.4' into tqtc/lts-5.15-opensource
       Merge remote-tracking branch 'origin/tqtc/lts-5.15.5' into tqtc/lts-5.15-opensource
+      Merge remote-tracking branch 'origin/tqtc/lts-5.15.6' into tqtc/lts-5.15-opensource
 
-Ulf Hermann (13):
+Thomas Hartmann (1):
+      Avoid infinite loop in designer support
+
+Tim Jenssen (1):
+      crash fix - avoid wrong gcc optimization
+
+Ulf Hermann (17):
       JIT: When making memory writable, include the exception handler
       masm: Add error handling for failed mprotect()
       Remove QQmlCleanup from QQmlScriptData
@@ -200,17 +232,24 @@ Ulf Hermann (13):
       V4 debugger: Properly count break points
       V4 Debugger: Collect locals also from block scopes
       Doc: Clarify preconditions for using QML_ELEMENT et al
+      Register the QML builtin sequence metatypes only once
+      Resolve data race in QQmlPropertyData in a minimally invasive way
+      Resolve data race on QQmlPropertyCache's arguments object
+      QmlPreview: Protect QQmlPreviewFileLoader::load with another mutex
       V4: Do not call dtor of an object we continue to use
 
 Vlad Zahorodnii (2):
       Fix sweep step for tainted QObject JavaScript wrappers
       Make sure QQuickWidget and its offscreen window's screens are always in sync
 
-Volker Hilsheimer (4):
+Volker Hilsheimer (7):
       MouseArea: fix containsMouse behavior during visibility changes
       Use unique_ptr to clarify ownership of QQuickDefaultClipNode objects
       Revert "Use unique_ptr to clarify ownership of QQuickDefaultClipNode objects"
       QQuickItemAnimation: close potential memory leak
+      Handle QScreen::physicalDotsPerInchChanged changes for the initial screen
+      Update QQuickImage's DPR if re-loading the image didn't
+      Pass the focus reason through to the control on mouse press
 
 Wang Chuan (2):
       QQuickLoader: prevent clearing initial properties after active = true
@@ -218,6 +257,10 @@ Wang Chuan (2):
 
 Wolfgang Frisch (1):
       Fix Flickable with QTBUG-56075 patch applied
+
+Yuya Nishihara (2):
+      Add tests of matrix4x4 transformation functions
+      Doc: Document matrix4x4 transformation functions
 
 Zhang Hao (1):
       Remove extra colon
@@ -1080,6 +1123,136 @@ index 39ac4d4dcb..43baec32d7 100644
      bool m_breakOnThrow;
      QV4DebugServiceImpl *m_debugService;
  };
+diff --git a/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileengine.cpp b/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileengine.cpp
+index 5e78539155..e11b8c9776 100644
+--- a/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileengine.cpp
++++ b/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileengine.cpp
+@@ -398,6 +398,14 @@ bool QQmlPreviewFileEngine::supportsExtension(Extension extension) const
+ 
+ void QQmlPreviewFileEngine::load() const
+ {
++    // We can get here from different threads on different instances of QQmlPreviewFileEngine.
++    // However, there is only one loader per QQmlPreviewFileEngineHandler and it is not thread-safe.
++    // Its content mutex doesn't help us here because we explicitly wait on it in load(), which
++    // causes it to be released. Therefore, lock the load mutex first.
++    // This doesn't cause any deadlocks because the only thread that wakes the loader on the content
++    // mutex never calls load(). It's the QML debug server thread that handles the debug protocol.
++    QMutexLocker loadLocker(m_loader->loadMutex());
++
+     m_result = m_loader->load(m_absolute);
+     switch (m_result) {
+     case QQmlPreviewFileLoader::File:
+diff --git a/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.cpp b/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.cpp
+index bb43f75c63..8d8a8f18d2 100644
+--- a/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.cpp
++++ b/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.cpp
+@@ -101,7 +101,7 @@ QQmlPreviewFileLoader::~QQmlPreviewFileLoader() {
+ 
+ QQmlPreviewFileLoader::Result QQmlPreviewFileLoader::load(const QString &path)
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     m_path = path;
+ 
+     auto fileIterator = m_fileCache.constFind(path);
+@@ -124,19 +124,19 @@ QQmlPreviewFileLoader::Result QQmlPreviewFileLoader::load(const QString &path)
+     m_entries.clear();
+     m_contents.clear();
+     emit request(path);
+-    m_waitCondition.wait(&m_mutex);
++    m_waitCondition.wait(&m_contentMutex);
+     return m_result;
+ }
+ 
+ QByteArray QQmlPreviewFileLoader::contents()
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     return m_contents;
+ }
+ 
+ QStringList QQmlPreviewFileLoader::entries()
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     return m_entries;
+ }
+ 
+@@ -144,20 +144,20 @@ void QQmlPreviewFileLoader::whitelist(const QUrl &url)
+ {
+     const QString path = QQmlFile::urlToLocalFileOrQrc(url);
+     if (!path.isEmpty()) {
+-        QMutexLocker locker(&m_mutex);
++        QMutexLocker locker(&m_contentMutex);
+         m_blacklist.whitelist(path);
+     }
+ }
+ 
+ bool QQmlPreviewFileLoader::isBlacklisted(const QString &path)
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     return m_blacklist.isBlacklisted(path);
+ }
+ 
+ void QQmlPreviewFileLoader::file(const QString &path, const QByteArray &contents)
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     m_blacklist.whitelist(path);
+     m_fileCache[path] = contents;
+     if (path == m_path) {
+@@ -169,7 +169,7 @@ void QQmlPreviewFileLoader::file(const QString &path, const QByteArray &contents
+ 
+ void QQmlPreviewFileLoader::directory(const QString &path, const QStringList &entries)
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     m_blacklist.whitelist(path);
+     m_directoryCache[path] = entries;
+     if (path == m_path) {
+@@ -181,7 +181,7 @@ void QQmlPreviewFileLoader::directory(const QString &path, const QStringList &en
+ 
+ void QQmlPreviewFileLoader::error(const QString &path)
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     m_blacklist.blacklist(path);
+     if (path == m_path) {
+         m_result = Fallback;
+@@ -191,7 +191,7 @@ void QQmlPreviewFileLoader::error(const QString &path)
+ 
+ void QQmlPreviewFileLoader::clearCache()
+ {
+-    QMutexLocker locker(&m_mutex);
++    QMutexLocker locker(&m_contentMutex);
+     m_fileCache.clear();
+     m_directoryCache.clear();
+ }
+diff --git a/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.h b/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.h
+index 0c55c48c4a..ffda9c0dbf 100644
+--- a/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.h
++++ b/src/plugins/qmltooling/qmldbg_preview/qqmlpreviewfileloader.h
+@@ -79,7 +79,9 @@ public:
+     QQmlPreviewFileLoader(QQmlPreviewServiceImpl *service);
+     ~QQmlPreviewFileLoader();
+ 
++    QMutex *loadMutex() { return &m_loadMutex; }
+     Result load(const QString &file);
++
+     QByteArray contents();
+     QStringList entries();
+ 
+@@ -90,7 +92,8 @@ signals:
+     void request(const QString &file);
+ 
+ private:
+-    QMutex m_mutex;
++    QMutex m_loadMutex;
++    QMutex m_contentMutex;
+     QWaitCondition m_waitCondition;
+ 
+     QThread m_thread;
 diff --git a/src/qml/animations/qanimationgroupjob.cpp b/src/qml/animations/qanimationgroupjob.cpp
 index 66599561fc..60b3003d0a 100644
 --- a/src/qml/animations/qanimationgroupjob.cpp
@@ -1551,6 +1724,80 @@ index 80f914c141..10ad0a6ede 100644
  };
  
  }
+diff --git a/src/qml/jsruntime/qv4dateobject.cpp b/src/qml/jsruntime/qv4dateobject.cpp
+index 4e445a73fa..a14c7d9257 100644
+--- a/src/qml/jsruntime/qv4dateobject.cpp
++++ b/src/qml/jsruntime/qv4dateobject.cpp
+@@ -78,10 +78,21 @@
+   QTBUG-75585 for an explanation and possible workarounds.
+  */
+ #define USE_QTZ_SYSTEM_ZONE
++#elif defined(Q_OS_WASM)
++/*
++    TODO: evaluate using this version of the code more generally, rather than
++    the #else branches of the various USE_QTZ_SYSTEM_ZONE choices. It might even
++    work better than the timezone variant; experiments needed.
++*/
++// Kludge around the lack of time-zone info using QDateTime.
++// It uses localtime() and friends to determine offsets from UTC.
++#define USE_QDT_LOCAL_TIME
+ #endif
+ 
+ #ifdef USE_QTZ_SYSTEM_ZONE
+ #include <QtCore/QTimeZone>
++#elif defined(USE_QDT_LOCAL_TIME)
++// QDateTime already included above
+ #else
+ #  ifdef Q_OS_WIN
+ #    include <windows.h>
+@@ -356,6 +367,7 @@ static inline double MakeDate(double day, double time)
+   mean a whole day of DST offset for some zones, that have crossed the
+   international date line.  This shall confuse client code.)  The bug report
+   against the ECMAScript spec is https://github.com/tc39/ecma262/issues/725
++  and they've now changed the spec so that the following conforms to it ;^>
+ */
+ 
+ static inline double DaylightSavingTA(double t, double localTZA) // t is a UTC time
+@@ -363,6 +375,12 @@ static inline double DaylightSavingTA(double t, double localTZA) // t is a UTC t
+     return QTimeZone::systemTimeZone().offsetFromUtc(
+         QDateTime::fromMSecsSinceEpoch(qint64(t), Qt::UTC)) * 1e3 - localTZA;
+ }
++#elif defined(USE_QDT_LOCAL_TIME)
++static inline double DaylightSavingTA(double t, double localTZA) // t is a UTC time
++{
++    return QDateTime::fromMSecsSinceEpoch(qint64(t), Qt::UTC
++        ).toLocalTime().offsetFromUtc() * 1e3 - localTZA;
++}
+ #else
+ // This implementation fails to take account of past changes in standard offset.
+ static inline double DaylightSavingTA(double t, double /*localTZA*/)
+@@ -721,6 +739,26 @@ static double getLocalTZA()
+     // TODO: QTimeZone::resetSystemTimeZone(), see QTBUG-56899 and comment above.
+     // Standard offset, with no daylight-savings adjustment, in ms:
+     return QTimeZone::systemTimeZone().standardTimeOffset(QDateTime::currentDateTime()) * 1e3;
++#elif defined(USE_QDT_LOCAL_TIME)
++    QDate today = QDate::currentDate();
++    QDateTime near = today.startOfDay(Qt::LocalTime);
++    // Early out if we're in standard time anyway:
++    if (!near.isDaylightTime())
++        return near.offsetFromUtc() * 1000;
++    int year, month;
++    today.getDate(&year, &month, nullptr);
++    // One of the solstices is probably in standard time:
++    QDate summer(year, 6, 21), winter(year - (month < 7 ? 1 : 0), 12, 21);
++    // But check the one closest to the present by preference, in case there's a
++    // standard time offset change between them:
++    QDateTime far = summer.startOfDay(Qt::LocalTime);
++    near = winter.startOfDay(Qt::LocalTime);
++    if (month > 3 && month < 10)
++        near.swap(far);
++    bool isDst = near.isDaylightTime();
++    if (isDst && far.isDaylightTime()) // Permanent DST, probably an hour west:
++        return (qMin(near.offsetFromUtc(), far.offsetFromUtc()) - 3600) * 1000;
++    return (isDst ? far : near).offsetFromUtc() * 1000;
+ #else
+ #  ifdef Q_OS_WIN
+     TIME_ZONE_INFORMATION tzInfo;
 diff --git a/src/qml/jsruntime/qv4executableallocator.cpp b/src/qml/jsruntime/qv4executableallocator.cpp
 index 7ee6f39aa2..c06773d3c5 100644
 --- a/src/qml/jsruntime/qv4executableallocator.cpp
@@ -1675,11 +1922,14 @@ index 4eee6f4338..5077bf1d2b 100644
                                Value::undefinedValue());
  
 diff --git a/src/qml/jsruntime/qv4generatorobject_p.h b/src/qml/jsruntime/qv4generatorobject_p.h
-index 366319723d..10eea5e46b 100644
+index 366319723d..14368f5416 100644
 --- a/src/qml/jsruntime/qv4generatorobject_p.h
 +++ b/src/qml/jsruntime/qv4generatorobject_p.h
-@@ -90,7 +90,8 @@ struct GeneratorPrototype : FunctionObject {
-     Member(class, Pointer, GeneratorFunction *, function) \
+@@ -87,10 +87,10 @@ struct GeneratorPrototype : FunctionObject {
+ 
+ #define GeneratorObjectMembers(class, Member) \
+     Member(class, Pointer, ExecutionContext *, context) \
+-    Member(class, Pointer, GeneratorFunction *, function) \
      Member(class, NoMark, GeneratorState, state) \
      Member(class, NoMark, CppStackFrame, cppFrame) \
 -    Member(class, ValueArray, ValueArray, stack)
@@ -1818,6 +2068,33 @@ index 9899c9274e..272b85069f 100644
  }
  
  
+diff --git a/src/qml/jsruntime/qv4sequenceobject.cpp b/src/qml/jsruntime/qv4sequenceobject.cpp
+index aff8844bb0..f84718b48f 100644
+--- a/src/qml/jsruntime/qv4sequenceobject.cpp
++++ b/src/qml/jsruntime/qv4sequenceobject.cpp
+@@ -720,13 +720,20 @@ DEFINE_OBJECT_TEMPLATE_VTABLE(QQmlRealList);
+ }
+ 
+ #define REGISTER_QML_SEQUENCE_METATYPE(unused, unused2, SequenceType, unused3) qRegisterMetaType<SequenceType>(#SequenceType);
+-void SequencePrototype::init()
++static bool registerAllSequenceTypes()
+ {
+     FOREACH_QML_SEQUENCE_TYPE(REGISTER_QML_SEQUENCE_METATYPE)
++    return true;
++}
++#undef REGISTER_QML_SEQUENCE_METATYPE
++
++void SequencePrototype::init()
++{
++    static const bool registered = registerAllSequenceTypes();
++    Q_UNUSED(registered);
+     defineDefaultProperty(QStringLiteral("sort"), method_sort, 1);
+     defineDefaultProperty(engine()->id_valueOf(), method_valueOf, 0);
+ }
+-#undef REGISTER_QML_SEQUENCE_METATYPE
+ 
+ ReturnedValue SequencePrototype::method_valueOf(const FunctionObject *f, const Value *thisObject, const Value *, int)
+ {
 diff --git a/src/qml/jsruntime/qv4stringobject.cpp b/src/qml/jsruntime/qv4stringobject.cpp
 index bf098fef26..b5b406b317 100644
 --- a/src/qml/jsruntime/qv4stringobject.cpp
@@ -1882,6 +2159,34 @@ index 907825d28c..2b294ffff6 100644
          objects << newObj;
          QObject::connect(newObj, &QObject::destroyed, q, [&](QObject *obj) { objects.removeAll(obj); });
          q->objectCreated(objects.constLast(), c->url());
+diff --git a/src/qml/qml/qqmlbinding.cpp b/src/qml/qml/qqmlbinding.cpp
+index b9566d5862..194f7b4cf7 100644
+--- a/src/qml/qml/qqmlbinding.cpp
++++ b/src/qml/qml/qqmlbinding.cpp
+@@ -645,7 +645,10 @@ void QQmlBinding::getPropertyData(QQmlPropertyData **propertyData, QQmlPropertyD
+         Q_ASSERT(valueTypeMetaObject);
+         QMetaProperty vtProp = valueTypeMetaObject->property(m_targetIndex.valueTypeIndex());
+         valueTypeData->setFlags(QQmlPropertyData::flagsForProperty(vtProp));
++
++        // valueTypeData is expected to be local here. It must not be shared with other threads.
+         valueTypeData->setPropType(vtProp.userType());
++
+         valueTypeData->setCoreIndex(m_targetIndex.valueTypeIndex());
+     }
+ }
+@@ -748,7 +751,11 @@ QQmlBinding *QQmlBinding::newBinding(QQmlEnginePrivate *engine, const QQmlProper
+     if (property && property->isQObject())
+         return new QObjectPointerBinding(engine, property->propType());
+ 
+-    const int type = (property && property->isFullyResolved()) ? property->propType() : QMetaType::UnknownType;
++    // If the property is not resolved at this point, you get a binding of unknown type.
++    // This has been the case for a long time and we keep it like this in Qt5 to be bug-compatible.
++    const int type = (property && property->isResolved())
++            ? property->propType()
++            : QMetaType::UnknownType;
+ 
+     if (type == qMetaTypeId<QQmlBinding *>()) {
+         return new QQmlBindingBinding;
 diff --git a/src/qml/qml/qqmlcomponent.cpp b/src/qml/qml/qqmlcomponent.cpp
 index 9ee4fdbe41..c785f8ef51 100644
 --- a/src/qml/qml/qqmlcomponent.cpp
@@ -2015,6 +2320,60 @@ index 7af6af276a..f55bbe7ffc 100644
  
      Holds a set of options for number-to-string and
      string-to-number conversions.
+diff --git a/src/qml/qml/qqmlmetaobject.cpp b/src/qml/qml/qqmlmetaobject.cpp
+index a967f46b12..d273849ccb 100644
+--- a/src/qml/qml/qqmlmetaobject.cpp
++++ b/src/qml/qml/qqmlmetaobject.cpp
+@@ -232,8 +232,6 @@ int *QQmlMetaObject::methodParameterTypes(int index, ArgTypeStorage *argStorage,
+     Q_ASSERT(!_m.isNull() && index >= 0);
+ 
+     if (_m.isT1()) {
+-        typedef QQmlPropertyCacheMethodArguments A;
+-
+         QQmlPropertyCache *c = _m.asT1();
+         Q_ASSERT(index < c->methodIndexCacheStart + c->methodIndexCache.count());
+ 
+@@ -242,19 +240,16 @@ int *QQmlMetaObject::methodParameterTypes(int index, ArgTypeStorage *argStorage,
+ 
+         QQmlPropertyData *rv = const_cast<QQmlPropertyData *>(&c->methodIndexCache.at(index - c->methodIndexCacheStart));
+ 
+-        if (rv->arguments() && static_cast<A *>(rv->arguments())->argumentsValid)
+-            return static_cast<A *>(rv->arguments())->arguments;
++        if (QQmlPropertyCacheMethodArguments *args = rv->arguments())
++            return args->arguments;
+ 
+         const QMetaObject *metaObject = c->createMetaObject();
+         Q_ASSERT(metaObject);
+         QMetaMethod m = metaObject->method(index);
+ 
+         int argc = m.parameterCount();
+-        if (!rv->arguments()) {
+-            A *args = c->createArgumentsObject(argc, m.parameterNames());
+-            rv->setArguments(args);
+-        }
+-        A *args = static_cast<A *>(rv->arguments());
++
++        QQmlPropertyCacheMethodArguments *args = c->createArgumentsObject(argc, m.parameterNames());
+ 
+         QList<QByteArray> argTypeNames; // Only loaded if needed
+ 
+@@ -280,8 +275,14 @@ int *QQmlMetaObject::methodParameterTypes(int index, ArgTypeStorage *argStorage,
+             }
+             args->arguments[ii + 1] = type;
+         }
+-        args->argumentsValid = true;
+-        return static_cast<A *>(rv->arguments())->arguments;
++
++        // If we cannot set it, then another thread has set it in the mean time.
++        // Just return that one, then. We don't have to delete the arguments object
++        // we've created as it's tracked in a linked list.
++        if (rv->setArguments(args))
++            return args->arguments;
++        else
++            return rv->arguments()->arguments;
+ 
+     } else {
+         QMetaMethod m = _m.asT2()->method(index);
 diff --git a/src/qml/qml/qqmlmetatype.cpp b/src/qml/qml/qqmlmetatype.cpp
 index be4a79297c..40300b1fe3 100644
 --- a/src/qml/qml/qqmlmetatype.cpp
@@ -2094,6 +2453,259 @@ index 8abd83d7b4..b76a216cf3 100644
      QPointer<QQmlEngine> engine;
      QPointer<QObject> object;
  
+diff --git a/src/qml/qml/qqmlpropertycache.cpp b/src/qml/qml/qqmlpropertycache.cpp
+index 0911c06cd0..6b68a2a288 100644
+--- a/src/qml/qml/qqmlpropertycache.cpp
++++ b/src/qml/qml/qqmlpropertycache.cpp
+@@ -138,17 +138,17 @@ void QQmlPropertyData::lazyLoad(const QMetaProperty &p)
+ {
+     populate(this, p);
+     int type = static_cast<int>(p.userType());
+-    if (type == QMetaType::QObjectStar) {
+-        setPropType(type);
++
++    if (type >= QMetaType::User || type == 0)
++        return; // Resolve later
++
++    if (type == QMetaType::QObjectStar)
+         m_flags.type = Flags::QObjectDerivedType;
+-    } else if (type == QMetaType::QVariant) {
+-        setPropType(type);
++    else if (type == QMetaType::QVariant)
+         m_flags.type = Flags::QVariantType;
+-    } else if (type >= QMetaType::User || type == 0) {
+-        m_flags.notFullyResolved = true;
+-    } else {
+-        setPropType(type);
+-    }
++
++    // This is OK because lazyLoad is done before exposing the property data.
++    setPropType(type);
+ }
+ 
+ void QQmlPropertyData::load(const QMetaProperty &p)
+@@ -158,45 +158,48 @@ void QQmlPropertyData::load(const QMetaProperty &p)
+     flagsForPropertyType(propType(), m_flags);
+ }
+ 
+-void QQmlPropertyData::load(const QMetaMethod &m)
++static void populate(QQmlPropertyData *data, const QMetaMethod &m)
+ {
+-    setCoreIndex(m.methodIndex());
+-    setArguments(nullptr);
++    data->setCoreIndex(m.methodIndex());
+ 
+-    setPropType(m.returnType());
+-
+-    m_flags.type = Flags::FunctionType;
+-    if (m.methodType() == QMetaMethod::Signal) {
+-        m_flags.setIsSignal(true);
+-    } else if (m.methodType() == QMetaMethod::Constructor) {
+-        m_flags.setIsConstructor(true);
+-        setPropType(QMetaType::QObjectStar);
+-    }
++    QQmlPropertyData::Flags flags = data->flags();
++    flags.type = QQmlPropertyData::Flags::FunctionType;
++    if (m.methodType() == QMetaMethod::Signal)
++        flags.setIsSignal(true);
++    else if (m.methodType() == QMetaMethod::Constructor)
++        flags.setIsConstructor(true);
+ 
+     const int paramCount = m.parameterCount();
+     if (paramCount) {
+-        m_flags.setHasArguments(true);
++        flags.setHasArguments(true);
+         if ((paramCount == 1) && (m.parameterTypes().constFirst() == "QQmlV4Function*"))
+-            m_flags.setIsV4Function(true);
++            flags.setIsV4Function(true);
+     }
+ 
+     if (m.attributes() & QMetaMethod::Cloned)
+-        m_flags.setIsCloned(true);
++        flags.setIsCloned(true);
++
++    data->setFlags(flags);
+ 
+     Q_ASSERT(m.revision() <= Q_INT16_MAX);
+-    setRevision(m.revision());
++    data->setRevision(m.revision());
+ }
+ 
+-void QQmlPropertyData::lazyLoad(const QMetaMethod &m)
++void QQmlPropertyData::load(const QMetaMethod &m)
+ {
+-    load(m);
++    populate(this, m);
++    setPropType(m.methodType() == QMetaMethod::Constructor
++                    ? QMetaType::QObjectStar
++                    : m.returnType());
++}
+ 
++void QQmlPropertyData::lazyLoad(const QMetaMethod &m)
++{
+     const char *returnType = m.typeName();
+-    if (!returnType)
+-        returnType = "\0";
+-    if ((*returnType != 'v') || (qstrcmp(returnType+1, "oid") != 0)) {
+-        m_flags.notFullyResolved = true;
+-    }
++    if (!returnType || *returnType != 'v' || qstrcmp(returnType + 1, "oid") != 0)
++        populate(this, m);
++    else
++        load(m); // If it's void, resolve it right away
+ }
+ 
+ /*!
+@@ -318,7 +321,6 @@ void QQmlPropertyCache::appendSignal(const QString &name, QQmlPropertyData::Flag
+     data.setPropType(QMetaType::UnknownType);
+     data.setCoreIndex(coreIndex);
+     data.setFlags(flags);
+-    data.setArguments(nullptr);
+ 
+     QQmlPropertyData handler = data;
+     handler.m_flags.setIsSignalHandler(true);
+@@ -327,7 +329,6 @@ void QQmlPropertyCache::appendSignal(const QString &name, QQmlPropertyData::Flag
+         int argumentCount = *types;
+         QQmlPropertyCacheMethodArguments *args = createArgumentsObject(argumentCount, names);
+         ::memcpy(args->arguments, types, (argumentCount + 1) * sizeof(int));
+-        args->argumentsValid = true;
+         data.setArguments(args);
+     }
+ 
+@@ -361,7 +362,6 @@ void QQmlPropertyCache::appendMethod(const QString &name, QQmlPropertyData::Flag
+     QQmlPropertyCacheMethodArguments *args = createArgumentsObject(argumentCount, names);
+     for (int ii = 0; ii < argumentCount; ++ii)
+         args->arguments[ii + 1] = parameterTypes.at(ii);
+-    args->argumentsValid = true;
+     data.setArguments(args);
+ 
+     data.setFlags(flags);
+@@ -650,25 +650,23 @@ void QQmlPropertyCache::append(const QMetaObject *metaObject,
+     }
+ }
+ 
+-void QQmlPropertyCache::resolve(QQmlPropertyData *data) const
++int QQmlPropertyCache::findPropType(const QQmlPropertyData *data) const
+ {
+-    Q_ASSERT(data->notFullyResolved());
+-    data->m_flags.notFullyResolved = false;
+-
++    int type = QMetaType::UnknownType;
+     const QMetaObject *mo = firstCppMetaObject();
+     if (data->isFunction()) {
+         auto metaMethod = mo->method(data->coreIndex());
+         const char *retTy = metaMethod.typeName();
+         if (!retTy)
+             retTy = "\0";
+-        data->setPropType(QMetaType::type(retTy));
++        type = QMetaType::type(retTy);
+     } else {
+         auto metaProperty = mo->property(data->coreIndex());
+-        data->setPropType(QMetaType::type(metaProperty.typeName()));
++        type = QMetaType::type(metaProperty.typeName());
+     }
+ 
+     if (!data->isFunction()) {
+-        if (data->propType() == QMetaType::UnknownType) {
++        if (type == QMetaType::UnknownType) {
+             QQmlPropertyCache *p = _parent;
+             while (p && (!mo || _ownMetaObject)) {
+                 mo = p->_metaObject;
+@@ -684,11 +682,33 @@ void QQmlPropertyCache::resolve(QQmlPropertyData *data) const
+ 
+                 int registerResult = -1;
+                 void *argv[] = { &registerResult };
+-                mo->static_metacall(QMetaObject::RegisterPropertyMetaType, data->coreIndex() - propOffset, argv);
+-                data->setPropType(registerResult == -1 ? QMetaType::UnknownType : registerResult);
++                mo->static_metacall(QMetaObject::RegisterPropertyMetaType,
++                                    data->coreIndex() - propOffset, argv);
++                type = registerResult == -1 ? QMetaType::UnknownType : registerResult;
+             }
+         }
+-        flagsForPropertyType(data->propType(), data->m_flags);
++    }
++
++    return type;
++}
++
++void QQmlPropertyCache::resolve(QQmlPropertyData *data) const
++{
++    const int type = findPropType(data);
++
++    // Setting the flags unsynchronized is somewhat dirty but unlikely to cause trouble
++    // in practice. We have to do this before setting the property type because otherwise
++    // a consumer of the flags might see outdated flags even after the property type has
++    // become valid. The flags should only depend on the property type and the property
++    // type should be the same across different invocations. So, setting this concurrently
++    // should be a noop.
++    if (!data->isFunction())
++        flagsForPropertyType(type, data->m_flags);
++
++    // This is the one place where we can update the property type after exposing the data.
++    if (!data->m_propTypeAndRelativePropIndex.testAndSetOrdered(
++                0, type > 0 ? quint32(type) : quint32(QQmlPropertyData::PropTypeUnknown))) {
++        return; // Someone else is resolving it already
+     }
+ }
+ 
+@@ -873,12 +893,11 @@ QQmlPropertyCacheMethodArguments *QQmlPropertyCache::createArgumentsObject(int a
+     typedef QQmlPropertyCacheMethodArguments A;
+     A *args = static_cast<A *>(malloc(sizeof(A) + (argc) * sizeof(int)));
+     args->arguments[0] = argc;
+-    args->argumentsValid = false;
+     args->signalParameterStringForJS = nullptr;
+-    args->parameterError = false;
+     args->names = argc ? new QList<QByteArray>(names) : nullptr;
+-    args->next = argumentsCache;
+-    argumentsCache = args;
++    do {
++        args->next = argumentsCache;
++    } while (!argumentsCache.testAndSetRelease(args->next, args));
+     return args;
+ }
+ 
+@@ -1172,7 +1191,6 @@ void QQmlPropertyCache::toMetaObjectBuilder(QMetaObjectBuilder &builder)
+         QQmlPropertyCacheMethodArguments *arguments = nullptr;
+         if (data->hasArguments()) {
+             arguments = (QQmlPropertyCacheMethodArguments *)data->arguments();
+-            Q_ASSERT(arguments->argumentsValid);
+             for (int ii = 0; ii < arguments->arguments[0]; ++ii) {
+                 if (ii != 0) signature.append(',');
+                 signature.append(QMetaType::typeName(arguments->arguments[1 + ii]));
+diff --git a/src/qml/qml/qqmlpropertycache_p.h b/src/qml/qml/qqmlpropertycache_p.h
+index a5340cec37..1563bc0a41 100644
+--- a/src/qml/qml/qqmlpropertycache_p.h
++++ b/src/qml/qml/qqmlpropertycache_p.h
+@@ -220,6 +220,8 @@ private:
+         _hasPropertyOverrides |= isOverride;
+     }
+ 
++    int findPropType(const QQmlPropertyData *data) const;
++
+ private:
+     QQmlPropertyCache *_parent;
+     int propertyIndexCacheStart;
+@@ -239,14 +241,18 @@ private:
+     QByteArray _dynamicClassName;
+     QByteArray _dynamicStringData;
+     QString _defaultPropertyName;
+-    QQmlPropertyCacheMethodArguments *argumentsCache;
++    QAtomicPointer<QQmlPropertyCacheMethodArguments> argumentsCache;
+     int _jsFactoryMethodIndex;
+     QByteArray _checksum;
+ };
+ 
+ inline QQmlPropertyData *QQmlPropertyCache::ensureResolved(QQmlPropertyData *p) const
+ {
+-    if (p && Q_UNLIKELY(p->notFullyResolved()))
++    // Avoid resolve() in the common case where it's already initialized and we don't
++    // run into a data race. resolve() checks again, with an atomic operation.
++    // If there is no coreIndex, there is no point in trying to resolve anything. In that
++    // case it's a default-constructed instance that never got load()'ed or lazyLoad()'ed.
++    if (p && p->coreIndex() != -1 && Q_UNLIKELY(p->m_propTypeAndRelativePropIndex == 0))
+         resolve(p);
+ 
+     return p;
 diff --git a/src/qml/qml/qqmlpropertycachecreator.cpp b/src/qml/qml/qqmlpropertycachecreator.cpp
 index 36581bda4e..88d80d88ab 100644
 --- a/src/qml/qml/qqmlpropertycachecreator.cpp
@@ -2115,7 +2727,7 @@ index 36581bda4e..88d80d88ab 100644
                                                                   const QString &instantiatingPropertyName, QQmlPropertyCache *referencingObjectPropertyCache)
      : referencingObjectIndex(referencingObjectIndex)
 diff --git a/src/qml/qml/qqmlpropertycachecreator_p.h b/src/qml/qml/qqmlpropertycachecreator_p.h
-index 6b02d6fb98..77e3763a49 100644
+index 6b02d6fb98..3fd6c8b4da 100644
 --- a/src/qml/qml/qqmlpropertycachecreator_p.h
 +++ b/src/qml/qml/qqmlpropertycachecreator_p.h
 @@ -104,6 +104,8 @@ public:
@@ -2127,6 +2739,235 @@ index 6b02d6fb98..77e3763a49 100644
  };
  
  template <typename ObjectContainer>
+@@ -863,6 +865,10 @@ inline QQmlError QQmlPropertyCacheAliasCreator<ObjectContainer>::propertyDataFor
+             Q_ASSERT(targetCache);
+             targetProperty = targetCache->property(valueTypeIndex);
+ 
++            if (targetProperty == nullptr) {
++                return qQmlCompileError(alias.referenceLocation,
++                                        QQmlPropertyCacheCreatorBase::tr("Invalid alias target"));
++            }
+ 
+             *type = targetProperty->propType();
+             writable = targetProperty->isWritable();
+diff --git a/src/qml/qml/qqmlpropertycachemethodarguments_p.h b/src/qml/qml/qqmlpropertycachemethodarguments_p.h
+index 62f09bdfff..32affe6d9c 100644
+--- a/src/qml/qml/qqmlpropertycachemethodarguments_p.h
++++ b/src/qml/qml/qqmlpropertycachemethodarguments_p.h
+@@ -64,8 +64,6 @@ public:
+ 
+     //for signal handler rewrites
+     QString *signalParameterStringForJS;
+-    int parameterError:1;
+-    int argumentsValid:1;
+ 
+     QList<QByteArray> *names;
+ 
+diff --git a/src/qml/qml/qqmlpropertydata_p.h b/src/qml/qml/qqmlpropertydata_p.h
+index d9855797cd..2f1b6f62f1 100644
+--- a/src/qml/qml/qqmlpropertydata_p.h
++++ b/src/qml/qml/qqmlpropertydata_p.h
+@@ -84,14 +84,6 @@ public:
+             QVariantType         = 9  // Property is a QVariant
+         };
+ 
+-        // The _otherBits (which "pad" the Flags struct to align it nicely) are used
+-        // to store the relative property index. It will only get used when said index fits. See
+-        // trySetStaticMetaCallFunction for details.
+-        // (Note: this padding is done here, because certain compilers have surprising behavior
+-        // when an enum is declared in-between two bit fields.)
+-        enum { BitsLeftInFlags = 15 };
+-        unsigned otherBits       : BitsLeftInFlags; // align to 32 bits
+-
+         // Members of the form aORb can only be a when type is not FunctionType, and only be
+         // b when type equals FunctionType. For that reason, the semantic meaning of the bit is
+         // overloaded, and the accessor functions are used to get the correct value
+@@ -102,25 +94,24 @@ public:
+         //
+         // Lastly, isDirect and isOverridden apply to both functions and non-functions
+     private:
+-        unsigned isConstantORisVMEFunction     : 1; // Has CONST flag OR Function was added by QML
+-        unsigned isWritableORhasArguments      : 1; // Has WRITE function OR Function takes arguments
+-        unsigned isResettableORisSignal        : 1; // Has RESET function OR Function is a signal
+-        unsigned isAliasORisVMESignal          : 1; // Is a QML alias to another property OR Signal was added by QML
+-        unsigned isFinalORisV4Function         : 1; // Has FINAL flag OR Function takes QQmlV4Function* args
+-        unsigned isSignalHandler               : 1; // Function is a signal handler
+-        unsigned isOverload                    : 1; // Function is an overload of another function
+-        unsigned isRequiredORisCloned          : 1; // Has REQUIRED flag OR The function was marked as cloned
+-        unsigned isConstructor                 : 1; // The function was marked is a constructor
+-        unsigned isDirect                      : 1; // Exists on a C++ QMetaObject
+-        unsigned isOverridden                  : 1; // Is overridden by a extension property
++        quint16 isConstantORisVMEFunction   : 1; // Has CONST flag OR Function was added by QML
++        quint16 isWritableORhasArguments    : 1; // Has WRITE function OR Function takes arguments
++        quint16 isResettableORisSignal      : 1; // Has RESET function OR Function is a signal
++        quint16 isAliasORisVMESignal        : 1; // Is a QML alias to another property OR Signal was added by QML
++        quint16 isFinalORisV4Function       : 1; // Has FINAL flag OR Function takes QQmlV4Function* args
++        quint16 isSignalHandler             : 1; // Function is a signal handler
++        quint16 isOverload                  : 1; // Function is an overload of another function
++        quint16 isRequiredORisCloned        : 1; // Has REQUIRED flag OR The function was marked as cloned
++        quint16 isConstructor               : 1; // The function was marked is a constructor
++        quint16 isDirect                    : 1; // Exists on a C++ QMetaObject
++        quint16 isOverridden                : 1; // Is overridden by a extension property
+     public:
+-        unsigned type             : 4; // stores an entry of Types
++        quint16 type                        : 4; // stores an entry of Types
+ 
+         // Apply only to IsFunctions
+ 
+         // Internal QQmlPropertyCache flags
+-        unsigned notFullyResolved : 1; // True if the type data is to be lazily resolved
+-        unsigned overrideIndexIsProperty: 1;
++        quint16 overrideIndexIsProperty: 1;
+ 
+         inline Flags();
+         inline bool operator==(const Flags &other) const;
+@@ -208,16 +199,12 @@ public:
+ 
+     };
+ 
++    Q_STATIC_ASSERT(sizeof(Flags) == sizeof(quint16));
+ 
+     inline bool operator==(const QQmlPropertyData &) const;
+ 
+     Flags flags() const { return m_flags; }
+-    void setFlags(Flags f)
+-    {
+-        unsigned otherBits = m_flags.otherBits;
+-        m_flags = f;
+-        m_flags.otherBits = otherBits;
+-    }
++    void setFlags(Flags f) { m_flags = f; }
+ 
+     bool isValid() const { return coreIndex() != -1; }
+ 
+@@ -253,14 +240,26 @@ public:
+     bool hasOverride() const { return overrideIndex() >= 0; }
+     bool hasRevision() const { return revision() != 0; }
+ 
+-    bool isFullyResolved() const { return !m_flags.notFullyResolved; }
++    // This is unsafe in the general case. The property might be in the process of getting
++    // resolved. Only use it if this case has been taken into account.
++    bool isResolved() const { return m_propTypeAndRelativePropIndex != 0; }
++
++    int propType() const
++    {
++        const quint32 type = m_propTypeAndRelativePropIndex & PropTypeMask;
++        Q_ASSERT(type > 0); // Property has to be fully resolved.
++        return type == PropTypeUnknown ? 0 : type;
++    }
+ 
+-    int propType() const { Q_ASSERT(isFullyResolved()); return m_propType; }
+     void setPropType(int pt)
+     {
++        // You can only directly set the property type if you own the QQmlPropertyData.
++        // It must not be exposed to other threads before setting the type!
+         Q_ASSERT(pt >= 0);
+-        Q_ASSERT(pt <= std::numeric_limits<qint16>::max());
+-        m_propType = quint16(pt);
++        Q_ASSERT(uint(pt) < PropTypeUnknown);
++        m_propTypeAndRelativePropIndex
++                = (m_propTypeAndRelativePropIndex & RelativePropIndexMask)
++                    | (pt == 0 ? PropTypeUnknown : quint32(pt));
+     }
+ 
+     int notifyIndex() const { return m_notifyIndex; }
+@@ -323,7 +322,10 @@ public:
+     }
+ 
+     QQmlPropertyCacheMethodArguments *arguments() const { return m_arguments; }
+-    void setArguments(QQmlPropertyCacheMethodArguments *args) { m_arguments = args; }
++    bool setArguments(QQmlPropertyCacheMethodArguments *args)
++    {
++        return m_arguments.testAndSetRelease(nullptr, args);
++    }
+ 
+     int metaObjectOffset() const { return m_metaObjectOffset; }
+     void setMetaObjectOffset(int off)
+@@ -336,12 +338,26 @@ public:
+     StaticMetaCallFunction staticMetaCallFunction() const { return m_staticMetaCallFunction; }
+     void trySetStaticMetaCallFunction(StaticMetaCallFunction f, unsigned relativePropertyIndex)
+     {
+-        if (relativePropertyIndex < (1 << Flags::BitsLeftInFlags) - 1) {
+-            m_flags.otherBits = relativePropertyIndex;
++        if (relativePropertyIndex > std::numeric_limits<quint16>::max())
++            return;
++
++        const quint16 propType = m_propTypeAndRelativePropIndex & PropTypeMask;
++        if (propType > 0) {
++            // We can do this because we know that resolve() has run at this point
++            // and we don't need to synchronize anymore. If we get a 0, that means it hasn't
++            // run or is currently in progress. We don't want to interfer and just go through
++            // the meta object.
++            m_propTypeAndRelativePropIndex
++                    = propType | (relativePropertyIndex << RelativePropIndexShift);
+             m_staticMetaCallFunction = f;
+         }
+     }
+-    quint16 relativePropertyIndex() const { Q_ASSERT(hasStaticMetaCallFunction()); return m_flags.otherBits; }
++
++    quint16 relativePropertyIndex() const
++    {
++        Q_ASSERT(hasStaticMetaCallFunction());
++        return m_propTypeAndRelativePropIndex >> 16;
++    }
+ 
+     static Flags flagsForProperty(const QMetaProperty &);
+     void load(const QMetaProperty &);
+@@ -401,11 +417,17 @@ private:
+     friend class QQmlPropertyCache;
+     void lazyLoad(const QMetaProperty &);
+     void lazyLoad(const QMetaMethod &);
+-    bool notFullyResolved() const { return m_flags.notFullyResolved; }
++
++    enum {
++        PropTypeMask           = 0x0000ffff,
++        RelativePropIndexMask  = 0xffff0000,
++        RelativePropIndexShift = 16,
++        PropTypeUnknown        = std::numeric_limits<quint16>::max(),
++    };
++    QAtomicInteger<quint32> m_propTypeAndRelativePropIndex;
+ 
+     Flags m_flags;
+     qint16 m_coreIndex = -1;
+-    quint16 m_propType = 0;
+ 
+     // The notify index is in the range returned by QObjectPrivate::signalIndex().
+     // This is different from QMetaMethod::methodIndex().
+@@ -416,7 +438,7 @@ private:
+     quint8 m_typeMinorVersion = 0;
+     qint16 m_metaObjectOffset = -1;
+ 
+-    QQmlPropertyCacheMethodArguments *m_arguments = nullptr;
++    QAtomicPointer<QQmlPropertyCacheMethodArguments> m_arguments;
+     StaticMetaCallFunction m_staticMetaCallFunction = nullptr;
+ };
+ 
+@@ -436,8 +458,7 @@ bool QQmlPropertyData::operator==(const QQmlPropertyData &other) const
+ }
+ 
+ QQmlPropertyData::Flags::Flags()
+-    : otherBits(0)
+-    , isConstantORisVMEFunction(false)
++    : isConstantORisVMEFunction(false)
+     , isWritableORhasArguments(false)
+     , isResettableORisSignal(false)
+     , isAliasORisVMESignal(false)
+@@ -449,7 +470,6 @@ QQmlPropertyData::Flags::Flags()
+     , isDirect(false)
+     , isOverridden(false)
+     , type(OtherType)
+-    , notFullyResolved(false)
+     , overrideIndexIsProperty(false)
+ {}
+ 
+@@ -465,7 +485,6 @@ bool QQmlPropertyData::Flags::operator==(const QQmlPropertyData::Flags &other) c
+             isRequiredORisCloned == other.isRequiredORisCloned &&
+             type == other.type &&
+             isConstructor == other.isConstructor &&
+-            notFullyResolved == other.notFullyResolved &&
+             overrideIndexIsProperty == other.overrideIndexIsProperty;
+ }
+ 
 diff --git a/src/qml/qml/qqmlpropertyvalidator.cpp b/src/qml/qml/qqmlpropertyvalidator.cpp
 index 3587609301..3a1f33113f 100644
 --- a/src/qml/qml/qqmlpropertyvalidator.cpp
@@ -2281,7 +3122,7 @@ index a7e37d1964..01b2f58f16 100644
  
  //
 diff --git a/src/qmlmodels/qqmldelegatemodel.cpp b/src/qmlmodels/qqmldelegatemodel.cpp
-index 725b9e8bc3..f5d586a4c2 100644
+index 725b9e8bc3..a577cb2351 100644
 --- a/src/qmlmodels/qqmldelegatemodel.cpp
 +++ b/src/qmlmodels/qqmldelegatemodel.cpp
 @@ -1,6 +1,6 @@
@@ -2318,7 +3159,41 @@ index 725b9e8bc3..f5d586a4c2 100644
      QObject::disconnect(aim, SIGNAL(dataChanged(QModelIndex,QModelIndex,QVector<int>)),
                          q, SLOT(_q_dataChanged(QModelIndex,QModelIndex,QVector<int>)));
      QObject::disconnect(aim, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
-@@ -1343,6 +1355,8 @@ QObject *QQmlDelegateModel::object(int index, QQmlIncubator::IncubationMode incu
+@@ -968,6 +980,17 @@ void QQDMIncubationTask::initializeRequiredProperties(QQmlDelegateModelItem *mod
+             contextData->extraObject = modelItemToIncubate;
+         }
+ 
++        // If we have required properties, we clear the context object
++        // so that the model role names are not polluting the context
++        if (incubating) {
++            Q_ASSERT(incubating->contextData);
++            incubating->contextData->contextObject = nullptr;
++        }
++
++        if (proxyContext) {
++            proxyContext->contextObject = nullptr;
++        }
++
+         if (incubatorPriv->requiredProperties().empty())
+             return;
+         RequiredProperties &requiredProperties = incubatorPriv->requiredProperties();
+@@ -1279,6 +1302,7 @@ QObject *QQmlDelegateModelPrivate::object(Compositor::Group group, int index, QQ
+ 
+         QQmlContextData *ctxt = new QQmlContextData;
+         ctxt->setParent(QQmlContextData::get(creationContext  ? creationContext : m_context.data()));
++        ctxt->contextObject = cacheItem;
+         cacheItem->contextData = ctxt;
+ 
+         if (m_adaptorModel.hasProxyObject()) {
+@@ -1289,6 +1313,7 @@ QObject *QQmlDelegateModelPrivate::object(Compositor::Group group, int index, QQ
+                 QObject *proxied = proxy->proxiedObject();
+                 cacheItem->incubationTask->proxiedObject = proxied;
+                 cacheItem->incubationTask->proxyContext = ctxt;
++                ctxt->contextObject = cacheItem;
+                 // We don't own the proxied object. We need to clear it if it goes away.
+                 QObject::connect(proxied, &QObject::destroyed,
+                                  cacheItem, &QQmlDelegateModelItem::childContextObjectDestroyed);
+@@ -1343,6 +1368,8 @@ QObject *QQmlDelegateModel::object(int index, QQmlIncubator::IncubationMode incu
  QQmlIncubator::Status QQmlDelegateModel::incubationStatus(int index)
  {
      Q_D(QQmlDelegateModel);
@@ -2327,7 +3202,7 @@ index 725b9e8bc3..f5d586a4c2 100644
      Compositor::iterator it = d->m_compositor.find(d->m_compositorGroup, index);
      if (!it->inCache())
          return QQmlIncubator::Null;
-@@ -1609,7 +1623,7 @@ void QQmlDelegateModelPrivate::itemsRemoved(
+@@ -1609,7 +1636,7 @@ void QQmlDelegateModelPrivate::itemsRemoved(
          removed[i] = 0;
  
      for (const Compositor::Remove &remove : removes) {
@@ -2336,7 +3211,7 @@ index 725b9e8bc3..f5d586a4c2 100644
              incrementIndexes(m_cache.at(cacheIndex), m_groupCount, removed);
  
          for (int i = 1; i < m_groupCount; ++i) {
-@@ -1875,6 +1889,9 @@ void QQmlDelegateModel::_q_modelReset()
+@@ -1875,6 +1902,9 @@ void QQmlDelegateModel::_q_modelReset()
          d->m_count = d->adaptorModelCount();
  
          const QList<QQmlDelegateModelItem *> cache = d->m_cache;
@@ -2346,7 +3221,7 @@ index 725b9e8bc3..f5d586a4c2 100644
          for (int i = 0, c = cache.count();  i < c; ++i) {
              QQmlDelegateModelItem *item = cache.at(i);
              // layout change triggered by changing the modelIndex might have
-@@ -1886,6 +1903,8 @@ void QQmlDelegateModel::_q_modelReset()
+@@ -1886,6 +1916,8 @@ void QQmlDelegateModel::_q_modelReset()
                  item->setModelIndex(-1, -1, -1);
          }
  
@@ -2355,7 +3230,7 @@ index 725b9e8bc3..f5d586a4c2 100644
          QVector<Compositor::Remove> removes;
          QVector<Compositor::Insert> inserts;
          if (oldCount)
-@@ -1953,6 +1972,38 @@ void QQmlDelegateModel::_q_rowsMoved(
+@@ -1953,6 +1985,38 @@ void QQmlDelegateModel::_q_rowsMoved(
      }
  }
  
@@ -2394,7 +3269,7 @@ index 725b9e8bc3..f5d586a4c2 100644
  void QQmlDelegateModel::_q_dataChanged(const QModelIndex &begin, const QModelIndex &end, const QVector<int> &roles)
  {
      Q_D(QQmlDelegateModel);
-@@ -2379,6 +2430,15 @@ void QQmlDelegateModelItem::destroyObject()
+@@ -2379,6 +2443,15 @@ void QQmlDelegateModelItem::destroyObject()
          data->ownContext = nullptr;
          data->context = nullptr;
      }
@@ -2542,6 +3417,27 @@ index c75d5f3129..6452567f6b 100644
 +GHS_KEEP_REFERENCE(qml_register_types_QtQml_WorkerScript);
  
  #endif // QTQMLWORKERSCRIPTGLOBAL_P_H
+diff --git a/src/quick/accessible/qaccessiblequickitem.cpp b/src/quick/accessible/qaccessiblequickitem.cpp
+index 5e1ae25c38..85719fdc80 100644
+--- a/src/quick/accessible/qaccessiblequickitem.cpp
++++ b/src/quick/accessible/qaccessiblequickitem.cpp
+@@ -216,6 +216,8 @@ QAccessible::Role QAccessibleQuickItem::role() const
+     if (role == QAccessible::NoRole) {
+         if (qobject_cast<QQuickText*>(const_cast<QQuickItem *>(item())))
+             role = QAccessible::StaticText;
++        else if (qobject_cast<QQuickTextInput*>(const_cast<QQuickItem *>(item())))
++            role = QAccessible::EditableText;
+         else
+             role = QAccessible::Client;
+     }
+@@ -232,6 +234,7 @@ QStringList QAccessibleQuickItem::actionNames() const
+ {
+     QStringList actions;
+     switch (role()) {
++    case QAccessible::Link:
+     case QAccessible::PushButton:
+         actions << QAccessibleActionInterface::pressAction();
+         break;
 diff --git a/src/quick/accessible/qaccessiblequickitem_p.h b/src/quick/accessible/qaccessiblequickitem_p.h
 index 931e995f0f..ccc9280ba0 100644
 --- a/src/quick/accessible/qaccessiblequickitem_p.h
@@ -2564,31 +3460,89 @@ index 931e995f0f..ccc9280ba0 100644
  public:
      QAccessibleQuickItem(QQuickItem *item);
 diff --git a/src/quick/designer/qquickdesignersupportproperties.cpp b/src/quick/designer/qquickdesignersupportproperties.cpp
-index 335795acf1..fb6a5fb324 100644
+index 335795acf1..479e77bf68 100644
 --- a/src/quick/designer/qquickdesignersupportproperties.cpp
 +++ b/src/quick/designer/qquickdesignersupportproperties.cpp
-@@ -137,11 +137,8 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::propert
-     if (inspectedObjects == nullptr)
-         inspectedObjects = &localObjectList;
+@@ -126,22 +126,18 @@ void QQuickDesignerSupportProperties::getPropertyCache(QObject *object, QQmlEngi
+     QQmlEnginePrivate::get(engine)->cache(object->metaObject());
+ }
  
+-QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::propertyNameListForWritableProperties(QObject *object,
++static QQuickDesignerSupport::PropertyNameList propertyNameListForWritableProperties(QObject *object,
+                                                        const QQuickDesignerSupport::PropertyName &baseName,
+-                                                       QObjectList *inspectedObjects)
++                                                       QObjectList *inspectedObjects,
++                                                       int depth = 0)
+ {
+     QQuickDesignerSupport::PropertyNameList propertyNameList;
+ 
+-    QObjectList localObjectList;
+-
+-    if (inspectedObjects == nullptr)
+-        inspectedObjects = &localObjectList;
+-
 -
 -    if (inspectedObjects->contains(object))
--        return propertyNameList;
--
++    if (depth > 2)
+         return propertyNameList;
+ 
 -    inspectedObjects->append(object);
 +    if (!inspectedObjects->contains(object))
 +        inspectedObjects->append(object);
  
      const QMetaObject *metaObject = object->metaObject();
      for (int index = 0; index < metaObject->propertyCount(); ++index) {
-@@ -194,12 +191,8 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::allProp
+@@ -153,14 +149,16 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::propert
+                 if (childObject)
+                     propertyNameList.append(propertyNameListForWritableProperties(childObject,
+                                                                                   baseName +  QQuickDesignerSupport::PropertyName(metaProperty.name())
+-                                                                                  + '.', inspectedObjects));
++                                                                                  + '.', inspectedObjects,
++                                                                                  depth + 1));
+             }
+         } else if (QQmlGadgetPtrWrapper *valueType
+                    = QQmlGadgetPtrWrapper::instance(qmlEngine(object), metaProperty.userType())) {
+             valueType->setValue(metaProperty.read(object));
+             propertyNameList.append(propertyNameListForWritableProperties(valueType,
+                                                                           baseName +  QQuickDesignerSupport::PropertyName(metaProperty.name())
+-                                                                          + '.', inspectedObjects));
++                                                                          + '.', inspectedObjects,
++                                                                          depth + 1));
+         }
+ 
+         if (metaProperty.isReadable() && metaProperty.isWritable()) {
+@@ -172,6 +170,12 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::propert
+     return propertyNameList;
+ }
+ 
++QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::propertyNameListForWritableProperties(QObject *object)
++{
++    QObjectList localObjectList;
++    return ::propertyNameListForWritableProperties(object, {}, &localObjectList);
++}
++
+ bool QQuickDesignerSupportProperties::isPropertyBlackListed(const QQuickDesignerSupport::PropertyName &propertyName)
+ {
+     if (propertyName.contains(".") && propertyName.contains("__"))
+@@ -185,7 +189,8 @@ bool QQuickDesignerSupportProperties::isPropertyBlackListed(const QQuickDesigner
+ 
+ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::allPropertyNames(QObject *object,
+                                   const QQuickDesignerSupport::PropertyName &baseName,
+-                                  QObjectList *inspectedObjects)
++                                  QObjectList *inspectedObjects,
++                                  int depth)
+ {
+     QQuickDesignerSupport::PropertyNameList propertyNameList;
+ 
+@@ -194,12 +199,11 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::allProp
      if (inspectedObjects == nullptr)
          inspectedObjects = &localObjectList;
  
 -
 -    if (inspectedObjects->contains(object))
--        return propertyNameList;
--
++    if (depth > 2)
+         return propertyNameList;
+ 
 -    inspectedObjects->append(object);
 -
 +    if (!inspectedObjects->contains(object))
@@ -2596,6 +3550,170 @@ index 335795acf1..fb6a5fb324 100644
  
      const QMetaObject *metaObject = object->metaObject();
  
+@@ -221,7 +225,8 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::allProp
+                     propertyNameList.append(allPropertyNames(childObject,
+                                                              baseName
+                                                              + QQuickDesignerSupport::PropertyName(metaProperty.name())
+-                                                             + '.', inspectedObjects));
++                                                             + '.', inspectedObjects,
++                                                             depth + 1));
+             }
+         } else if (QQmlGadgetPtrWrapper *valueType
+                    = QQmlGadgetPtrWrapper::instance(qmlEngine(object), metaProperty.userType())) {
+@@ -230,7 +235,8 @@ QQuickDesignerSupport::PropertyNameList QQuickDesignerSupportProperties::allProp
+             propertyNameList.append(allPropertyNames(valueType,
+                                                      baseName
+                                                      + QQuickDesignerSupport::PropertyName(metaProperty.name())
+-                                                     + '.', inspectedObjects));
++                                                     + '.', inspectedObjects,
++                                                     depth + 1));
+         } else  {
+             addToPropertyNameListIfNotBlackListed(&propertyNameList,
+                                                   baseName + QQuickDesignerSupport::PropertyName(metaProperty.name()));
+diff --git a/src/quick/designer/qquickdesignersupportproperties_p.h b/src/quick/designer/qquickdesignersupportproperties_p.h
+index 02e75ea886..5970eca9f1 100644
+--- a/src/quick/designer/qquickdesignersupportproperties_p.h
++++ b/src/quick/designer/qquickdesignersupportproperties_p.h
+@@ -90,12 +90,11 @@ public:
+ 
+     static void getPropertyCache(QObject *object, QQmlEngine *engine);
+     static bool isPropertyBlackListed(const QQuickDesignerSupport::PropertyName &propertyName);
+-    static QQuickDesignerSupport::PropertyNameList propertyNameListForWritableProperties(QObject *object,
+-                                                                  const QQuickDesignerSupport::PropertyName &baseName = QQuickDesignerSupport::PropertyName(),
+-                                                                  QObjectList *inspectedObjects = nullptr);
++    static QQuickDesignerSupport::PropertyNameList propertyNameListForWritableProperties(QObject *object);
+     static QQuickDesignerSupport::PropertyNameList allPropertyNames(QObject *object,
+                                              const QQuickDesignerSupport::PropertyName &baseName = QQuickDesignerSupport::PropertyName(),
+-                                             QObjectList *inspectedObjects = nullptr);
++                                             QObjectList *inspectedObjects = nullptr,
++                                             int depth = 0);
+     static bool hasFullImplementedListInterface(const QQmlListReference &list);
+ };
+ 
+diff --git a/src/quick/doc/snippets/pointerHandlers/hoverTapKeyButton.qml b/src/quick/doc/snippets/pointerHandlers/hoverTapKeyButton.qml
+new file mode 100644
+index 0000000000..1564aa16b5
+--- /dev/null
++++ b/src/quick/doc/snippets/pointerHandlers/hoverTapKeyButton.qml
+@@ -0,0 +1,73 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the documentation of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:BSD$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** BSD License Usage
++** Alternatively, you may use this file under the terms of the BSD license
++** as follows:
++**
++** "Redistribution and use in source and binary forms, with or without
++** modification, are permitted provided that the following conditions are
++** met:
++**   * Redistributions of source code must retain the above copyright
++**     notice, this list of conditions and the following disclaimer.
++**   * Redistributions in binary form must reproduce the above copyright
++**     notice, this list of conditions and the following disclaimer in
++**     the documentation and/or other materials provided with the
++**     distribution.
++**   * Neither the name of The Qt Company Ltd nor the names of its
++**     contributors may be used to endorse or promote products derived
++**     from this software without specific prior written permission.
++**
++**
++** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++//![0]
++import QtQuick 2.12
++
++Rectangle {
++    id: button
++    signal clicked
++
++    width: 150; height: 50; radius: 3
++    color: tapHandler.pressed ? "goldenrod" : hoverHandler.hovered ? "wheat" : "beige"
++    border.color: activeFocus ? "brown" : "transparent"
++    focus: true
++
++    HoverHandler {
++        id: hoverHandler
++    }
++
++    TapHandler {
++        id: tapHandler
++        onTapped: button.clicked()
++    }
++
++    Keys.onEnterPressed: button.clicked()
++}
++//![0]
+diff --git a/src/quick/doc/snippets/qml/externaldrag.qml b/src/quick/doc/snippets/qml/externaldrag.qml
+index 97a23293ca..5a88be2d4b 100644
+--- a/src/quick/doc/snippets/qml/externaldrag.qml
++++ b/src/quick/doc/snippets/qml/externaldrag.qml
+@@ -48,7 +48,7 @@
+ **
+ ****************************************************************************/
+ //![0]
+-import QtQuick 2.8
++import QtQuick 2.12
+ 
+ Item {
+     width: 200; height: 200
+@@ -59,7 +59,7 @@ Item {
+         color: "green"
+         radius: 5
+ 
+-        Drag.active: dragArea.drag.active
++        Drag.active: dragHandler.active
+         Drag.dragType: Drag.Automatic
+         Drag.supportedActions: Qt.CopyAction
+         Drag.mimeData: {
+@@ -72,14 +72,14 @@ Item {
+             text: "Drag me"
+         }
+ 
+-        MouseArea {
+-            id: dragArea
+-            anchors.fill: parent
+-
+-            drag.target: parent
+-            onPressed: parent.grabToImage(function(result) {
+-                parent.Drag.imageSource = result.url
+-            })
++        DragHandler {
++            id: dragHandler
++            onActiveChanged:
++                if (active) {
++                    parent.grabToImage(function(result) {
++                        parent.Drag.imageSource = result.url;
++                    })
++                }
+         }
+     }
+ }
 diff --git a/src/quick/doc/snippets/qml/item/childrenRect.qml b/src/quick/doc/snippets/qml/item/childrenRect.qml
 new file mode 100644
 index 0000000000..769633dc2a
@@ -2687,11 +3805,259 @@ index 32406f8f2f..5f93dfdbe8 100644
 +    view->show();
 +//![1]
 +}
+diff --git a/src/quick/doc/src/concepts/inputhandlers/qtquickhandlers-index.qdoc b/src/quick/doc/src/concepts/inputhandlers/qtquickhandlers-index.qdoc
+index 2ac9860e6f..bf889a9066 100644
+--- a/src/quick/doc/src/concepts/inputhandlers/qtquickhandlers-index.qdoc
++++ b/src/quick/doc/src/concepts/inputhandlers/qtquickhandlers-index.qdoc
+@@ -1,6 +1,6 @@
+ /****************************************************************************
+ **
+-** Copyright (C) 2018 The Qt Company Ltd.
++** Copyright (C) 2021 The Qt Company Ltd.
+ ** Contact: https://www.qt.io/licensing/
+ **
+ ** This file is part of the documentation of the Qt Toolkit.
+@@ -30,20 +30,21 @@
+     \title Qt Quick Input Handlers
+     \brief A module with a set of QML elements that handle events from input devices in a user interface.
+ 
+-    Qt Quick Input Handlers are a set of QML types used to handle events from
+-    keyboard, touch, mouse, and stylus devices in a UI. In contrast to event-handling
+-    items, such as \l MouseArea and \l Flickable, input handlers are explicitly non-visual,
+-    require less memory and are intended to be used in greater numbers: one
+-    handler instance per aspect of interaction. Each input handler instance
+-    handles certain events on behalf of its \c parent Item. Thus the visual and
++    Qt Quick Input Handlers are a set of QML types used to handle
++    \l {QInputEvent}{events} from keyboard, touch, mouse, and stylus
++    \l {QInputDevice}{devices} in a UI. In contrast to event-handling
++    items, such as \l MouseArea and \l Flickable, input handlers are explicitly
++    non-visual, require less memory and are intended to be used in greater
++    numbers: one handler instance per aspect of interaction. Each input handler
++    instance handles certain events on behalf of its
++    \l {QQuickPointerHandler::parent()}{parent} Item. Thus the visual and
+     behavioral concerns are better separated, and the behavior is built up by
+     finer-grained composition.
+ 
+-    In Qt 5.10, these handlers were introduced in a separate Qt.labs.handlers module.
+-    Now they are included with Qt Quick since 5.12.  The pre-existing
+-    \l Keys attached property is similar in concept, so we refer to the
+-    pointing-device-oriented handlers plus \c Keys together as the set of Input Handlers.
+-    We expect to offer more attached-property use cases in future versions of Qt.
++    The pre-existing \l Keys attached property is similar in concept, so we
++    refer to the pointing-device-oriented handlers plus \c Keys together as the
++    set of Input Handlers. We expect to offer more attached-property use cases
++    in future versions of Qt.
+ 
+     \section1 Input Handlers
+ 
+@@ -60,7 +61,44 @@
+         \li Each Item can have unlimited Handlers
+     \endlist
+ 
+-    \omit TODO actual overview with snippets and stuff \endomit
++    \section1 Handlers Manipulating Items
++
++    Some Handlers add interactivity simply by being declared inside an Item:
++
++    \snippet pointerHandlers/dragHandler.qml 0
++
++    \section1 Handler Properties and Signals
++
++    All Handlers have properties that can be used in bindings, and signals that
++    can be handled to react to input:
++
++    \snippet pointerHandlers/hoverTapKeyButton.qml 0
++
++    \section1 Pointer Grab
++
++    An important concept with Pointer Handlers is the type of grabs that they
++    perform. The only kind of grab an Item can take is the exclusive grab: for
++    example if you call \l QPointerEvent::setExclusiveGrabber(), the following
++    mouse moves and mouse release event will be sent only to that object. (As a
++    workaround to this exclusivity, see \l QQuickItem::setFiltersChildMouseEvents()
++    and \l QQuickItem::childMouseEventFilter().) However Pointer Handlers have
++    an additional mechanism available: the
++    \l {QPointerEvent::addPassiveGrabber()} {passive grab}. Mouse and touch
++    \l {QEventPoint::state()}{press} events are delivered by visiting all the
++    Items in top-down Z order: first each Item's child Handlers, and then the
++    \l {QQuickItem::event()}{Item} itself. At the time a press event is
++    delivered, a Handler can take either a passive or an exclusive grab
++    depending on its needs. If it takes a passive grab, it is guaranteed to
++    receive the updates and the release, even if other Items or Handlers in the
++    scene take any kind of grab, passive or exclusve. Some Handlers (such as
++    PointHandler) can work only with passive grabs; others require exclusive
++    grabs; and others can "lurk" with passive grabs until they detect that a
++    gesture is being performed, and then make the transition from passive to
++    exclusive grab.
++
++    When a grab transition is requested, \l PointerHandler::grabPermissions,
++    \l QQuickItem::keepMouseGrab() and \l QQuickItem::keepTouchGrab() control
++    whether the transition will be allowed.
+ 
+     \section1 Related Information
+ 
+diff --git a/src/quick/doc/src/qmltypereference.qdoc b/src/quick/doc/src/qmltypereference.qdoc
+index 528444cad3..65de1284a4 100644
+--- a/src/quick/doc/src/qmltypereference.qdoc
++++ b/src/quick/doc/src/qmltypereference.qdoc
+@@ -739,6 +739,73 @@ console.log(c + " " + d); // false true
+         \li Description
+         \li Example
+ 
++        \row
++        \li translate(vector3d vector)
++        \li Multiplies \c this matrix4x4 by another that translates coordinates by the components
++            of \c vector
++        \li \code
++var m = Qt.matrix4x4();
++m.translate(Qt.vector3d(1,2,3));
++console.log(m.toString());
++// QMatrix4x4(1, 0, 0, 1, 0, 1, 0, 2, 0, 0, 1, 3, 0, 0, 0, 1)
++            \endcode
++
++        \row
++        \li rotate(real angle, vector3d axis)
++        \li Multiples \c this matrix4x4 by another that rotates coordinates through
++            \c angle degrees about \c axis
++        \li \code
++var m = Qt.matrix4x4();
++m.rotate(180,vector3d(1,0,0));
++console.log(m.toString());
++// QMatrix4x4(1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)
++            \endcode
++
++        \row
++        \li scale(real factor)
++        \li Multiplies \c this matrix4x4 by another that scales coordinates by the given \c factor
++        \li \code
++var m = Qt.matrix4x4();
++m.scale(2);
++console.log(m.toString());
++// QMatrix4x4(2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1)
++            \endcode
++
++        \row
++        \li scale(real x, real y, real z)
++        \li Multiplies \c this matrix4x4 by another that scales coordinates by the components
++            \c x, \c y, and \c z
++        \li \code
++var m = Qt.matrix4x4();
++m.scale(1,2,3);
++console.log(m.toString());
++// QMatrix4x4(1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1)
++            \endcode
++
++        \row
++        \li scale(vector3d vector)
++        \li Multiplies \c this matrix4x4 by another that scales coordinates by the components
++            of \c vector
++        \li \code
++var m = Qt.matrix4x4();
++m.scale(Qt.vector3d(1,2,3));
++console.log(m.toString());
++// QMatrix4x4(1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1)
++            \endcode
++
++        \row
++        \li lookAt(vector3d eye, vector3d center, vector3d up)
++        \li Multiplies \c this matrix4x4 by a viewing matrix derived from an \c eye point.
++            The \c center vector3d indicates the center of the view that the \c eye is looking at.
++            The \c up vector3d indicates which direction should be considered up with respect to
++            the \c eye.
++        \li \code
++var m = Qt.matrix4x4();
++m.lookAt(Qt.vector3d(1,2,3),Qt.vector3d(1,2,0),Qt.vector3d(0,1,0));
++console.log(m.toString());
++// QMatrix4x4(1, 0, 0, -1, 0, 1, 0, -2, 0, 0, 1, -3, 0, 0, 0, 1)
++            \endcode
++
+         \row
+         \li matrix4x4 times(matrix4x4 other)
+         \li Returns the matrix4x4 result of multiplying \c this matrix4x4 with
+diff --git a/src/quick/handlers/qquickmultipointhandler.cpp b/src/quick/handlers/qquickmultipointhandler.cpp
+index f404788de4..2a9ecd341c 100644
+--- a/src/quick/handlers/qquickmultipointhandler.cpp
++++ b/src/quick/handlers/qquickmultipointhandler.cpp
+@@ -146,7 +146,7 @@ void QQuickMultiPointHandler::onActiveChanged()
+     }
+ }
+ 
+-void QQuickMultiPointHandler::onGrabChanged(QQuickPointerHandler *, QQuickEventPoint::GrabTransition transition, QQuickEventPoint *)
++void QQuickMultiPointHandler::onGrabChanged(QQuickPointerHandler *grabber, QQuickEventPoint::GrabTransition transition, QQuickEventPoint *point)
+ {
+     Q_D(QQuickMultiPointHandler);
+     // If another handler or item takes over this set of points, assume it has
+@@ -155,6 +155,20 @@ void QQuickMultiPointHandler::onGrabChanged(QQuickPointerHandler *, QQuickEventP
+     // (e.g. between DragHandler and PinchHandler).
+     if (transition == QQuickEventPoint::UngrabExclusive || transition == QQuickEventPoint::CancelGrabExclusive)
+         d->currentPoints.clear();
++    if (grabber != this)
++        return;
++    switch (transition) {
++    case QQuickEventPoint::GrabExclusive:
++    case QQuickEventPoint::GrabPassive:
++    case QQuickEventPoint::UngrabPassive:
++    case QQuickEventPoint::UngrabExclusive:
++    case QQuickEventPoint::CancelGrabPassive:
++    case QQuickEventPoint::CancelGrabExclusive:
++        QQuickPointerHandler::onGrabChanged(grabber, transition, point);
++        break;
++    case QQuickEventPoint::OverrideGrabPassive:
++        return; // don't emit
++    }
+ }
+ 
+ QVector<QQuickEventPoint *> QQuickMultiPointHandler::eligiblePoints(QQuickPointerEvent *event)
 diff --git a/src/quick/handlers/qquickpointerhandler.cpp b/src/quick/handlers/qquickpointerhandler.cpp
-index adb753e000..03f8d8918c 100644
+index adb753e000..a6c18feafe 100644
 --- a/src/quick/handlers/qquickpointerhandler.cpp
 +++ b/src/quick/handlers/qquickpointerhandler.cpp
-@@ -503,8 +503,11 @@ bool QQuickPointerHandler::parentContains(const QQuickEventPoint *point) const
+@@ -346,10 +346,16 @@ bool QQuickPointerHandler::approveGrabTransition(QQuickEventPoint *point, QObjec
+                         existingPhGrabber->metaObject()->className() == metaObject()->className())
+                     allowed = true;
+             } else if ((d->grabPermissions & CanTakeOverFromItems)) {
++                allowed = true;
+                 QQuickItem * existingItemGrabber = point->grabberItem();
+-                if (existingItemGrabber && !((existingItemGrabber->keepMouseGrab() && point->pointerEvent()->asPointerMouseEvent()) ||
+-                                             (existingItemGrabber->keepTouchGrab() && point->pointerEvent()->asPointerTouchEvent()))) {
+-                    allowed = true;
++                QQuickWindowPrivate *winPriv = QQuickWindowPrivate::get(parentItem()->window());
++                const bool isMouse = point->pointerEvent()->asPointerMouseEvent();
++                const bool isTouch = point->pointerEvent()->asPointerTouchEvent();
++                if (existingItemGrabber &&
++                        ((existingItemGrabber->keepMouseGrab() &&
++                          (isMouse || winPriv->isDeliveringTouchAsMouse())) ||
++                         (existingItemGrabber->keepTouchGrab() && isTouch))) {
++                    allowed = false;
+                     // If the handler wants to steal the exclusive grab from an Item, the Item can usually veto
+                     // by having its keepMouseGrab flag set.  But an exception is if that Item is a parent that
+                     // normally filters events (such as a Flickable): it needs to be possible for e.g. a
+@@ -358,14 +364,19 @@ bool QQuickPointerHandler::approveGrabTransition(QQuickEventPoint *point, QObjec
+                     // at first and then expects to be able to steal the grab later on.  It cannot respect
+                     // Flickable's wishes in that case, because then it would never have a chance.
+                     if (existingItemGrabber->keepMouseGrab() &&
+-                            !(existingItemGrabber->filtersChildMouseEvents() && existingItemGrabber->isAncestorOf(parentItem()))) {
+-                        QQuickWindowPrivate *winPriv = QQuickWindowPrivate::get(parentItem()->window());
++                            existingItemGrabber->filtersChildMouseEvents() && existingItemGrabber->isAncestorOf(parentItem())) {
+                         if (winPriv->isDeliveringTouchAsMouse() && point->pointId() == winPriv->touchMouseId) {
+-                            qCDebug(lcPointerHandlerGrab) << this << "wants to grab touchpoint" << point->pointId()
+-                                << "but declines to steal grab from touch-mouse grabber with keepMouseGrab=true" << existingItemGrabber;
+-                            allowed = false;
++                            qCDebug(lcPointerHandlerGrab) << this << "steals touchpoint" << point->pointId()
++                                << "despite parent touch-mouse grabber with keepMouseGrab=true" << existingItemGrabber;
++                            allowed = true;
+                         }
+                     }
++                    if (!allowed) {
++                        qCDebug(lcPointerHandlerGrab) << this << "wants to grab point" << point->pointId()
++                                << "but declines to steal from grabber" << existingItemGrabber
++                                << "with keepMouseGrab=" << existingItemGrabber->keepMouseGrab()
++                                << "keepTouchGrab=" << existingItemGrabber->keepTouchGrab();
++                    }
+                 }
+             }
+         }
+@@ -503,8 +514,11 @@ bool QQuickPointerHandler::parentContains(const QQuickEventPoint *point) const
          return false;
      if (QQuickItem *par = parentItem()) {
          if (par->window()) {
@@ -2704,6 +4070,75 @@ index adb753e000..03f8d8918c 100644
                  return false;
          }
          QPointF p = par->mapFromScene(point->scenePosition());
+diff --git a/src/quick/handlers/qquicktaphandler.cpp b/src/quick/handlers/qquicktaphandler.cpp
+index f3674d6fa9..2284750f15 100644
+--- a/src/quick/handlers/qquicktaphandler.cpp
++++ b/src/quick/handlers/qquicktaphandler.cpp
+@@ -209,6 +209,8 @@ void QQuickTapHandler::timerEvent(QTimerEvent *event)
+     If the spatial constraint is violated, \l pressed transitions immediately
+     from true to false, regardless of the time held.
+ 
++    The \c gesturePolicy also affects grab behavior as described below.
++
+     \value TapHandler.DragThreshold
+            (the default value) The event point must not move significantly.
+            If the mouse, finger or stylus moves past the system-wide drag
+@@ -217,11 +219,13 @@ void QQuickTapHandler::timerEvent(QTimerEvent *event)
+            can be useful whenever TapHandler needs to cooperate with other
+            input handlers (for example \l DragHandler) or event-handling Items
+            (for example QtQuick Controls), because in this case TapHandler
+-           will not take the exclusive grab, but merely a passive grab.
++           will not take the exclusive grab, but merely a
++           \l {QPointerEvent::addPassiveGrabber()}{passive grab}.
+ 
+     \value TapHandler.WithinBounds
+            If the event point leaves the bounds of the \c parent Item, the tap
+-           gesture is canceled. The TapHandler will take the exclusive grab on
++           gesture is canceled. The TapHandler will take the
++           \l {QPointerEvent::setExclusiveGrabber}{exclusive grab} on
+            press, but will release the grab as soon as the boundary constraint
+            is no longer satisfied.
+ 
+@@ -232,8 +236,9 @@ void QQuickTapHandler::timerEvent(QTimerEvent *event)
+            typical behavior for button widgets: you can cancel a click by
+            dragging outside the button, and you can also change your mind by
+            dragging back inside the button before release. Note that it's
+-           necessary for TapHandler take the exclusive grab on press and retain
+-           it until release in order to detect this gesture.
++           necessary for TapHandler to take the
++           \l {QPointerEvent::setExclusiveGrabber}{exclusive grab} on press
++           and retain it until release in order to detect this gesture.
+ */
+ void QQuickTapHandler::setGesturePolicy(QQuickTapHandler::GesturePolicy gesturePolicy)
+ {
+diff --git a/src/quick/items/context2d/qquickcontext2dcommandbuffer.cpp b/src/quick/items/context2d/qquickcontext2dcommandbuffer.cpp
+index 55ebbe907c..1d047e3c2f 100644
+--- a/src/quick/items/context2d/qquickcontext2dcommandbuffer.cpp
++++ b/src/quick/items/context2d/qquickcontext2dcommandbuffer.cpp
+@@ -375,7 +375,10 @@ void QQuickContext2DCommandBuffer::replay(QPainter* p, QQuickContext2D::State& s
+             }
+             state.lineDash = pattern;
+             QPen nPen = p->pen();
+-            nPen.setDashPattern(pattern);
++            if (count > 0)
++                nPen.setDashPattern(pattern);
++            else
++                nPen.setStyle(Qt::SolidLine);
+             p->setPen(nPen);
+             break;
+         }
+diff --git a/src/quick/items/qquickdroparea.cpp b/src/quick/items/qquickdroparea.cpp
+index d90ee209d6..e503cd7815 100644
+--- a/src/quick/items/qquickdroparea.cpp
++++ b/src/quick/items/qquickdroparea.cpp
+@@ -91,6 +91,7 @@ QQuickDropAreaPrivate::~QQuickDropAreaPrivate()
+ /*!
+     \qmltype DropArea
+     \instantiates QQuickDropArea
++    \inherits Item
+     \inqmlmodule QtQuick
+     \ingroup qtquick-input
+     \brief For specifying drag and drop handling in an area.
 diff --git a/src/quick/items/qquickevents.cpp b/src/quick/items/qquickevents.cpp
 index 950afaed52..7e673b3fe4 100644
 --- a/src/quick/items/qquickevents.cpp
@@ -2940,8 +4375,78 @@ index 414c9c33d6..6163613493 100644
  
      enum FixupMode { Normal, Immediate, ExtentChanged };
      FixupMode fixupMode;
+diff --git a/src/quick/items/qquickimage.cpp b/src/quick/items/qquickimage.cpp
+index 1882ec8997..04c5da6167 100644
+--- a/src/quick/items/qquickimage.cpp
++++ b/src/quick/items/qquickimage.cpp
+@@ -343,9 +343,9 @@ void QQuickImage::setFillMode(FillMode mode)
+ }
+ 
+ /*!
+-
+     \qmlproperty real QtQuick::Image::paintedWidth
+     \qmlproperty real QtQuick::Image::paintedHeight
++    \readonly
+ 
+     These properties hold the size of the image that is actually painted.
+     In most cases it is the same as \c width and \c height, but when using an
+@@ -367,6 +367,7 @@ qreal QQuickImage::paintedHeight() const
+ 
+ /*!
+     \qmlproperty enumeration QtQuick::Image::status
++    \readonly
+ 
+     This property holds the status of image loading.  It can be one of:
+     \list
+@@ -404,6 +405,7 @@ qreal QQuickImage::paintedHeight() const
+ 
+ /*!
+     \qmlproperty real QtQuick::Image::progress
++    \readonly
+ 
+     This property holds the progress of image loading, from 0.0 (nothing loaded)
+     to 1.0 (finished).
+@@ -425,7 +427,7 @@ qreal QQuickImage::paintedHeight() const
+ */
+ 
+ /*!
+-    \qmlproperty QSize QtQuick::Image::sourceSize
++    \qmlproperty size QtQuick::Image::sourceSize
+ 
+     This property holds the scaled width and height of the full-frame image.
+ 
+diff --git a/src/quick/items/qquickimagebase.cpp b/src/quick/items/qquickimagebase.cpp
+index 8849c2005c..d7b5709bb0 100644
+--- a/src/quick/items/qquickimagebase.cpp
++++ b/src/quick/items/qquickimagebase.cpp
+@@ -56,8 +56,8 @@ QT_BEGIN_NAMESPACE
+ bool QQuickImageBasePrivate::updateDevicePixelRatio(qreal targetDevicePixelRatio)
+ {
+     // QQuickImageProvider and SVG and PDF can generate a high resolution image when
+-    // sourceSize is set (this function is only called if it's set).
+-    // If sourceSize is not set then the provider default size will be used, as usual.
++    // sourceSize is set. If sourceSize is not set then the provider default size will
++    // be used, as usual.
+     bool setDevicePixelRatio = false;
+     if (url.scheme() == QLatin1String("image")) {
+         setDevicePixelRatio = true;
+@@ -418,10 +418,14 @@ void QQuickImageBase::itemChange(ItemChange change, const ItemChangeData &value)
+     Q_D(QQuickImageBase);
+     // If the screen DPI changed, reload image.
+     if (change == ItemDevicePixelRatioHasChanged && value.realValue != d->devicePixelRatio) {
++        const auto oldDpr = d->devicePixelRatio;
+         // ### how can we get here with !qmlEngine(this)? that implies
+         // itemChange() on an item pending deletion, which seems strange.
+         if (qmlEngine(this) && isComponentComplete() && d->url.isValid()) {
+             load();
++            // not changed when loading (sourceSize might not be set)
++            if (d->devicePixelRatio == oldDpr)
++                d->updateDevicePixelRatio(value.realValue);
+         }
+     }
+     QQuickItem::itemChange(change, value);
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 67c4611d9e..83e52b12e5 100644
+index 67c4611d9e..aede212126 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
 @@ -1,9 +1,9 @@
@@ -3103,7 +4608,32 @@ index 67c4611d9e..83e52b12e5 100644
  }
  
  /*!
-@@ -7293,7 +7337,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
+@@ -4751,14 +4795,24 @@ void QQuickItem::forceActiveFocus()
+ 
+ void QQuickItem::forceActiveFocus(Qt::FocusReason reason)
+ {
++    Q_D(QQuickItem);
+     setFocus(true, reason);
+     QQuickItem *parent = parentItem();
++    QQuickItem *scope = nullptr;
+     while (parent) {
+         if (parent->flags() & QQuickItem::ItemIsFocusScope) {
+             parent->setFocus(true, reason);
++            if (!scope)
++                scope = parent;
+         }
+         parent = parent->parentItem();
+     }
++    // In certain reparenting scenarios, d->focus might be true and the scope
++    // might also have focus, so that setFocus() returns early without actually
++    // acquiring active focus, because it thinks it already has it. In that
++    // case, try to set the DeliveryAgent's active focus. (QTBUG-89736).
++    if (scope && !d->activeFocus && d->window)
++        QQuickWindowPrivate::get(d->window)->setFocusInScope(scope, this, Qt::OtherFocusReason);
+ }
+ 
+ /*!
+@@ -7293,7 +7347,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
      If an item does not accept the mouse button for a particular mouse event,
      the mouse event will not be delivered to the item and will be delivered
      to the next item in the item hierarchy instead.
@@ -3114,7 +4644,7 @@ index 67c4611d9e..83e52b12e5 100644
  Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  {
      Q_D(const QQuickItem);
-@@ -7302,7 +7348,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
+@@ -7302,7 +7358,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  
  /*!
      Sets the mouse buttons accepted by this item to \a buttons.
@@ -3129,7 +4659,7 @@ index 67c4611d9e..83e52b12e5 100644
  void QQuickItem::setAcceptedMouseButtons(Qt::MouseButtons buttons)
  {
      Q_D(QQuickItem);
-@@ -7352,6 +7404,12 @@ bool QQuickItem::isUnderMouse() const
+@@ -7352,6 +7414,12 @@ bool QQuickItem::isUnderMouse() const
      if (!d->window)
          return false;
  
@@ -3142,7 +4672,7 @@ index 67c4611d9e..83e52b12e5 100644
      QPointF cursorPos = QGuiApplicationPrivate::lastCursorPosition;
      return contains(mapFromScene(d->window->mapFromGlobal(cursorPos.toPoint())));
  }
-@@ -7766,22 +7824,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
+@@ -7766,22 +7834,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
  }
  
  /*!
@@ -3177,6 +4707,64 @@ index 67c4611d9e..83e52b12e5 100644
 +    delivery, so the implementation should be kept as lightweight as possible.
  */
  bool QQuickItem::contains(const QPointF &point) const
+ {
+@@ -7804,22 +7873,48 @@ bool QQuickItem::contains(const QPointF &point) const
+     \qmlproperty QObject* QtQuick::Item::containmentMask
+     \since 5.11
+     This property holds an optional mask for the Item to be used in the
+-    QtQuick::Item::contains method.
+-    QtQuick::Item::contains main use is currently to determine whether
+-    an input event has landed into the item or not.
++    QtQuick::Item::contains() method. Its main use is currently to determine
++    whether a \l {QPointerEvent}{pointer event} has landed into the item or not.
+ 
+     By default the \l contains method will return true for any point
+-    within the Item's bounding box. \c containmentMask allows for a
+-    more fine-grained control. For example, the developer could
+-    define and use an AnotherItem element as containmentMask,
+-    which has a specialized contains method, like:
++    within the Item's bounding box. \c containmentMask allows for
++    more fine-grained control. For example, if a custom C++
++    QQuickItem subclass with a specialized contains() method
++    is used as containmentMask:
+ 
+     \code
+     Item { id: item; containmentMask: AnotherItem { id: anotherItem } }
+     \endcode
+ 
+-    \e{item}'s contains method would then return true only if
+-    \e{anotherItem}'s contains implementation returns true.
++    \e{item}'s contains method would then return \c true only if
++    \e{anotherItem}'s contains() implementation returns \c true.
++
++    A \l Shape can be used in this way, to make an item react to
++    \l {QPointerEvent}{pointer events} only within a non-rectangular region,
++    as illustrated in the \l {Qt Quick Examples - Shapes}{Shapes example}
++    (see \c tapableTriangle.qml).
++*/
++/*!
++    \property QQuickItem::containmentMask
++    \since 5.11
++    This property holds an optional mask to be used in the contains() method,
++    which is mainly used for hit-testing each \l QPointerEvent.
++
++    By default, \l contains() will return \c true for any point
++    within the Item's bounding box. But any QQuickItem, or any QObject
++    that implements a function of the form
++    \code
++    Q_INVOKABLE bool contains(const QPointF &point) const;
++    \endcode
++    can be used as a mask, to defer hit-testing to that object.
++
++    \note contains() is called frequently during event delivery.
++    Deferring hit-testing to another object slows it down somewhat.
++    containmentMask() can cause performance problems if that object's
++    contains() method is not efficient. If you implement a custom
++    QQuickItem subclass, you can alternatively override contains().
++
++    \sa contains()
+ */
+ QObject *QQuickItem::containmentMask() const
  {
 diff --git a/src/quick/items/qquickitemanimation.cpp b/src/quick/items/qquickitemanimation.cpp
 index 23694e2de3..63359a7683 100644
@@ -3606,6 +5194,19 @@ index 4deb6c70a3..c0a1ccab78 100644
  
  protected:
      void releaseResources() override;
+diff --git a/src/quick/items/qquickstateoperations.cpp b/src/quick/items/qquickstateoperations.cpp
+index ddaa1979b6..a832f53e39 100644
+--- a/src/quick/items/qquickstateoperations.cpp
++++ b/src/quick/items/qquickstateoperations.cpp
+@@ -573,7 +573,7 @@ void QQuickParentChange::rewind()
+     The AnchorChanges type is used to modify the anchors of an item in a \l State.
+ 
+     AnchorChanges cannot be used to modify the margins on an item. For this, use
+-    PropertyChanges intead.
++    PropertyChanges instead.
+ 
+     In the following example we change the top and bottom anchors of an item
+     using AnchorChanges, and the top and bottom anchor margins using
 diff --git a/src/quick/items/qquicktableview.cpp b/src/quick/items/qquicktableview.cpp
 index 7b73fcb393..5feec60874 100644
 --- a/src/quick/items/qquicktableview.cpp
@@ -3906,9 +5507,40 @@ index 068571f15e..1d9e3761a2 100644
  }
  
 diff --git a/src/quick/items/qquicktextinput.cpp b/src/quick/items/qquicktextinput.cpp
-index 6275b298ed..0e7f52e816 100644
+index 6275b298ed..b4b64d59cc 100644
 --- a/src/quick/items/qquicktextinput.cpp
 +++ b/src/quick/items/qquicktextinput.cpp
+@@ -1585,7 +1585,7 @@ void QQuickTextInput::mousePressEvent(QMouseEvent *event)
+     d->moveCursor(cursor, mark);
+ 
+     if (d->focusOnPress && !qGuiApp->styleHints()->setFocusOnTouchRelease())
+-        ensureActiveFocus();
++        ensureActiveFocus(Qt::MouseFocusReason);
+ 
+     event->setAccepted(true);
+ }
+@@ -1637,7 +1637,7 @@ void QQuickTextInput::mouseReleaseEvent(QMouseEvent *event)
+ #endif
+ 
+     if (d->focusOnPress && qGuiApp->styleHints()->setFocusOnTouchRelease())
+-        ensureActiveFocus();
++        ensureActiveFocus(Qt::MouseFocusReason);
+ 
+     if (!event->isAccepted())
+         QQuickImplicitSizeItem::mouseReleaseEvent(event);
+@@ -1872,10 +1872,10 @@ void QQuickTextInput::invalidateFontCaches()
+         d->m_textLayout.engine()->resetFontEngineCache();
+ }
+ 
+-void QQuickTextInput::ensureActiveFocus()
++void QQuickTextInput::ensureActiveFocus(Qt::FocusReason reason)
+ {
+     bool hadActiveFocus = hasActiveFocus();
+-    forceActiveFocus();
++    forceActiveFocus(reason);
+ #if QT_CONFIG(im)
+     Q_D(QQuickTextInput);
+     // re-open input panel on press if already focused
 @@ -2952,6 +2952,7 @@ void QQuickTextInputPrivate::setTopPadding(qreal value, bool reset)
      }
      if ((!reset && !qFuzzyCompare(oldPadding, value)) || (reset && !qFuzzyCompare(oldPadding, padding()))) {
@@ -4057,6 +5689,19 @@ index 6275b298ed..0e7f52e816 100644
      emit paddingChanged();
      if (!d->extra.isAllocated() || !d->extra->explicitTopPadding)
          emit topPaddingChanged();
+diff --git a/src/quick/items/qquicktextinput_p.h b/src/quick/items/qquicktextinput_p.h
+index 9f7b82b168..8e97393d10 100644
+--- a/src/quick/items/qquicktextinput_p.h
++++ b/src/quick/items/qquicktextinput_p.h
+@@ -361,7 +361,7 @@ Q_SIGNALS:
+ 
+ private:
+     void invalidateFontCaches();
+-    void ensureActiveFocus();
++    void ensureActiveFocus(Qt::FocusReason reason);
+ 
+ protected:
+     QQuickTextInput(QQuickTextInputPrivate &dd, QQuickItem *parent = nullptr);
 diff --git a/src/quick/items/qquicktextinput_p_p.h b/src/quick/items/qquicktextinput_p_p.h
 index 7965f3d3f4..fa92e608b7 100644
 --- a/src/quick/items/qquicktextinput_p_p.h
@@ -4127,7 +5772,7 @@ index 97f6689d8a..b3a5270e9b 100644
     \sa QQmlComponent::createWithInitialProperties()
     \since 5.14
 diff --git a/src/quick/items/qquickwindow.cpp b/src/quick/items/qquickwindow.cpp
-index d0c9ad5454..c956c85091 100644
+index d0c9ad5454..2b9810ed57 100644
 --- a/src/quick/items/qquickwindow.cpp
 +++ b/src/quick/items/qquickwindow.cpp
 @@ -164,7 +164,7 @@ protected:
@@ -4154,26 +5799,44 @@ index d0c9ad5454..c956c85091 100644
      int m_incubation_time;
      int m_timer;
  };
-@@ -450,15 +450,14 @@ void QQuickWindow::physicalDpiChanged()
+@@ -450,15 +450,15 @@ void QQuickWindow::physicalDpiChanged()
  void QQuickWindow::handleScreenChanged(QScreen *screen)
  {
      Q_D(QQuickWindow);
++    // we connected to the initial screen in QQuickWindowPrivate::init, but the screen changed
 +    disconnect(d->physicalDpiChangedConnection);
      if (screen) {
          physicalDpiChanged();
          // When physical DPI changes on the same screen, either the resolution or the device pixel
          // ratio changed. We must check what it is. Device pixel ratio does not have its own
-         // ...Changed() signal.
+-        // ...Changed() signal.
 -        d->physicalDpiChangedConnection = connect(screen, SIGNAL(physicalDotsPerInchChanged(qreal)),
 -                                                  this, SLOT(physicalDpiChanged()));
 -    } else {
 -        disconnect(d->physicalDpiChangedConnection);
++        // ...Changed() signal. Reconnect, same as in QQuickWindowPrivate::init.
 +        d->physicalDpiChangedConnection = connect(screen, &QScreen::physicalDotsPerInchChanged,
 +                                                  this, &QQuickWindow::physicalDpiChanged);
      }
  
      d->forcePolish();
-@@ -2864,6 +2863,14 @@ void QQuickWindowPrivate::deliverMatchingPointsToItem(QQuickItem *item, QQuickPo
+@@ -708,8 +708,13 @@ void QQuickWindowPrivate::init(QQuickWindow *c, QQuickRenderControl *control)
+ 
+     Q_ASSERT(windowManager || renderControl);
+ 
+-    if (QScreen *screen = q->screen())
+-       devicePixelRatio = screen->devicePixelRatio();
++    if (QScreen *screen = q->screen()) {
++        devicePixelRatio = screen->devicePixelRatio();
++        // if the screen changes, then QQuickWindow::handleScreenChanged disconnects
++        // and connects to the new screen
++        physicalDpiChangedConnection = QObject::connect(screen, &QScreen::physicalDotsPerInchChanged,
++                                                        q, &QQuickWindow::physicalDpiChanged);
++    }
+ 
+     QSGContext *sg;
+     if (renderControl) {
+@@ -2864,6 +2869,14 @@ void QQuickWindowPrivate::deliverMatchingPointsToItem(QQuickItem *item, QQuickPo
  {
      Q_Q(QQuickWindow);
      QQuickItemPrivate *itemPrivate = QQuickItemPrivate::get(item);
@@ -4485,6 +6148,39 @@ index 3c60f830de..0fd6581dc4 100644
          changed = true;
      }
  
+diff --git a/src/quick/scenegraph/qsgrenderloop.cpp b/src/quick/scenegraph/qsgrenderloop.cpp
+index c96129e660..ee01211545 100644
+--- a/src/quick/scenegraph/qsgrenderloop.cpp
++++ b/src/quick/scenegraph/qsgrenderloop.cpp
+@@ -413,13 +413,6 @@ void QSGGuiThreadRenderLoop::windowDestroyed(QQuickWindow *window)
+             qCDebug(QSG_LOG_RENDERLOOP, "cleanup without an OpenGL context");
+     }
+ 
+-#if QT_CONFIG(quick_shadereffect)
+-    QSGRhiShaderEffectNode::cleanupMaterialTypeCache();
+-#if QT_CONFIG(opengl)
+-    QQuickOpenGLShaderEffectMaterial::cleanupMaterialCache();
+-#endif
+-#endif
+-
+     if (d->swapchain) {
+         if (window->handle()) {
+             // We get here when exiting via QCoreApplication::quit() instead of
+@@ -432,6 +425,14 @@ void QSGGuiThreadRenderLoop::windowDestroyed(QQuickWindow *window)
+     }
+ 
+     d->cleanupNodesOnShutdown();
++
++#if QT_CONFIG(quick_shadereffect)
++    QSGRhiShaderEffectNode::cleanupMaterialTypeCache();
++#if QT_CONFIG(opengl)
++    QQuickOpenGLShaderEffectMaterial::cleanupMaterialCache();
++#endif
++#endif
++
+     if (m_windows.size() == 0) {
+         rc->invalidate();
+         d->rhi = nullptr;
 diff --git a/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp b/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp
 index 53b6fe117f..219cdd5966 100644
 --- a/src/quick/scenegraph/qsgrhidistancefieldglyphcache.cpp
@@ -4518,6 +6214,53 @@ index 53b6fe117f..219cdd5966 100644
                  qWarning("qtdf table too small in font '%s'.",
                           qPrintable(font.familyName()));
                  return false;
+diff --git a/src/quick/scenegraph/qsgthreadedrenderloop.cpp b/src/quick/scenegraph/qsgthreadedrenderloop.cpp
+index 1c72c4dba6..d47b0d72a5 100644
+--- a/src/quick/scenegraph/qsgthreadedrenderloop.cpp
++++ b/src/quick/scenegraph/qsgthreadedrenderloop.cpp
+@@ -547,17 +547,16 @@ void QSGRenderThread::invalidateGraphics(QQuickWindow *window, bool inDestructor
+ 
+     QQuickWindowPrivate *dd = QQuickWindowPrivate::get(window);
+ 
++    // The canvas nodes must be cleaned up regardless if we are in the destructor..
++    if (wipeSG) {
++        dd->cleanupNodesOnShutdown();
+ #if QT_CONFIG(quick_shadereffect)
+-    QSGRhiShaderEffectNode::cleanupMaterialTypeCache();
++        QSGRhiShaderEffectNode::cleanupMaterialTypeCache();
+ #if QT_CONFIG(opengl)
+-    if (current)
+-        QQuickOpenGLShaderEffectMaterial::cleanupMaterialCache();
++        if (current)
++            QQuickOpenGLShaderEffectMaterial::cleanupMaterialCache();
+ #endif
+ #endif
+-
+-    // The canvas nodes must be cleaned up regardless if we are in the destructor..
+-    if (wipeSG) {
+-        dd->cleanupNodesOnShutdown();
+     } else {
+         qCDebug(QSG_LOG_RENDERLOOP, QSG_RT_PAD, "- persistent SG, avoiding cleanup");
+         if (current && gl)
+diff --git a/src/quick/scenegraph/qsgwindowsrenderloop.cpp b/src/quick/scenegraph/qsgwindowsrenderloop.cpp
+index 20d7c4557f..20e127c49f 100644
+--- a/src/quick/scenegraph/qsgwindowsrenderloop.cpp
++++ b/src/quick/scenegraph/qsgwindowsrenderloop.cpp
+@@ -256,12 +256,13 @@ void QSGWindowsRenderLoop::windowDestroyed(QQuickWindow *window)
+     if (Q_UNLIKELY(!current))
+         RLDEBUG("cleanup without an OpenGL context");
+ 
++    d->cleanupNodesOnShutdown();
++
+ #if QT_CONFIG(quick_shadereffect) && QT_CONFIG(opengl)
+     if (current)
+         QQuickOpenGLShaderEffectMaterial::cleanupMaterialCache();
+ #endif
+ 
+-    d->cleanupNodesOnShutdown();
+     if (m_windows.size() == 0) {
+         d->context->invalidate();
+         delete m_gl;
 diff --git a/src/quick/scenegraph/shaders_ng/24bittextmask.frag b/src/quick/scenegraph/shaders_ng/24bittextmask.frag
 index bc3826a924..ed8da4cd30 100644
 --- a/src/quick/scenegraph/shaders_ng/24bittextmask.frag
@@ -6074,6 +7817,70 @@ index 43cbd93396..544569de5f 100644
      }
  }
  
+diff --git a/tests/auto/qml/qqmldelegatemodel/data/ImageToggle.qml b/tests/auto/qml/qqmldelegatemodel/data/ImageToggle.qml
+new file mode 100644
+index 0000000000..fa154b25f3
+--- /dev/null
++++ b/tests/auto/qml/qqmldelegatemodel/data/ImageToggle.qml
+@@ -0,0 +1,21 @@
++import QtQuick 2.0
++
++Item {
++    property var isSelected: null
++    property string source
++    implicitWidth: 16
++    implicitHeight: 16
++
++    onSourceChanged: {
++      updateImageSource()
++    }
++
++    onIsSelectedChanged: {
++      updateImageSource()
++    }
++
++    function updateImageSource() {
++     let result = isSelected ? source + "_selected_dark.png" : source + "_active_dark.png"
++    }
++
++}
+diff --git a/tests/auto/qml/qqmldelegatemodel/data/contextAccessedByHandler.qml b/tests/auto/qml/qqmldelegatemodel/data/contextAccessedByHandler.qml
+new file mode 100644
+index 0000000000..46d7524527
+--- /dev/null
++++ b/tests/auto/qml/qqmldelegatemodel/data/contextAccessedByHandler.qml
+@@ -0,0 +1,31 @@
++import QtQuick 2.0
++
++Item {
++    id: root
++    width: 640
++    height: 480
++    property bool works: myView.currentItem.okay
++
++    ListView {
++        id: myView
++        model: myModel
++        anchors.fill: parent
++        delegate: Row {
++            property alias okay: image.isSelected
++            ImageToggle {
++                id: image
++                source: "glyph_16_arrow_patch"
++                isSelected: model.age < 6
++            }
++            Text {
++                text: "age:" + model.age + " selected:" + image.isSelected
++            }
++        }
++    }
++
++    ListModel {
++        id: myModel
++        ListElement { type: "Cat"; age: 3; }
++        ListElement { type: "Dog"; age: 2; }
++    }
++}
 diff --git a/tests/auto/qml/qqmldelegatemodel/data/qtbug_86017.qml b/tests/auto/qml/qqmldelegatemodel/data/qtbug_86017.qml
 new file mode 100644
 index 0000000000..02d737e37f
@@ -6194,7 +8001,7 @@ index 7fdd3ab5f1..fbd72f6a44 100644
  SOURCES += tst_qqmldelegatemodel.cpp
  
 diff --git a/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp b/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp
-index 87f42c0c8a..120b1897a1 100644
+index 87f42c0c8a..1722447830 100644
 --- a/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp
 +++ b/tests/auto/qml/qqmldelegatemodel/tst_qqmldelegatemodel.cpp
 @@ -27,8 +27,12 @@
@@ -6210,17 +8017,18 @@ index 87f42c0c8a..120b1897a1 100644
  
  #include "../../shared/util.h"
  
-@@ -42,6 +46,9 @@ public:
+@@ -42,6 +46,10 @@ public:
  private slots:
      void valueWithoutCallingObjectFirst_data();
      void valueWithoutCallingObjectFirst();
 +    void filterOnGroup_removeWhenCompleted();
 +    void qtbug_86017();
++    void contextAccessedByHandler();
 +    void redrawUponColumnChange();
  };
  
  class AbstractItemModel : public QAbstractItemModel
-@@ -134,6 +141,56 @@ void tst_QQmlDelegateModel::valueWithoutCallingObjectFirst()
+@@ -134,6 +142,77 @@ void tst_QQmlDelegateModel::valueWithoutCallingObjectFirst()
      QCOMPARE(model->variantValue(index, role), expectedValue);
  }
  
@@ -6250,6 +8058,27 @@ index 87f42c0c8a..120b1897a1 100644
 +    QCOMPARE(model->filterGroup(), "selected");
 +}
 +
++void tst_QQmlDelegateModel::filterOnGroup_removeWhenCompleted()
++{
++    QQuickView view(testFileUrl("removeFromGroup.qml"));
++    QCOMPARE(view.status(), QQuickView::Ready);
++    view.show();
++    QQuickItem *root = view.rootObject();
++    QVERIFY(root);
++    QQmlDelegateModel *model = root->findChild<QQmlDelegateModel*>();
++    QVERIFY(model);
++    QVERIFY(QTest::qWaitFor([=]{ return model->count() == 2; }));
++}
++
++void tst_QQmlDelegateModel::contextAccessedByHandler()
++{
++    QQmlEngine engine;
++    QQmlComponent component(&engine, testFileUrl("contextAccessedByHandler.qml"));
++    QScopedPointer<QObject> root(component.create());
++    QVERIFY2(root, qPrintable(component.errorString()));
++    QVERIFY(root->property("works").toBool());
++}
++
 +void tst_QQmlDelegateModel::redrawUponColumnChange()
 +{
 +    QStandardItemModel m1;
@@ -6277,6 +8106,25 @@ index 87f42c0c8a..120b1897a1 100644
  QTEST_MAIN(tst_QQmlDelegateModel)
  
  #include "tst_qqmldelegatemodel.moc"
+diff --git a/tests/auto/qml/qqmlecmascript/data/generatorCallsGC.qml b/tests/auto/qml/qqmlecmascript/data/generatorCallsGC.qml
+new file mode 100644
+index 0000000000..7fe366cac8
+--- /dev/null
++++ b/tests/auto/qml/qqmlecmascript/data/generatorCallsGC.qml
+@@ -0,0 +1,13 @@
++import QtQml 2.15
++
++QtObject {
++  function test_generator_gc() {
++    ((function*() { gc() })()).next();
++    ((function*() { gc() })()).next();
++    ((function*() { gc() })()).next();
++    ((function*() { gc() })()).next();
++  }
++
++  Component.onCompleted: () => test_generator_gc()
++
++}
 diff --git a/tests/auto/qml/qqmlecmascript/data/generatorCrashNewProperty.qml b/tests/auto/qml/qqmlecmascript/data/generatorCrashNewProperty.qml
 new file mode 100644
 index 0000000000..f775b4c613
@@ -6339,18 +8187,19 @@ index 0000000000..affba7d9f1
 +  }
 +}
 diff --git a/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp b/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp
-index 1e10841430..3c3a2a7a99 100644
+index 1e10841430..7da1b2c500 100644
 --- a/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp
 +++ b/tests/auto/qml/qqmlecmascript/tst_qqmlecmascript.cpp
-@@ -239,6 +239,7 @@ private slots:
+@@ -239,6 +239,8 @@ private slots:
      void eval();
      void function();
      void topLevelGeneratorFunction();
 +    void generatorCrashNewProperty();
++    void generatorCallsGC();
      void qtbug_10696();
      void qtbug_11606();
      void qtbug_11600();
-@@ -382,7 +383,8 @@ private slots:
+@@ -382,7 +384,8 @@ private slots:
      void semicolonAfterProperty();
      void hugeStack();
      void variantConversionMethod();
@@ -6360,7 +8209,7 @@ index 1e10841430..3c3a2a7a99 100644
      void gcCrashRegressionTest();
  
  private:
-@@ -6488,6 +6490,21 @@ void tst_qqmlecmascript::topLevelGeneratorFunction()
+@@ -6488,6 +6491,30 @@ void tst_qqmlecmascript::topLevelGeneratorFunction()
      QCOMPARE(it.property("next").callWithInstance(it).property("value").toInt(), 1);
  }
  
@@ -6379,10 +8228,19 @@ index 1e10841430..3c3a2a7a99 100644
 +    QCOMPARE(o->property("c").toInt(), 42);
 +}
 +
++void tst_qqmlecmascript::generatorCallsGC()
++{
++    QQmlEngine engine;
++    QQmlComponent component(&engine, testFileUrl("generatorCallsGC.qml"));
++
++    QScopedPointer<QObject> o(component.create()); // should not crash
++    QVERIFY2(o != nullptr, qPrintable(component.errorString()));
++}
++
  // Test the "Qt.include" method
  void tst_qqmlecmascript::include()
  {
-@@ -9306,6 +9323,44 @@ void tst_qqmlecmascript::variantConversionMethod()
+@@ -9306,6 +9333,44 @@ void tst_qqmlecmascript::variantConversionMethod()
      QCOMPARE(obj.funcCalled, QLatin1String("QModelIndex"));
  }
  
@@ -6534,8 +8392,29 @@ index 0000000000..87cac10200
 +    property IC other: IC { name: "Toby"; age: 30 }
 +    property list<IC> listProp: [IC { name: "Alfred Ill"; age: 65 }, IC { name: "Claire Zachanassian"; age: 62}]
 +}
+diff --git a/tests/auto/qml/qqmllanguage/data/qtbug_89822.errors.txt b/tests/auto/qml/qqmllanguage/data/qtbug_89822.errors.txt
+new file mode 100644
+index 0000000000..d69122ef8b
+--- /dev/null
++++ b/tests/auto/qml/qqmllanguage/data/qtbug_89822.errors.txt
+@@ -0,0 +1 @@
++6:40:Invalid alias target
+diff --git a/tests/auto/qml/qqmllanguage/data/qtbug_89822.qml b/tests/auto/qml/qqmllanguage/data/qtbug_89822.qml
+new file mode 100644
+index 0000000000..17602ca4b9
+--- /dev/null
++++ b/tests/auto/qml/qqmllanguage/data/qtbug_89822.qml
+@@ -0,0 +1,8 @@
++import QtQml 2.0
++
++QtObject {
++    id: root
++    readonly property QtObject test: QtObject { property int subproperty: 3}
++    readonly property alias testAlias: root.test.subproperty
++}
++
 diff --git a/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp b/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp
-index 8adcbc1837..94ecd6862a 100644
+index 8adcbc1837..31bf30c57c 100644
 --- a/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp
 +++ b/tests/auto/qml/qqmllanguage/tst_qqmllanguage.cpp
 @@ -48,6 +48,7 @@
@@ -6546,7 +8425,15 @@ index 8adcbc1837..94ecd6862a 100644
  
  #include "testtypes.h"
  #include "testhttpserver.h"
-@@ -331,6 +332,9 @@ private slots:
+@@ -145,6 +146,7 @@ private slots:
+     void aliasProperties();
+     void aliasPropertiesAndSignals();
+     void aliasPropertyChangeSignals();
++    void qtbug_89822();
+     void componentCompositeType();
+     void i18n();
+     void i18n_data();
+@@ -331,6 +333,9 @@ private slots:
      void arrayToContainer();
      void qualifiedScopeInCustomParser();
      void accessNullPointerPropertyCache();
@@ -6556,7 +8443,20 @@ index 8adcbc1837..94ecd6862a 100644
  
  private:
      QQmlEngine engine;
-@@ -5604,6 +5608,7 @@ void tst_qqmllanguage::inlineComponent_data()
+@@ -2228,6 +2233,12 @@ void tst_qqmllanguage::aliasPropertiesAndSignals()
+     QCOMPARE(o->property("test").toBool(), true);
+ }
+ 
++void tst_qqmllanguage::qtbug_89822()
++{
++    QQmlComponent component(&engine, testFileUrl("qtbug_89822.qml"));
++    VERIFY_ERRORS("qtbug_89822.errors.txt");
++}
++
+ // Test that the root element in a composite type can be a Component
+ void tst_qqmllanguage::componentCompositeType()
+ {
+@@ -5604,6 +5615,7 @@ void tst_qqmllanguage::inlineComponent_data()
      QTest::newRow("Alias resolves correctly") << testFileUrl("inlineComponentWithAlias.qml") << QColorConstants::Svg::lime << 42 << true;
  
      QTest::newRow("Two inline components in same do not crash (QTBUG-86989)") << testFileUrl("twoInlineComponents.qml") << QColor() << 0 << false;
@@ -6564,7 +8464,7 @@ index 8adcbc1837..94ecd6862a 100644
  }
  
  void tst_qqmllanguage::inlineComponentReferenceCycle_data()
-@@ -5812,6 +5817,42 @@ void tst_qqmllanguage::accessNullPointerPropertyCache()
+@@ -5812,6 +5824,42 @@ void tst_qqmllanguage::accessNullPointerPropertyCache()
      QVERIFY(!obj.isNull());
  }
  
@@ -7131,6 +9031,77 @@ index 8a96fc52c5..5363cc8fcb 100644
  QTEST_MAIN(tst_qqmlproperty)
  
  #include "tst_qqmlproperty.moc"
+diff --git a/tests/auto/qml/qqmlvaluetypes/data/matrix4x4_invokables.qml b/tests/auto/qml/qqmlvaluetypes/data/matrix4x4_invokables.qml
+index aa26956922..09f1d472b7 100644
+--- a/tests/auto/qml/qqmlvaluetypes/data/matrix4x4_invokables.qml
++++ b/tests/auto/qml/qqmlvaluetypes/data/matrix4x4_invokables.qml
+@@ -10,6 +10,59 @@ Item {
+     property variant v2: Qt.vector3d(1,2,3)
+     property real factor: 2.23
+ 
++    function testTransformation() {
++        let m = Qt.matrix4x4();
++
++        m.scale(1, 2, 4);
++        if (m !== Qt.matrix4x4(1, 0, 0, 0,
++                               0, 2, 0, 0,
++                               0, 0, 4, 0,
++                               0, 0, 0, 1))
++            return false;
++        m.scale(Qt.vector3d(-8, -4, -2));
++        if (m !== Qt.matrix4x4(-8, 0, 0, 0,
++                               0,-8, 0, 0,
++                               0, 0, -8, 0,
++                               0, 0, 0, 1))
++            return false;
++        m.scale(-1 / 8);
++        if (m !== Qt.matrix4x4())
++            return false;
++
++        m.rotate(180, Qt.vector3d(1, 0, 0));
++        if (m !== Qt.matrix4x4(1, 0, 0, 0,
++                               0, -1, 0, 0,
++                               0, 0, -1, 0,
++                               0, 0, 0, 1))
++            return false;
++        m.rotate(180, Qt.vector3d(0, 1, 0));
++        if (m !== Qt.matrix4x4(-1, 0, 0, 0,
++                               0, -1, 0, 0,
++                               0, 0, 1, 0,
++                               0, 0, 0, 1))
++            return false;
++        m.rotate(180, Qt.vector3d(0, 0, 1));
++        if (m !== Qt.matrix4x4())
++            return false;
++
++        m.translate(Qt.vector3d(1, 2, 4));
++        if (m !== Qt.matrix4x4(1, 0, 0, 1,
++                               0, 1, 0, 2,
++                               0, 0, 1, 4,
++                               0, 0, 0, 1))
++            return false;
++
++        m = Qt.matrix4x4();
++        m.lookAt(Qt.vector3d(1, 2, 4), Qt.vector3d(1, 2, 0), Qt.vector3d(0, 1, 0));
++        if (m !== Qt.matrix4x4(1, 0, 0, -1,
++                               0, 1, 0, -2,
++                               0, 0, 1, -4,
++                               0, 0, 0, 1))
++            return false;
++
++        return true;
++    }
++
+     Component.onCompleted: {
+         success = true;
+         if (m1.times(m2) != Qt.matrix4x4(26, 26, 26, 26, 52, 52, 52, 52, 78, 78, 78, 78, 104, 104, 104, 104)) success = false;
+@@ -27,5 +80,6 @@ Item {
+         if (m1.transposed() != Qt.matrix4x4(1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4)) success = false;
+         if (m1.fuzzyEquals(m2)) success = false;
+         if (!m1.fuzzyEquals(m2, 10)) success = false;
++        if (!testTransformation()) success = false;
+     }
+ }
 diff --git a/tests/auto/qml/qv4mm/tst_qv4mm.cpp b/tests/auto/qml/qv4mm/tst_qv4mm.cpp
 index 5d635aa63b..824fd89e5b 100644
 --- a/tests/auto/qml/qv4mm/tst_qv4mm.cpp
@@ -7161,6 +9132,166 @@ index 8ad1541cbc..0b793269e9 100644
      positioners \
      qqmlbinding \
      qtbug46798 \
+diff --git a/tests/auto/quick/nodes/tst_nodestest.cpp b/tests/auto/quick/nodes/tst_nodestest.cpp
+index 249ecd5aa5..a4f138c8df 100644
+--- a/tests/auto/quick/nodes/tst_nodestest.cpp
++++ b/tests/auto/quick/nodes/tst_nodestest.cpp
+@@ -125,12 +125,12 @@ public:
+         setRootNode(root);
+     }
+ 
+-    void render() {
++    void render() override {
+         ++renderCount;
+         renderingOrder = ++globalRendereringOrder;
+     }
+ 
+-    void nodeChanged(QSGNode *node, QSGNode::DirtyState state) {
++    void nodeChanged(QSGNode *node, QSGNode::DirtyState state) override {
+         changedNode = node;
+         changedState = state;
+         QSGBatchRenderer::Renderer::nodeChanged(node, state);
+diff --git a/tests/auto/quick/pointerhandlers/qquickdraghandler/data/dragHandlerUnderModalLayer.qml b/tests/auto/quick/pointerhandlers/qquickdraghandler/data/dragHandlerUnderModalLayer.qml
+new file mode 100644
+index 0000000000..b24812c914
+--- /dev/null
++++ b/tests/auto/quick/pointerhandlers/qquickdraghandler/data/dragHandlerUnderModalLayer.qml
+@@ -0,0 +1,34 @@
++import QtQuick 2.15
++
++import Test 1.0
++
++Item {
++    width: 640
++    height: 480
++
++    Rectangle {
++        anchors.fill: parent
++        color: "grey"
++
++        Rectangle {
++            x: 200
++            y: 200
++            width: 100
++            height: 100
++            color: "orange"
++            DragHandler {
++                grabPermissions: DragHandler.CanTakeOverFromAnything // but not anything with keepMouseGrab!
++            }
++        }
++    }
++
++    ModalLayer {
++        anchors.fill: parent
++
++        Rectangle {
++            anchors.fill: parent
++            color: "red"
++            opacity: 0.4
++        }
++    }
++}
+diff --git a/tests/auto/quick/pointerhandlers/qquickdraghandler/tst_qquickdraghandler.cpp b/tests/auto/quick/pointerhandlers/qquickdraghandler/tst_qquickdraghandler.cpp
+index 4d6866041e..f71febbaf9 100644
+--- a/tests/auto/quick/pointerhandlers/qquickdraghandler/tst_qquickdraghandler.cpp
++++ b/tests/auto/quick/pointerhandlers/qquickdraghandler/tst_qquickdraghandler.cpp
+@@ -68,6 +68,7 @@ private slots:
+     void touchPassiveGrabbers_data();
+     void touchPassiveGrabbers();
+     void touchPinchAndMouseMove();
++    void underModalLayer();
+ 
+ private:
+     void createView(QScopedPointer<QQuickView> &window, const char *fileName);
+@@ -811,6 +812,59 @@ void tst_DragHandler::touchPinchAndMouseMove()
+     }
+ }
+ 
++class ModalLayer : public QQuickItem {
++public:
++    explicit ModalLayer(QQuickItem* parent = nullptr) : QQuickItem(parent) {
++        this->setAcceptedMouseButtons(Qt::AllButtons);
++        this->setAcceptTouchEvents(true);
++        this->setKeepMouseGrab(true);
++        this->setKeepTouchGrab(true);
++    }
++
++    bool event(QEvent* event) override {
++        switch (event->type()) {
++        case QEvent::KeyPress:
++        case QEvent::MouseMove:
++        case QEvent::MouseButtonPress:
++        case QEvent::MouseButtonRelease:
++        case QEvent::MouseTrackingChange:
++        case QEvent::MouseButtonDblClick:
++        case QEvent::Wheel:
++        case QEvent::TouchBegin:
++        case QEvent::TouchUpdate:
++        case QEvent::TouchCancel:
++        case QEvent::TouchEnd: {
++            qCDebug(lcPointerTests) << "BLOCK!" << event->type();
++            return true;
++        }
++        default: break;
++        }
++        return QQuickItem::event(event);
++    }
++};
++
++void tst_DragHandler::underModalLayer() // QTBUG-78258
++{
++    qmlRegisterType<ModalLayer>("Test", 1, 0, "ModalLayer");
++
++    const int dragThreshold = QGuiApplication::styleHints()->startDragDistance();
++    QScopedPointer<QQuickView> windowPtr;
++    createView(windowPtr, "dragHandlerUnderModalLayer.qml");
++    QQuickView * window = windowPtr.data();
++    QPointer<QQuickDragHandler> dragHandler = window->rootObject()->findChild<QQuickDragHandler*>();
++    QVERIFY(dragHandler);
++
++    QPoint p1(250, 250);
++    QTest::mousePress(window, Qt::LeftButton, Qt::NoModifier, p1);
++    p1 += QPoint(dragThreshold, dragThreshold);
++    QTest::mouseMove(window, p1);
++    QVERIFY(!dragHandler->active());
++    p1 += QPoint(dragThreshold, dragThreshold);
++    QTest::mouseMove(window, p1);
++    QVERIFY(!dragHandler->active());
++    QTest::mouseRelease(window, Qt::LeftButton);
++}
++
+ QTEST_MAIN(tst_DragHandler)
+ 
+ #include "tst_qquickdraghandler.moc"
+diff --git a/tests/auto/quick/pointerhandlers/qquickpinchhandler/tst_qquickpinchhandler.cpp b/tests/auto/quick/pointerhandlers/qquickpinchhandler/tst_qquickpinchhandler.cpp
+index 19fdae3b44..2b8ddd197d 100644
+--- a/tests/auto/quick/pointerhandlers/qquickpinchhandler/tst_qquickpinchhandler.cpp
++++ b/tests/auto/quick/pointerhandlers/qquickpinchhandler/tst_qquickpinchhandler.cpp
+@@ -217,6 +217,7 @@ void tst_QQuickPinchHandler::scale()
+ 
+     QQuickPinchHandler *pinchHandler = window->rootObject()->findChild<QQuickPinchHandler*>("pinchHandler");
+     QVERIFY(pinchHandler != nullptr);
++    QSignalSpy grabChangedSpy(pinchHandler, SIGNAL(grabChanged(QQuickEventPoint::GrabTransition, QQuickEventPoint*)));
+ 
+     QQuickItem *root = qobject_cast<QQuickItem*>(window->rootObject());
+     QVERIFY(root != nullptr);
+@@ -238,6 +239,7 @@ void tst_QQuickPinchHandler::scale()
+         // it is outside its bounds.
+         pinchSequence.stationary(0).press(1, p1, window).commit();
+         QQuickTouchUtils::flush(window);
++        QTRY_COMPARE(grabChangedSpy.count(), 1); // passive grab
+ 
+         QPoint pd(10, 10);
+         // move one point until PinchHandler activates
+@@ -247,6 +249,8 @@ void tst_QQuickPinchHandler::scale()
+             QQuickTouchUtils::flush(window);
+         }
+         QCOMPARE(pinchHandler->active(), true);
++        // first point got a passive grab; both points got exclusive grabs
++        QCOMPARE(grabChangedSpy.count(), 3);
+         QLineF line(p0, p1);
+         const qreal startLength = line.length();
+ 
 diff --git a/tests/auto/quick/pointerhandlers/qquicktaphandler/data/simpleTapHandler.qml b/tests/auto/quick/pointerhandlers/qquicktaphandler/data/simpleTapHandler.qml
 new file mode 100644
 index 0000000000..1c18133f92
@@ -7292,6 +9423,144 @@ index 419afed3ac..52cef6248f 100644
  QTEST_MAIN(tst_TapHandler)
  
  #include "tst_qquicktaphandler.moc"
+diff --git a/tests/auto/quick/qquickcanvasitem/data/tst_line.qml b/tests/auto/quick/qquickcanvasitem/data/tst_line.qml
+index dc960a24d0..fb4db5ae54 100644
+--- a/tests/auto/quick/qquickcanvasitem/data/tst_line.qml
++++ b/tests/auto/quick/qquickcanvasitem/data/tst_line.qml
+@@ -894,6 +894,37 @@ CanvasTestCase {
+        comparePixel(ctx, 39,0, 0,0,0,0);
+   }
+ 
++   function test_lineDashReset(row) {
++       var canvas = createCanvasObject(row);
++       var ctx = canvas.getContext('2d');
++       ctx.reset();
++       ctx.strokeStyle = "#ff0000";
++       ctx.lineWidth = 2;
++       var pattern = [2, 3, 5, 1, 6, 3]
++       ctx.setLineDash(pattern)
++
++       compare(ctx.getLineDash(), pattern);
++
++       pattern = []
++       ctx.setLineDash(pattern)
++       compare(ctx.getLineDash(), pattern);
++
++       ctx.beginPath();
++       ctx.moveTo(0, 0);
++       ctx.lineTo(40, 0);
++       ctx.stroke();
++
++       comparePixel(ctx, 0,0, 255,0,0,255);
++       comparePixel(ctx, 4,0, 255,0,0,255);
++       comparePixel(ctx, 5,0, 255,0,0,255);
++       comparePixel(ctx, 14,0, 255,0,0,255);
++       comparePixel(ctx, 20,0, 255,0,0,255);
++       comparePixel(ctx, 21,0, 255,0,0,255);
++       comparePixel(ctx, 22,0, 255,0,0,255);
++       comparePixel(ctx, 34,0, 255,0,0,255);
++       comparePixel(ctx, 35,0, 255,0,0,255);
++   }
++
+    function test_lineDashOffset(row) {
+        var canvas = createCanvasObject(row);
+        var ctx = canvas.getContext('2d');
+diff --git a/tests/auto/quick/qquickdesignersupport/data/RecursiveProperty.qml b/tests/auto/quick/qquickdesignersupport/data/RecursiveProperty.qml
+new file mode 100644
+index 0000000000..ec419f8935
+--- /dev/null
++++ b/tests/auto/quick/qquickdesignersupport/data/RecursiveProperty.qml
+@@ -0,0 +1,8 @@
++import QtQuick 2.0
++
++Item {
++    id: myObject
++    readonly property int testProperty: 0
++    readonly property QtObject myproperty: myObject
++}
++
+diff --git a/tests/auto/quick/qquickdesignersupport/data/propertyNameTest.qml b/tests/auto/quick/qquickdesignersupport/data/propertyNameTest.qml
+new file mode 100644
+index 0000000000..88fd8509cc
+--- /dev/null
++++ b/tests/auto/quick/qquickdesignersupport/data/propertyNameTest.qml
+@@ -0,0 +1,13 @@
++import QtQuick 2.11
++
++Rectangle {
++    objectName: "rootItem"
++    color: "white"
++    width: 800
++    height: 600
++
++    RecursiveProperty {
++        objectName: "recursiveProperty"
++
++    }
++}
+diff --git a/tests/auto/quick/qquickdesignersupport/tst_qquickdesignersupport.cpp b/tests/auto/quick/qquickdesignersupport/tst_qquickdesignersupport.cpp
+index b44977bd5a..0471619049 100644
+--- a/tests/auto/quick/qquickdesignersupport/tst_qquickdesignersupport.cpp
++++ b/tests/auto/quick/qquickdesignersupport/tst_qquickdesignersupport.cpp
+@@ -62,6 +62,7 @@ private slots:
+     void testNotifyPropertyChangeCallBack();
+     void testFixResourcePathsForObjectCallBack();
+     void testComponentOnCompleteSignal();
++    void testPropertyNames();
+ };
+ 
+ void tst_qquickdesignersupport::customData()
+@@ -586,6 +587,50 @@ void tst_qquickdesignersupport::testComponentOnCompleteSignal()
+     }
+ }
+ 
++void tst_qquickdesignersupport::testPropertyNames()
++{
++#ifdef Q_CC_MINGW
++    QSKIP("QQuickDesignerSupportProperties::registerCustomData segfaults on mingw. QTBUG-90869");
++#endif
++
++    QScopedPointer<QQuickView> view(new QQuickView);
++    view->engine()->setOutputWarningsToStandardError(false);
++    view->setSource(testFileUrl("propertyNameTest.qml"));
++
++    QVERIFY(view->errors().isEmpty());
++    QQuickItem *rootItem = view->rootObject();
++    QVERIFY(rootItem);
++
++    QQuickDesignerSupport::PropertyNameList names = QQuickDesignerSupportProperties::allPropertyNames(rootItem);
++    QVERIFY(!names.isEmpty());
++    QVERIFY(names.contains("width"));
++    QVERIFY(names.contains("height"));
++    QVERIFY(names.contains("clip"));
++    QVERIFY(names.contains("opacity"));
++    QVERIFY(names.contains("childrenRect"));
++    QVERIFY(names.contains("activeFocus"));
++    QVERIFY(names.contains("border.width"));
++    names = QQuickDesignerSupportProperties::propertyNameListForWritableProperties(rootItem);
++    QVERIFY(!names.isEmpty());
++    QVERIFY(names.contains("width"));
++    QVERIFY(names.contains("height"));
++    QVERIFY(names.contains("opacity"));
++    QVERIFY(names.contains("clip"));
++    QVERIFY(!names.contains("childrenRect"));
++    QVERIFY(!names.contains("activeFocus"));
++    QVERIFY(names.contains("border.width"));
++
++    QQuickItem *recursiveProperty = findItem<QQuickItem>(rootItem, QLatin1String("recursiveProperty"));
++    QVERIFY(recursiveProperty);
++    names = QQuickDesignerSupportProperties::allPropertyNames(recursiveProperty);
++    QVERIFY(!names.isEmpty());
++    QVERIFY(names.contains("testProperty"));
++    QVERIFY(names.contains("myproperty.testProperty"));
++
++    names = QQuickDesignerSupportProperties::propertyNameListForWritableProperties(recursiveProperty);
++    QVERIFY(!names.isEmpty());
++    QVERIFY(!names.contains("testProperty"));
++}
+ 
+ QTEST_MAIN(tst_qquickdesignersupport)
+ 
 diff --git a/tests/auto/quick/qquickflickable/tst_qquickflickable.cpp b/tests/auto/quick/qquickflickable/tst_qquickflickable.cpp
 index f3659290eb..9fa51da6f8 100644
 --- a/tests/auto/quick/qquickflickable/tst_qquickflickable.cpp
@@ -7379,11 +9648,76 @@ index 0000000000..889e480f3b
 +        }
 +    }
 +}
+diff --git a/tests/auto/quick/qquickitem2/data/focusableItemReparentedToLoadedComponent.qml b/tests/auto/quick/qquickitem2/data/focusableItemReparentedToLoadedComponent.qml
+new file mode 100644
+index 0000000000..a690c4243b
+--- /dev/null
++++ b/tests/auto/quick/qquickitem2/data/focusableItemReparentedToLoadedComponent.qml
+@@ -0,0 +1,51 @@
++import QtQuick 2.12
++
++Item {
++    width: 240; height: 240
++    Loader {
++        id: loader
++        sourceComponent: surfaceParent
++        anchors.fill: parent
++
++        onStatusChanged: {
++            if (status === Loader.Ready) {
++                holder.create()
++                holder.item.parent = item
++            } else if (status === Loader.Null){
++                holder.item.parent = null
++            }
++        }
++    }
++
++    property var holder: QtObject {
++        property bool created: false
++        function create()
++        {
++            if (!created)
++                surfaceComponent.createObject(item)
++            created = true
++        }
++
++        property Item item: Item {
++            anchors.fill: parent
++            Component {
++                id: surfaceComponent
++                Item {
++                    anchors.fill: parent
++                    TextInput {
++                        width: parent.width
++                        font.pixelSize: 40
++                        text: "focus me"
++                    }
++                }
++            }
++        }
++    }
++
++    Component {
++        id: surfaceParent
++        Rectangle {
++            anchors.fill: parent
++        }
++    }
++}
 diff --git a/tests/auto/quick/qquickitem2/tst_qquickitem.cpp b/tests/auto/quick/qquickitem2/tst_qquickitem.cpp
-index f65650cf9c..eeff768bb4 100644
+index f65650cf9c..c8ef36ee68 100644
 --- a/tests/auto/quick/qquickitem2/tst_qquickitem.cpp
 +++ b/tests/auto/quick/qquickitem2/tst_qquickitem.cpp
-@@ -66,6 +66,7 @@ private slots:
+@@ -33,6 +33,7 @@
+ #include <QtQuick/qquickitemgrabresult.h>
+ #include <QtQuick/qquickview.h>
+ #include <QtGui/private/qinputmethod_p.h>
++#include <QtQuick/private/qquickloader_p.h>
+ #include <QtQuick/private/qquickrectangle_p.h>
+ #include <QtQuick/private/qquicktextinput_p.h>
+ #include <QtQuick/private/qquickitemchangelistener_p.h>
+@@ -66,6 +67,7 @@ private slots:
      void activeFocusOnTab10();
      void activeFocusOnTab_infiniteLoop_data();
      void activeFocusOnTab_infiniteLoop();
@@ -7391,7 +9725,15 @@ index f65650cf9c..eeff768bb4 100644
  
      void nextItemInFocusChain();
      void nextItemInFocusChain2();
-@@ -1055,6 +1056,17 @@ void tst_QQuickItem::activeFocusOnTab_infiniteLoop()
+@@ -75,6 +77,7 @@ private slots:
+     void qtbug_50516();
+     void qtbug_50516_2_data();
+     void qtbug_50516_2();
++    void focusableItemReparentedToLoadedComponent();
+ 
+     void keys();
+ #if QT_CONFIG(shortcut)
+@@ -1055,6 +1058,17 @@ void tst_QQuickItem::activeFocusOnTab_infiniteLoop()
      QCOMPARE(item, window->rootObject());
  }
  
@@ -7409,6 +9751,42 @@ index f65650cf9c..eeff768bb4 100644
  void tst_QQuickItem::nextItemInFocusChain()
  {
      if (!qt_tab_all_widgets())
+@@ -1312,6 +1326,35 @@ void tst_QQuickItem::qtbug_50516_2()
+     delete window;
+ }
+ 
++void tst_QQuickItem::focusableItemReparentedToLoadedComponent() // QTBUG-89736
++{
++    QQuickView window;
++    window.setSource(testFileUrl("focusableItemReparentedToLoadedComponent.qml"));
++    window.show();
++    QVERIFY(QTest::qWaitForWindowActive(&window));
++    QCOMPARE(QGuiApplication::focusWindow(), &window);
++    QQuickLoader *loader = window.rootObject()->findChild<QQuickLoader *>();
++    QVERIFY(loader);
++    QTRY_VERIFY(loader->status() == QQuickLoader::Ready);
++    QQuickTextInput *textInput = window.rootObject()->findChild<QQuickTextInput *>();
++    QVERIFY(textInput);
++
++    // click to focus
++    QTest::mouseClick(&window, Qt::LeftButton, Qt::NoModifier, {10, 10});
++    QTRY_VERIFY(textInput->hasActiveFocus());
++
++    // unload and reload
++    auto component = loader->sourceComponent();
++    loader->resetSourceComponent();
++    QTRY_VERIFY(loader->status() == QQuickLoader::Null);
++    loader->setSourceComponent(component);
++    QTRY_VERIFY(loader->status() == QQuickLoader::Ready);
++
++    // click to focus again
++    QTest::mouseClick(&window, Qt::LeftButton, Qt::NoModifier, {10, 10});
++    QTRY_VERIFY(textInput->hasActiveFocus());
++}
++
+ void tst_QQuickItem::keys()
+ {
+     QQuickView *window = new QQuickView(nullptr);
 diff --git a/tests/auto/quick/qquicklayouts/data/tst_rowlayout.qml b/tests/auto/quick/qquicklayouts/data/tst_rowlayout.qml
 index 85fe54eca6..87e0a01df2 100644
 --- a/tests/auto/quick/qquicklayouts/data/tst_rowlayout.qml
@@ -8710,19 +11088,66 @@ index 0000000000..e6f07b4687
 +        }
 +    }
 +}
+diff --git a/tests/auto/quick/qquicktextinput/data/focusReason.qml b/tests/auto/quick/qquicktextinput/data/focusReason.qml
+new file mode 100644
+index 0000000000..7ac913d363
+--- /dev/null
++++ b/tests/auto/quick/qquicktextinput/data/focusReason.qml
+@@ -0,0 +1,39 @@
++import QtQuick 2.2
++
++Rectangle {
++    width: 400
++    height: 400
++
++    Column {
++        spacing: 5
++        TextInput {
++            id: first
++            objectName: "first"
++            width: 100
++            Rectangle { anchors.fill: parent; color: parent.activeFocus ? "red" : "blue"; opacity: 0.3 }
++            KeyNavigation.backtab: third
++            KeyNavigation.tab: second
++            KeyNavigation.down: second
++        }
++        TextInput {
++            id: second
++            objectName: "second"
++            width: 100
++            Rectangle { anchors.fill: parent; color: parent.activeFocus ? "red" : "blue"; opacity: 0.3 }
++            KeyNavigation.up: first
++            KeyNavigation.backtab: first
++            KeyNavigation.tab: third
++        }
++        TextInput {
++            objectName: "third"
++            id: third
++            width: 100
++            Rectangle { anchors.fill: parent; color: parent.activeFocus ? "red" : "blue"; opacity: 0.3 }
++            KeyNavigation.backtab: second
++            KeyNavigation.tab: first
++        }
++        Component.onCompleted: {
++            first.focus = true
++        }
++    }
++}
 diff --git a/tests/auto/quick/qquicktextinput/tst_qquicktextinput.cpp b/tests/auto/quick/qquicktextinput/tst_qquicktextinput.cpp
-index 2e64c80b85..ac502bcb28 100644
+index 2e64c80b85..7c5c09055d 100644
 --- a/tests/auto/quick/qquicktextinput/tst_qquicktextinput.cpp
 +++ b/tests/auto/quick/qquicktextinput/tst_qquicktextinput.cpp
-@@ -236,6 +236,7 @@ private slots:
+@@ -236,6 +236,9 @@ private slots:
      void QTBUG_51115_readOnlyResetsSelection();
      void QTBUG_77814_InsertRemoveNoSelection();
  
 +    void checkCursorDelegateWhenPaddingChanged();
++
++    void focusReason();
  private:
      void simulateKey(QWindow *, int key);
  
-@@ -7054,6 +7055,35 @@ void tst_qquicktextinput::QTBUG_77814_InsertRemoveNoSelection()
+@@ -7054,6 +7057,113 @@ void tst_qquicktextinput::QTBUG_77814_InsertRemoveNoSelection()
      QCOMPARE(textInput->selectedText(), QString());
  }
  
@@ -8753,6 +11178,84 @@ index 2e64c80b85..ac502bcb28 100644
 +    textInput->setLeftPadding(10);
 +    QCOMPARE(cursorDelegate->x(), textInput->leftPadding());
 +    QCOMPARE(cursorDelegate->y(), textInput->topPadding());
++}
++
++/*!
++    Verifies that TextInput items get focus in/out events with the
++    correct focus reason set.
++
++    Up and Down keys translates to Backtab and Tab focus reasons.
++
++    See QTBUG-75862.
++*/
++void tst_qquicktextinput::focusReason()
++{
++    QQuickView view;
++    view.setSource(testFileUrl("focusReason.qml"));
++
++    QQuickTextInput *first = view.rootObject()->findChild<QQuickTextInput *>("first");
++    QQuickTextInput *second = view.rootObject()->findChild<QQuickTextInput *>("second");
++    QQuickTextInput *third = view.rootObject()->findChild<QQuickTextInput *>("third");
++    QVERIFY(first && second && third);
++
++    class FocusEventFilter : public QObject
++    {
++    public:
++        using QObject::QObject;
++
++        QHash<QObject*, Qt::FocusReason> lastFocusReason;
++    protected:
++        bool eventFilter(QObject *o, QEvent *e)
++        {
++            if (e->type() == QEvent::FocusIn || e->type() == QEvent::FocusOut) {
++                QFocusEvent *fe = static_cast<QFocusEvent*>(e);
++                lastFocusReason[o] = fe->reason();
++            }
++            return QObject::eventFilter(o, e);
++        }
++    } eventFilter;
++    first->installEventFilter(&eventFilter);
++    second->installEventFilter(&eventFilter);
++    third->installEventFilter(&eventFilter);
++
++    view.show();
++    QVERIFY(QTest::qWaitForWindowActive(&view));
++
++    QCOMPARE(qApp->focusObject(), first);
++    // on some platforms we don't get ActiveWindowFocusReason; tolerate this,
++    // it's not what we are testing in this test
++    if (eventFilter.lastFocusReason[first] != Qt::ActiveWindowFocusReason) {
++        QEXPECT_FAIL("", qPrintable(QString("No window activation event on the %1 platform")
++                                            .arg(QGuiApplication::platformName())),
++                     Continue);
++    }
++    QCOMPARE(eventFilter.lastFocusReason[first], Qt::ActiveWindowFocusReason);
++
++    QTest::mouseClick(&view, Qt::LeftButton, {},
++                      (second->boundingRect().center() + second->position()).toPoint());
++    QTRY_COMPARE(qApp->focusObject(), second);
++    QCOMPARE(eventFilter.lastFocusReason[first], Qt::MouseFocusReason);
++    QCOMPARE(eventFilter.lastFocusReason[second], Qt::MouseFocusReason);
++
++    QTest::keyClick(&view, Qt::Key_Tab);
++    QCOMPARE(qApp->focusObject(), third);
++    QCOMPARE(eventFilter.lastFocusReason[second], Qt::TabFocusReason);
++    QCOMPARE(eventFilter.lastFocusReason[third], Qt::TabFocusReason);
++
++    QTest::keyClick(&view, Qt::Key_Backtab);
++    QCOMPARE(qApp->focusObject(), second);
++    QCOMPARE(eventFilter.lastFocusReason[third], Qt::BacktabFocusReason);
++    QCOMPARE(eventFilter.lastFocusReason[second], Qt::BacktabFocusReason);
++
++    QTest::keyClick(&view, Qt::Key_Up);
++    QCOMPARE(qApp->focusObject(), first);
++    QCOMPARE(eventFilter.lastFocusReason[second], Qt::BacktabFocusReason);
++    QCOMPARE(eventFilter.lastFocusReason[first], Qt::BacktabFocusReason);
++
++    QTest::keyClick(&view, Qt::Key_Down);
++    QCOMPARE(qApp->focusObject(), second);
++    QCOMPARE(eventFilter.lastFocusReason[second], Qt::TabFocusReason);
++    QCOMPARE(eventFilter.lastFocusReason[first], Qt::TabFocusReason);
 +}
 +
  QTEST_MAIN(tst_qquicktextinput)
@@ -9204,6 +11707,25 @@ index 0000000000..9692347cb8
 +#include <QtQuickTest/quicktest.h>
 +
 +QUICK_TEST_MAIN(data)
+diff --git a/tests/manual/pointer/pinchHandler.qml b/tests/manual/pointer/pinchHandler.qml
+index 46ab91c2ed..93169da60a 100644
+--- a/tests/manual/pointer/pinchHandler.qml
++++ b/tests/manual/pointer/pinchHandler.qml
+@@ -154,6 +154,14 @@ Rectangle {
+                         if (!active)
+                             anim.restart(centroid.velocity)
+                     }
++                    onGrabChanged: function (transition, point) {
++                        if (transition === 0x10) { // GrabExclusive
++                            console.log(point.id, "grabbed @", point.position)
++                            Qt.createQmlObject("import QtQuick 2.0; Rectangle { opacity: 0.5; border.color: 'red'; radius: 8; width: radius * 2; height: radius * 2; " +
++                                               "x: " + (point.position.x - 8) + "; y: " + (point.position.y - 8) + "}",
++                                               rect3, "touchpoint" + point.id);
++                        }
++                    }
+                 }
+                 TapHandler { gesturePolicy: TapHandler.DragThreshold; onTapped: rect3.z = rect2.z + 1 }
+                 MomentumAnimation { id: anim; target: rect3 }
 diff --git a/tests/manual/scenegraph_lancelot/data/rotation/rotation_clip_multi.qml b/tests/manual/scenegraph_lancelot/data/rotation/rotation_clip_multi.qml
 new file mode 100644
 index 0000000000..277ac4f2db
