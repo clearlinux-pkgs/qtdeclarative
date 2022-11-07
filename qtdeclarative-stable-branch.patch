@@ -86,6 +86,12 @@ Fabian Kosmale (20):
 Fabio Falsini (1):
       QQuickItemParticle give() method kill particle
 
+Fushan Wen (1):
+      Don't convert QByteArray in `startDrag`
+
+Hannah von Reth (1):
+      Fix build after 95290f66b806a307b8da1f72f8fc2c69801933d0
+
 Ivan Solovev (1):
       QuickLayouts: fix crash when layout width depends on parent width
 
@@ -173,9 +179,10 @@ Mitch Curtis (7):
       Doc: mention that clipping can affect performance and link to page
       Revert "Fix ListView.isCurrentItem when used with DelegateModel"
 
-Morten Johan Sørvig (2):
+Morten Johan Sørvig (3):
       Set a11y role for QQuickTextInput to EditableText
       a11y: make links have pressAction first
+      Implement accessibility for QQuickWidget
 
 Paul Wicking (1):
       Doc: Fix broken QDoc markup
@@ -3641,10 +3648,72 @@ index c75d5f3129..6452567f6b 100644
  
  #endif // QTQMLWORKERSCRIPTGLOBAL_P_H
 diff --git a/src/quick/accessible/qaccessiblequickitem.cpp b/src/quick/accessible/qaccessiblequickitem.cpp
-index 5e1ae25c38..85719fdc80 100644
+index 5e1ae25c38..eb3df4d4cd 100644
 --- a/src/quick/accessible/qaccessiblequickitem.cpp
 +++ b/src/quick/accessible/qaccessiblequickitem.cpp
-@@ -216,6 +216,8 @@ QAccessible::Role QAccessibleQuickItem::role() const
+@@ -46,6 +46,7 @@
+ #include "QtQuick/private/qquicktextinput_p.h"
+ #include "QtQuick/private/qquickaccessibleattached_p.h"
+ #include "QtQuick/qquicktextdocument.h"
++#include "QtQuick/qquickrendercontrol.h"
+ QT_BEGIN_NAMESPACE
+ 
+ #if QT_CONFIG(accessibility)
+@@ -57,7 +58,19 @@ QAccessibleQuickItem::QAccessibleQuickItem(QQuickItem *item)
+ 
+ QWindow *QAccessibleQuickItem::window() const
+ {
+-    return item()->window();
++    QQuickWindow *window = item()->window();
++
++    // For QQuickWidget the above window will be the offscreen QQuickWindow,
++    // which is not a part of the accessibility tree. Detect this case and
++    // return the window for the QQuickWidget instead.
++    if (window && !window->handle()) {
++        if (QQuickRenderControl *renderControl = QQuickWindowPrivate::get(window)->renderControl) {
++            if (QWindow *renderWindow = renderControl->renderWindow(nullptr))
++                return renderWindow;
++        }
++    }
++
++    return window;
+ }
+ 
+ int QAccessibleQuickItem::childCount() const
+@@ -113,19 +126,15 @@ QAccessibleInterface *QAccessibleQuickItem::childAt(int x, int y) const
+ QAccessibleInterface *QAccessibleQuickItem::parent() const
+ {
+     QQuickItem *parent = item()->parentItem();
+-    QQuickWindow *window = item()->window();
+-    QQuickItem *ci = window ? window->contentItem() : nullptr;
++    QQuickWindow *itemWindow = item()->window();
++    QQuickItem *ci = itemWindow ? itemWindow->contentItem() : nullptr;
+     while (parent && !QQuickItemPrivate::get(parent)->isAccessible && parent != ci)
+         parent = parent->parentItem();
+ 
+     if (parent) {
+         if (parent == ci) {
+-            // Jump out to the scene widget if the parent is the root item.
+-            // There are two root items, QQuickWindow::rootItem and
+-            // QQuickView::declarativeRoot. The former is the true root item,
+-            // but is not a part of the accessibility tree. Check if we hit
+-            // it here and return an interface for the scene instead.
+-            return QAccessible::queryAccessibleInterface(window);
++            // Jump out to the window if the parent is the root item
++            return QAccessible::queryAccessibleInterface(window());
+         } else {
+             while (parent && !parent->d_func()->isAccessible)
+                 parent = parent->parentItem();
+@@ -188,7 +197,7 @@ QAccessible::State QAccessibleQuickItem::state() const
+     QRect viewRect_ = viewRect();
+     QRect itemRect = rect();
+ 
+-    if (viewRect_.isNull() || itemRect.isNull() || !item()->window() || !item()->window()->isVisible() ||!item()->isVisible() || qFuzzyIsNull(item()->opacity()))
++    if (viewRect_.isNull() || itemRect.isNull() || !window() || !window()->isVisible() ||!item()->isVisible() || qFuzzyIsNull(item()->opacity()))
+         state.invisible = true;
+     if (!viewRect_.intersects(itemRect))
+         state.offscreen = true;
+@@ -216,6 +225,8 @@ QAccessible::Role QAccessibleQuickItem::role() const
      if (role == QAccessible::NoRole) {
          if (qobject_cast<QQuickText*>(const_cast<QQuickItem *>(item())))
              role = QAccessible::StaticText;
@@ -3653,7 +3722,7 @@ index 5e1ae25c38..85719fdc80 100644
          else
              role = QAccessible::Client;
      }
-@@ -232,6 +234,7 @@ QStringList QAccessibleQuickItem::actionNames() const
+@@ -232,6 +243,7 @@ QStringList QAccessibleQuickItem::actionNames() const
  {
      QStringList actions;
      switch (role()) {
@@ -3682,6 +3751,19 @@ index 931e995f0f..ccc9280ba0 100644
  {
  public:
      QAccessibleQuickItem(QQuickItem *item);
+diff --git a/src/quick/accessible/qaccessiblequickview_p.h b/src/quick/accessible/qaccessiblequickview_p.h
+index 39ffcaf39c..8baa01330c 100644
+--- a/src/quick/accessible/qaccessiblequickview_p.h
++++ b/src/quick/accessible/qaccessiblequickview_p.h
+@@ -58,7 +58,7 @@ QT_BEGIN_NAMESPACE
+ 
+ #if QT_CONFIG(accessibility)
+ 
+-class QAccessibleQuickWindow : public QAccessibleObject
++class Q_QUICK_EXPORT QAccessibleQuickWindow : public QAccessibleObject
+ {
+ public:
+     QAccessibleQuickWindow(QQuickWindow *object);
 diff --git a/src/quick/designer/qquickdesignersupportproperties.cpp b/src/quick/designer/qquickdesignersupportproperties.cpp
 index 335795acf1..479e77bf68 100644
 --- a/src/quick/designer/qquickdesignersupportproperties.cpp
@@ -4417,6 +4499,36 @@ index 0ebd1a66c9..3f28620d90 100644
      if (!qFuzzyCompare(m_canvasDevicePixelRatio, canvasDevicePixelRatio)) {
          qCDebug(lcCanvas, "%s device pixel ratio %.1lf -> %.1lf",
                  (m_item->objectName().isEmpty() ? "Canvas" : qPrintable(m_item->objectName())),
+diff --git a/src/quick/items/qquickdrag.cpp b/src/quick/items/qquickdrag.cpp
+index 8321fcfeed..383078b3b9 100644
+--- a/src/quick/items/qquickdrag.cpp
++++ b/src/quick/items/qquickdrag.cpp
+@@ -481,7 +481,9 @@ void QQuickDragAttached::setKeys(const QStringList &keys)
+     \qmlattachedproperty stringlist QtQuick::Drag::mimeData
+     \since 5.2
+ 
+-    This property holds a map of mimeData that is used during startDrag.
++    This property holds a map from mime type to data that is used during startDrag.
++    The mime data needs to be a \c string, or an \c ArrayBuffer with the data encoded
++    according to the mime type.
+ */
+ 
+ QVariantMap QQuickDragAttached::mimeData() const
+@@ -766,8 +768,12 @@ Qt::DropAction QQuickDragAttachedPrivate::startDrag(Qt::DropActions supportedAct
+     QDrag *drag = new QDrag(source ? source : q);
+     QMimeData *mimeData = new QMimeData();
+ 
+-    for (auto it = externalMimeData.cbegin(), end = externalMimeData.cend(); it != end; ++it)
+-        mimeData->setData(it.key(), it.value().toString().toUtf8());
++    for (auto it = externalMimeData.cbegin(), end = externalMimeData.cend(); it != end; ++it) {
++        if (static_cast<QMetaType::Type>(it.value().type()) == QMetaType::QByteArray)
++            mimeData->setData(it.key(), it.value().toByteArray());
++        else
++            mimeData->setData(it.key(), it.value().toString().toUtf8());
++    }
+ 
+     drag->setMimeData(mimeData);
+     if (pixmapLoader.isReady()) {
 diff --git a/src/quick/items/qquickdroparea.cpp b/src/quick/items/qquickdroparea.cpp
 index d90ee209d6..e503cd7815 100644
 --- a/src/quick/items/qquickdroparea.cpp
@@ -7328,19 +7440,404 @@ index 40f6cfbdcf..37386c23b2 100644
 +GHS_KEEP_REFERENCE(qml_register_types_QtQuick_Shapes);
  
  #endif // QQUICKSHAPESGLOBAL_P_H
+diff --git a/src/quickwidgets/qaccessiblequickwidget.cpp b/src/quickwidgets/qaccessiblequickwidget.cpp
+new file mode 100644
+index 0000000000..6f04d6693f
+--- /dev/null
++++ b/src/quickwidgets/qaccessiblequickwidget.cpp
+@@ -0,0 +1,110 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the QtQuick module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:LGPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU Lesser General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU Lesser
++** General Public License version 3 as published by the Free Software
++** Foundation and appearing in the file LICENSE.LGPL3 included in the
++** packaging of this file. Please review the following information to
++** ensure the GNU Lesser General Public License version 3 requirements
++** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 2.0 or (at your option) the GNU General
++** Public license version 3 or any later version approved by the KDE Free
++** Qt Foundation. The licenses are as published by the Free Software
++** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-2.0.html and
++** https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++#include "qaccessiblequickwidget.h"
++
++#include "qquickwidget_p.h"
++
++QT_BEGIN_NAMESPACE
++
++#if QT_CONFIG(accessibility)
++
++QAccessibleQuickWidget::QAccessibleQuickWidget(QQuickWidget* widget)
++: QAccessibleWidget(widget)
++, m_accessibleWindow(QQuickWidgetPrivate::get(widget)->offscreenWindow)
++{
++    // NOTE: m_accessibleWindow is a QAccessibleQuickWindow, and not a
++    // QAccessibleQuickWidgetOffscreenWindow (defined below). This means
++    // it will return the Quick item child interfaces, which is what's needed here
++    // (unlike QAccessibleQuickWidgetOffscreenWindow, which will report 0 children).
++}
++
++QAccessibleInterface *QAccessibleQuickWidget::child(int index) const
++{
++    return m_accessibleWindow.child(index);
++}
++
++int QAccessibleQuickWidget::childCount() const
++{
++    return m_accessibleWindow.childCount();
++}
++
++int QAccessibleQuickWidget::indexOfChild(const QAccessibleInterface *iface) const
++{
++    return m_accessibleWindow.indexOfChild(iface);
++}
++
++QAccessibleInterface *QAccessibleQuickWidget::childAt(int x, int y) const
++{
++    return m_accessibleWindow.childAt(x, y);
++}
++
++QAccessibleQuickWidgetOffscreenWindow::QAccessibleQuickWidgetOffscreenWindow(QQuickWindow *window)
++:QAccessibleQuickWindow(window)
++{
++
++}
++
++QAccessibleInterface *QAccessibleQuickWidgetOffscreenWindow::child(int index) const
++{
++    Q_UNUSED(index);
++    return nullptr;
++}
++
++int QAccessibleQuickWidgetOffscreenWindow::childCount() const
++{
++    return 0;
++}
++
++int QAccessibleQuickWidgetOffscreenWindow::indexOfChild(const QAccessibleInterface *iface) const
++{
++    Q_UNUSED(iface);
++    return -1;
++}
++
++QAccessibleInterface *QAccessibleQuickWidgetOffscreenWindow::QAccessibleQuickWidgetOffscreenWindow::childAt(int x, int y) const
++{
++    Q_UNUSED(x);
++    Q_UNUSED(y);
++    return nullptr;
++}
++
++#endif // accessibility
++
++QT_END_NAMESPACE
+diff --git a/src/quickwidgets/qaccessiblequickwidget.h b/src/quickwidgets/qaccessiblequickwidget.h
+new file mode 100644
+index 0000000000..1f52c78c46
+--- /dev/null
++++ b/src/quickwidgets/qaccessiblequickwidget.h
+@@ -0,0 +1,84 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the QtQuick module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:LGPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU Lesser General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU Lesser
++** General Public License version 3 as published by the Free Software
++** Foundation and appearing in the file LICENSE.LGPL3 included in the
++** packaging of this file. Please review the following information to
++** ensure the GNU Lesser General Public License version 3 requirements
++** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 2.0 or (at your option) the GNU General
++** Public license version 3 or any later version approved by the KDE Free
++** Qt Foundation. The licenses are as published by the Free Software
++** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-2.0.html and
++** https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++#ifndef QACCESSIBLEQUICKWIDGET_H
++#define QACCESSIBLEQUICKWIDGET_H
++
++#include "qquickwidget.h"
++#include <QtWidgets/qaccessiblewidget.h>
++
++#include <private/qaccessiblequickview_p.h>
++
++QT_BEGIN_NAMESPACE
++
++#if QT_CONFIG(accessibility)
++
++// These classes implement the QQuickWiget accessibility switcharoo,
++// where the child items of the QQuickWidgetOffscreenWindow are reported
++// as child accessible interfaces of the QAccessibleQuickWidget.
++class QAccessibleQuickWidget: public QAccessibleWidget
++{
++public:
++    QAccessibleQuickWidget(QQuickWidget* widget);
++
++    QAccessibleInterface *child(int index) const override;
++    int childCount() const override;
++    int indexOfChild(const QAccessibleInterface *iface) const override;
++    QAccessibleInterface *childAt(int x, int y) const override;
++
++private:
++    QAccessibleQuickWindow m_accessibleWindow;
++    Q_DISABLE_COPY(QAccessibleQuickWidget)
++};
++
++class QAccessibleQuickWidgetOffscreenWindow: public QAccessibleQuickWindow
++{
++public:
++    QAccessibleQuickWidgetOffscreenWindow(QQuickWindow *window);
++    QAccessibleInterface *child(int index) const override;
++    int childCount() const override;
++    int indexOfChild(const QAccessibleInterface *iface) const override;
++    QAccessibleInterface *childAt(int x, int y) const override;
++};
++
++#endif // accessibility
++
++QT_END_NAMESPACE
++
++#endif
+diff --git a/src/quickwidgets/qaccessiblequickwidgetfactory.cpp b/src/quickwidgets/qaccessiblequickwidgetfactory.cpp
+new file mode 100644
+index 0000000000..3756d0c27c
+--- /dev/null
++++ b/src/quickwidgets/qaccessiblequickwidgetfactory.cpp
+@@ -0,0 +1,60 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the QtQuick module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:LGPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU Lesser General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU Lesser
++** General Public License version 3 as published by the Free Software
++** Foundation and appearing in the file LICENSE.LGPL3 included in the
++** packaging of this file. Please review the following information to
++** ensure the GNU Lesser General Public License version 3 requirements
++** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 2.0 or (at your option) the GNU General
++** Public license version 3 or any later version approved by the KDE Free
++** Qt Foundation. The licenses are as published by the Free Software
++** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-2.0.html and
++** https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++#include "qaccessiblequickwidgetfactory_p.h"
++#include "qaccessiblequickwidget.h"
++
++QT_BEGIN_NAMESPACE
++
++#if QT_CONFIG(accessibility)
++
++QAccessibleInterface *qAccessibleQuickWidgetFactory(const QString &classname, QObject *object)
++{
++    if (classname == QLatin1String("QQuickWidget")) {
++        return new QAccessibleQuickWidget(qobject_cast<QQuickWidget *>(object));
++    } else if (classname == QLatin1String("QQuickWidgetOffscreenWindow")) {
++        return new QAccessibleQuickWidgetOffscreenWindow(qobject_cast<QQuickWindow *>(object));
++    }
++    return 0;
++}
++
++#endif // accessibility
++
++QT_END_NAMESPACE
++
+diff --git a/src/quickwidgets/qaccessiblequickwidgetfactory_p.h b/src/quickwidgets/qaccessiblequickwidgetfactory_p.h
+new file mode 100644
+index 0000000000..8c63b09f81
+--- /dev/null
++++ b/src/quickwidgets/qaccessiblequickwidgetfactory_p.h
+@@ -0,0 +1,66 @@
++/****************************************************************************
++**
++** Copyright (C) 2021 The Qt Company Ltd.
++** Contact: https://www.qt.io/licensing/
++**
++** This file is part of the QtQuick module of the Qt Toolkit.
++**
++** $QT_BEGIN_LICENSE:LGPL$
++** Commercial License Usage
++** Licensees holding valid commercial Qt licenses may use this file in
++** accordance with the commercial license agreement provided with the
++** Software or, alternatively, in accordance with the terms contained in
++** a written agreement between you and The Qt Company. For licensing terms
++** and conditions see https://www.qt.io/terms-conditions. For further
++** information use the contact form at https://www.qt.io/contact-us.
++**
++** GNU Lesser General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU Lesser
++** General Public License version 3 as published by the Free Software
++** Foundation and appearing in the file LICENSE.LGPL3 included in the
++** packaging of this file. Please review the following information to
++** ensure the GNU Lesser General Public License version 3 requirements
++** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
++**
++** GNU General Public License Usage
++** Alternatively, this file may be used under the terms of the GNU
++** General Public License version 2.0 or (at your option) the GNU General
++** Public license version 3 or any later version approved by the KDE Free
++** Qt Foundation. The licenses are as published by the Free Software
++** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
++** included in the packaging of this file. Please review the following
++** information to ensure the GNU General Public License requirements will
++** be met: https://www.gnu.org/licenses/gpl-2.0.html and
++** https://www.gnu.org/licenses/gpl-3.0.html.
++**
++** $QT_END_LICENSE$
++**
++****************************************************************************/
++
++#include <QtGui/qaccessible.h>
++
++#ifndef QACCESSIBLEQUICKWIDGETFACTORY_H
++#define QACCESSIBLEQUICKWIDGETFACTORY_H
++
++//
++//  W A R N I N G
++//  -------------
++//
++// This file is not part of the Qt API.  It exists purely as an
++// implementation detail.  This header file may change from version to
++// version without notice, or even be removed.
++//
++// We mean it.
++//
++
++QT_BEGIN_NAMESPACE
++
++#if QT_CONFIG(accessibility)
++
++QAccessibleInterface *qAccessibleQuickWidgetFactory(const QString &classname, QObject *object);
++
++#endif
++
++QT_END_NAMESPACE
++
++#endif
 diff --git a/src/quickwidgets/qquickwidget.cpp b/src/quickwidgets/qquickwidget.cpp
-index 39780f8de3..223d91f579 100644
+index 39780f8de3..9c97b43518 100644
 --- a/src/quickwidgets/qquickwidget.cpp
 +++ b/src/quickwidgets/qquickwidget.cpp
-@@ -106,6 +106,7 @@ void QQuickWidgetPrivate::init(QQmlEngine* e)
+@@ -39,6 +39,7 @@
+ 
+ #include "qquickwidget.h"
+ #include "qquickwidget_p.h"
++#include "qaccessiblequickwidgetfactory_p.h"
+ 
+ #include "private/qquickwindow_p.h"
+ #include "private/qquickitem_p.h"
+@@ -75,9 +76,16 @@
+ 
+ QT_BEGIN_NAMESPACE
+ 
++QQuickWidgetOffscreenWindow::QQuickWidgetOffscreenWindow(QQuickWindowPrivate &dd, QQuickRenderControl *control)
++:QQuickWindow(dd, control)
++{
++    setTitle(QString::fromLatin1("Offscreen"));
++    setObjectName(QString::fromLatin1("QQuickOffScreenWindow"));
++}
++
+ // override setVisble to prevent accidental offscreen window being created
+ // by base class.
+-class QQuickOffcreenWindowPrivate: public QQuickWindowPrivate {
++class QQuickWidgetOffscreenWindowPrivate: public QQuickWindowPrivate {
+ public:
+     void setVisible(bool visible) override {
+         Q_Q(QWindow);
+@@ -105,9 +113,8 @@ void QQuickWidgetPrivate::init(QQmlEngine* e)
+     Q_Q(QQuickWidget);
  
      renderControl = new QQuickWidgetRenderControl(q);
-     offscreenWindow = new QQuickWindow(*new QQuickOffcreenWindowPrivate(),renderControl);
+-    offscreenWindow = new QQuickWindow(*new QQuickOffcreenWindowPrivate(),renderControl);
+-    offscreenWindow->setTitle(QString::fromLatin1("Offscreen"));
+-    offscreenWindow->setObjectName(QString::fromLatin1("QQuickOffScreenWindow"));
++    offscreenWindow = new QQuickWidgetOffscreenWindow(*new QQuickWidgetOffscreenWindowPrivate(), renderControl);
 +    offscreenWindow->setScreen(q->screen());
-     offscreenWindow->setTitle(QString::fromLatin1("Offscreen"));
-     offscreenWindow->setObjectName(QString::fromLatin1("QQuickOffScreenWindow"));
      // Do not call create() on offscreenWindow.
-@@ -901,9 +902,7 @@ void QQuickWidgetPrivate::createContext()
+ 
+     // Check if the Software Adaptation is being used
+@@ -138,6 +145,10 @@ void QQuickWidgetPrivate::init(QQmlEngine* e)
+     QWidget::connect(offscreenWindow, &QQuickWindow::focusObjectChanged, q, &QQuickWidget::propagateFocusObjectChanged);
+     QObject::connect(renderControl, SIGNAL(renderRequested()), q, SLOT(triggerUpdate()));
+     QObject::connect(renderControl, SIGNAL(sceneChanged()), q, SLOT(triggerUpdate()));
++
++#if QT_CONFIG(accessibility)
++    QAccessible::installFactory(&qAccessibleQuickWidgetFactory);
++#endif
+ }
+ 
+ void QQuickWidgetPrivate::ensureEngine() const
+@@ -901,9 +912,7 @@ void QQuickWidgetPrivate::createContext()
  
          context = new QOpenGLContext;
          context->setFormat(offscreenWindow->requestedFormat());
@@ -7351,7 +7848,7 @@ index 39780f8de3..223d91f579 100644
          QOpenGLContext *shareContext = qt_gl_global_share_context();
          if (!shareContext)
              shareContext = QWidgetPrivate::get(q->window())->shareContext();
-@@ -1520,19 +1519,16 @@ bool QQuickWidget::event(QEvent *e)
+@@ -1520,19 +1529,16 @@ bool QQuickWidget::event(QEvent *e)
          d->handleWindowChange();
          break;
  
@@ -7379,7 +7876,7 @@ index 39780f8de3..223d91f579 100644
  
          if (d->useSoftwareRenderer
  #if QT_CONFIG(opengl)
-@@ -1545,7 +1541,7 @@ bool QQuickWidget::event(QEvent *e)
+@@ -1545,7 +1551,7 @@ bool QQuickWidget::event(QEvent *e)
              d->render(true);
          }
          break;
@@ -7388,6 +7885,45 @@ index 39780f8de3..223d91f579 100644
      case QEvent::Show:
      case QEvent::Move:
          d->updatePosition();
+diff --git a/src/quickwidgets/qquickwidget_p.h b/src/quickwidgets/qquickwidget_p.h
+index 881f7f9220..1a946bcc71 100644
+--- a/src/quickwidgets/qquickwidget_p.h
++++ b/src/quickwidgets/qquickwidget_p.h
+@@ -148,6 +148,14 @@ public:
+     bool forceFullUpdate;
+ };
+ 
++class QQuickWidgetOffscreenWindow: public QQuickWindow
++{
++    Q_OBJECT
++
++public:
++    QQuickWidgetOffscreenWindow(QQuickWindowPrivate &dd, QQuickRenderControl *control);
++};
++
+ QT_END_NAMESPACE
+ 
+ #endif // QQuickWidget_P_H
+diff --git a/src/quickwidgets/quickwidgets.pro b/src/quickwidgets/quickwidgets.pro
+index 2438e577ae..f46deb54ac 100644
+--- a/src/quickwidgets/quickwidgets.pro
++++ b/src/quickwidgets/quickwidgets.pro
+@@ -7,9 +7,13 @@ DEFINES   += QT_NO_URL_CAST_FROM_STRING QT_NO_INTEGER_EVENT_COORDINATES QT_NO_FO
+ HEADERS += \
+     qquickwidget.h \
+     qquickwidget_p.h \
+-    qtquickwidgetsglobal.h
++    qtquickwidgetsglobal.h \
++    qaccessiblequickwidget.h \
++    qaccessiblequickwidgetfactory_p.h
+ 
+ SOURCES += \
+-    qquickwidget.cpp
++    qquickwidget.cpp \
++    qaccessiblequickwidget.cpp \
++    qaccessiblequickwidgetfactory.cpp
+ 
+ load(qt_module)
 diff --git a/tests/auto/particles/qquickitemparticle/data/takeGive.qml b/tests/auto/particles/qquickitemparticle/data/takeGive.qml
 index e95ae738bd..926d83bfc1 100644
 --- a/tests/auto/particles/qquickitemparticle/data/takeGive.qml
