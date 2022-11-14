@@ -86,8 +86,9 @@ Fabian Kosmale (20):
 Fabio Falsini (1):
       QQuickItemParticle give() method kill particle
 
-Fushan Wen (1):
+Fushan Wen (2):
       Don't convert QByteArray in `startDrag`
+      Send ObjectShow event for visible components after initialized
 
 Hannah von Reth (1):
       Fix build after 95290f66b806a307b8da1f72f8fc2c69801933d0
@@ -4870,7 +4871,7 @@ index 8849c2005c..d7b5709bb0 100644
      }
      QQuickItem::itemChange(change, value);
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 67c4611d9e..9de244ed9e 100644
+index 67c4611d9e..462147adbd 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
 @@ -1,9 +1,9 @@
@@ -5076,7 +5077,21 @@ index 67c4611d9e..9de244ed9e 100644
  }
  
  /*!
-@@ -7293,7 +7350,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
+@@ -5068,6 +5125,13 @@ void QQuickItem::componentComplete()
+         d->addToDirtyList();
+         QQuickWindowPrivate::get(d->window)->dirtyItem(this);
+     }
++
++#if QT_CONFIG(accessibility)
++    if (d->isAccessible && d->effectiveVisible) {
++        QAccessibleEvent ev(this, QAccessible::ObjectShow);
++        QAccessible::updateAccessibility(&ev);
++    }
++#endif
+ }
+ 
+ QQuickStateGroup *QQuickItemPrivate::_states()
+@@ -7293,7 +7357,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
      If an item does not accept the mouse button for a particular mouse event,
      the mouse event will not be delivered to the item and will be delivered
      to the next item in the item hierarchy instead.
@@ -5087,7 +5102,7 @@ index 67c4611d9e..9de244ed9e 100644
  Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  {
      Q_D(const QQuickItem);
-@@ -7302,7 +7361,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
+@@ -7302,7 +7368,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  
  /*!
      Sets the mouse buttons accepted by this item to \a buttons.
@@ -5102,7 +5117,7 @@ index 67c4611d9e..9de244ed9e 100644
  void QQuickItem::setAcceptedMouseButtons(Qt::MouseButtons buttons)
  {
      Q_D(QQuickItem);
-@@ -7352,6 +7417,12 @@ bool QQuickItem::isUnderMouse() const
+@@ -7352,6 +7424,12 @@ bool QQuickItem::isUnderMouse() const
      if (!d->window)
          return false;
  
@@ -5115,7 +5130,7 @@ index 67c4611d9e..9de244ed9e 100644
      QPointF cursorPos = QGuiApplicationPrivate::lastCursorPosition;
      return contains(mapFromScene(d->window->mapFromGlobal(cursorPos.toPoint())));
  }
-@@ -7766,22 +7837,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
+@@ -7766,22 +7844,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
  }
  
  /*!
@@ -5151,7 +5166,7 @@ index 67c4611d9e..9de244ed9e 100644
  */
  bool QQuickItem::contains(const QPointF &point) const
  {
-@@ -7804,22 +7876,48 @@ bool QQuickItem::contains(const QPointF &point) const
+@@ -7804,22 +7883,48 @@ bool QQuickItem::contains(const QPointF &point) const
      \qmlproperty QObject* QtQuick::Item::containmentMask
      \since 5.11
      This property holds an optional mask for the Item to be used in the
