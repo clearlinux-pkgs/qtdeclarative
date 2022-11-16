@@ -276,7 +276,7 @@ Vlad Zahorodnii (2):
       Fix sweep step for tainted QObject JavaScript wrappers
       Make sure QQuickWidget and its offscreen window's screens are always in sync
 
-Volker Hilsheimer (8):
+Volker Hilsheimer (9):
       MouseArea: fix containsMouse behavior during visibility changes
       Use unique_ptr to clarify ownership of QQuickDefaultClipNode objects
       Revert "Use unique_ptr to clarify ownership of QQuickDefaultClipNode objects"
@@ -285,6 +285,7 @@ Volker Hilsheimer (8):
       Update QQuickImage's DPR if re-loading the image didn't
       Pass the focus reason through to the control on mouse press
       Reinitialize shader data structure when effect changes
+      QQuickItem: avoid emitting signals during destruction
 
 Wang Chuan (2):
       QQuickLoader: prevent clearing initial properties after active = true
@@ -4871,7 +4872,7 @@ index 8849c2005c..d7b5709bb0 100644
      }
      QQuickItem::itemChange(change, value);
 diff --git a/src/quick/items/qquickitem.cpp b/src/quick/items/qquickitem.cpp
-index 67c4611d9e..462147adbd 100644
+index 67c4611d9e..4cf73ff73d 100644
 --- a/src/quick/items/qquickitem.cpp
 +++ b/src/quick/items/qquickitem.cpp
 @@ -1,9 +1,9 @@
@@ -4973,7 +4974,15 @@ index 67c4611d9e..462147adbd 100644
      \sa QQuickItem::ItemChange
   */
  
-@@ -2504,6 +2527,7 @@ QQuickItem* QQuickItemPrivate::nextPrevItemInTabFocusChain(QQuickItem *item, boo
+@@ -2304,6 +2327,7 @@ QQuickItem::QQuickItem(QQuickItemPrivate &dd, QQuickItem *parent)
+ QQuickItem::~QQuickItem()
+ {
+     Q_D(QQuickItem);
++    d->inDestructor = true;
+ 
+     if (d->windowRefCount > 1)
+         d->windowRefCount = 1; // Make sure window is set to null in next call to derefWindow().
+@@ -2504,6 +2528,7 @@ QQuickItem* QQuickItemPrivate::nextPrevItemInTabFocusChain(QQuickItem *item, boo
      QQuickItem *current = item;
      qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: startItem:" << startItem;
      qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: firstFromItem:" << firstFromItem;
@@ -4981,7 +4990,7 @@ index 67c4611d9e..462147adbd 100644
      do {
          qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: current:" << current;
          qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: from:" << from;
-@@ -2570,7 +2594,10 @@ QQuickItem* QQuickItemPrivate::nextPrevItemInTabFocusChain(QQuickItem *item, boo
+@@ -2570,7 +2595,10 @@ QQuickItem* QQuickItemPrivate::nextPrevItemInTabFocusChain(QQuickItem *item, boo
          // traversed all of the chain (by compare the [current] item with [startItem])
          // Since the [startItem] might be promoted to its parent if it is invisible,
          // we still have to check [current] item with original start item
@@ -4993,7 +5002,40 @@ index 67c4611d9e..462147adbd 100644
              // wrapped around, avoid endless loops
              if (item == contentItem) {
                  qCDebug(DBG_FOCUS) << "QQuickItemPrivate::nextPrevItemInTabFocusChain: looped, return contentItem";
-@@ -3055,8 +3082,9 @@ Returns a transform that maps points from item space into window space.
+@@ -2667,9 +2695,8 @@ void QQuickItem::setParentItem(QQuickItem *parentItem)
+ 
+         const bool wasVisible = isVisible();
+         op->removeChild(this);
+-        if (wasVisible) {
++        if (wasVisible && !op->inDestructor)
+             emit oldParentItem->visibleChildrenChanged();
+-        }
+     } else if (d->window) {
+         QQuickWindowPrivate::get(d->window)->parentlessItems.remove(this);
+     }
+@@ -2746,8 +2773,9 @@ void QQuickItem::setParentItem(QQuickItem *parentItem)
+ 
+     d->itemChange(ItemParentHasChanged, d->parentItem);
+ 
+-    emit parentChanged(d->parentItem);
+-    if (isVisible() && d->parentItem)
++    if (!d->inDestructor)
++        emit parentChanged(d->parentItem);
++    if (isVisible() && d->parentItem && !QQuickItemPrivate::get(d->parentItem)->inDestructor)
+         emit d->parentItem->visibleChildrenChanged();
+ }
+ 
+@@ -2943,7 +2971,8 @@ void QQuickItemPrivate::removeChild(QQuickItem *child)
+ 
+     itemChange(QQuickItem::ItemChildRemovedChange, child);
+ 
+-    emit q->childrenChanged();
++    if (!inDestructor)
++        emit q->childrenChanged();
+ }
+ 
+ void QQuickItemPrivate::refWindow(QQuickWindow *c)
+@@ -3055,8 +3084,9 @@ Returns a transform that maps points from item space into window space.
  */
  QTransform QQuickItemPrivate::itemToWindowTransform() const
  {
@@ -5005,7 +5047,15 @@ index 67c4611d9e..462147adbd 100644
      itemToParentTransform(rv);
      return rv;
  }
-@@ -3650,6 +3678,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
+@@ -3171,6 +3201,7 @@ QQuickItemPrivate::QQuickItemPrivate()
+     , touchEnabled(false)
+ #endif
+     , hasCursorHandler(false)
++    , inDestructor(false)
+     , dirtyAttributes(0)
+     , nextDirtyItem(nullptr)
+     , prevDirtyItem(nullptr)
+@@ -3650,6 +3681,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
  
      This property is useful if you need to access the collective geometry
      of an item's children in order to correctly size the item.
@@ -5016,7 +5066,7 @@ index 67c4611d9e..462147adbd 100644
  */
  /*!
      \property QQuickItem::childrenRect
-@@ -3659,6 +3691,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
+@@ -3659,6 +3694,10 @@ QQmlListProperty<QObject> QQuickItemPrivate::data()
  
      This property is useful if you need to access the collective geometry
      of an item's children in order to correctly size the item.
@@ -5027,7 +5077,7 @@ index 67c4611d9e..462147adbd 100644
  */
  QRectF QQuickItem::childrenRect()
  {
-@@ -3686,6 +3722,9 @@ QList<QQuickItem *> QQuickItem::childItems() const
+@@ -3686,6 +3725,9 @@ QList<QQuickItem *> QQuickItem::childItems() const
  
    If clipping is enabled, an item will clip its own painting, as well
    as the painting of its children, to its bounding rectangle.
@@ -5037,7 +5087,7 @@ index 67c4611d9e..462147adbd 100644
  */
  /*!
    \property QQuickItem::clip
-@@ -3753,6 +3792,14 @@ void QQuickItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeo
+@@ -3753,6 +3795,14 @@ void QQuickItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeo
          emit widthChanged();
      if (change.heightChange())
          emit heightChanged();
@@ -5052,7 +5102,7 @@ index 67c4611d9e..462147adbd 100644
  }
  
  /*!
-@@ -4751,14 +4798,24 @@ void QQuickItem::forceActiveFocus()
+@@ -4751,14 +4801,24 @@ void QQuickItem::forceActiveFocus()
  
  void QQuickItem::forceActiveFocus(Qt::FocusReason reason)
  {
@@ -5077,7 +5127,7 @@ index 67c4611d9e..462147adbd 100644
  }
  
  /*!
-@@ -5068,6 +5125,13 @@ void QQuickItem::componentComplete()
+@@ -5068,6 +5128,13 @@ void QQuickItem::componentComplete()
          d->addToDirtyList();
          QQuickWindowPrivate::get(d->window)->dirtyItem(this);
      }
@@ -5091,7 +5141,22 @@ index 67c4611d9e..462147adbd 100644
  }
  
  QQuickStateGroup *QQuickItemPrivate::_states()
-@@ -7293,7 +7357,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
+@@ -6054,9 +6121,11 @@ bool QQuickItemPrivate::setEffectiveVisibleRecur(bool newEffectiveVisible)
+         QAccessible::updateAccessibility(&ev);
+     }
+ #endif
+-    emit q->visibleChanged();
+-    if (childVisibilityChanged)
+-        emit q->visibleChildrenChanged();
++    if (!inDestructor) {
++        emit q->visibleChanged();
++        if (childVisibilityChanged)
++            emit q->visibleChildrenChanged();
++    }
+ 
+     return true;    // effective visibility DID change
+ }
+@@ -7293,7 +7362,9 @@ bool QQuickItem::isAncestorOf(const QQuickItem *child) const
      If an item does not accept the mouse button for a particular mouse event,
      the mouse event will not be delivered to the item and will be delivered
      to the next item in the item hierarchy instead.
@@ -5102,7 +5167,7 @@ index 67c4611d9e..462147adbd 100644
  Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  {
      Q_D(const QQuickItem);
-@@ -7302,7 +7368,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
+@@ -7302,7 +7373,13 @@ Qt::MouseButtons QQuickItem::acceptedMouseButtons() const
  
  /*!
      Sets the mouse buttons accepted by this item to \a buttons.
@@ -5117,7 +5182,7 @@ index 67c4611d9e..462147adbd 100644
  void QQuickItem::setAcceptedMouseButtons(Qt::MouseButtons buttons)
  {
      Q_D(QQuickItem);
-@@ -7352,6 +7424,12 @@ bool QQuickItem::isUnderMouse() const
+@@ -7352,6 +7429,12 @@ bool QQuickItem::isUnderMouse() const
      if (!d->window)
          return false;
  
@@ -5130,7 +5195,7 @@ index 67c4611d9e..462147adbd 100644
      QPointF cursorPos = QGuiApplicationPrivate::lastCursorPosition;
      return contains(mapFromScene(d->window->mapFromGlobal(cursorPos.toPoint())));
  }
-@@ -7766,22 +7844,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
+@@ -7766,22 +7849,23 @@ void QQuickItem::setKeepTouchGrab(bool keep)
  }
  
  /*!
@@ -5166,7 +5231,7 @@ index 67c4611d9e..462147adbd 100644
  */
  bool QQuickItem::contains(const QPointF &point) const
  {
-@@ -7804,22 +7883,48 @@ bool QQuickItem::contains(const QPointF &point) const
+@@ -7804,22 +7888,48 @@ bool QQuickItem::contains(const QPointF &point) const
      \qmlproperty QObject* QtQuick::Item::containmentMask
      \since 5.11
      This property holds an optional mask for the Item to be used in the
@@ -5224,6 +5289,18 @@ index 67c4611d9e..462147adbd 100644
  */
  QObject *QQuickItem::containmentMask() const
  {
+diff --git a/src/quick/items/qquickitem_p.h b/src/quick/items/qquickitem_p.h
+index 841d91bb40..ade8fb61f2 100644
+--- a/src/quick/items/qquickitem_p.h
++++ b/src/quick/items/qquickitem_p.h
+@@ -472,6 +472,7 @@ public:
+     bool replayingPressEvent:1;
+     bool touchEnabled:1;
+     bool hasCursorHandler:1;
++    quint32 inDestructor:1; // has entered ~QQuickItem
+ 
+     enum DirtyType {
+         TransformOrigin         = 0x00000001,
 diff --git a/src/quick/items/qquickitemanimation.cpp b/src/quick/items/qquickitemanimation.cpp
 index 23694e2de3..63359a7683 100644
 --- a/src/quick/items/qquickitemanimation.cpp
