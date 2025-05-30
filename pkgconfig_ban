@@ -5,3 +5,17 @@ Qt5Qml
 Qt5Quick
 Qt5QuickTest
 Qt5QuickWidgets
+Qt6Multimedia
+Qt6Qml
+Qt6Quick
+Qt6QuickTest
+Qt6QuickWidgets
+Qt6Concurrent
+Qt6Core
+Qt6Gui
+Qt6Network
+Qt6OpenGL
+Qt6Sql
+Qt6Svg
+Qt6Test
+Qt6Widgets
